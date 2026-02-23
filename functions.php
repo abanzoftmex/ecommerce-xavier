@@ -92,6 +92,38 @@ add_filter( 'body_class', function( $classes ) {
 } );
 
 // =============================================
+// 4b. DESACTIVAR HEADER DE ASTRA
+// =============================================
+
+// Remove Astra's default header
+add_action( 'after_setup_theme', function() {
+    remove_action( 'astra_header', 'astra_header_markup' );
+    remove_action( 'astra_masthead', 'astra_masthead_primary_template' );
+}, 99 );
+
+// Ensure no Astra header elements are visible
+add_action( 'wp_head', function() {
+    echo '<style>
+        .ast-primary-header-bar,
+        .ast-mobile-header-wrap,
+        #ast-desktop-header,
+        #ast-mobile-header,
+        .ast-above-header-wrap,
+        .ast-below-header-wrap,
+        .ast-main-header-wrap,
+        [data-section="section-header-builder"],
+        .ast-header-break-point .ast-mobile-header-wrap { 
+            display: none !important; 
+            height: 0 !important;
+            min-height: 0 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            overflow: hidden !important;
+        }
+    </style>';
+}, 999 );
+
+// =============================================
 // 5. BREADCRUMBS WOOCOMMERCE
 // =============================================
 
