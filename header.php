@@ -26,7 +26,7 @@
     <header id="masthead" class="site-header">
         <!-- Top Navigation Bar -->
         <nav class="main-navigation">
-            <div class="nav-container">
+            <div class="nav-container" style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px 40px;max-width:1440px;margin:0 auto;">
                 <!-- Logo -->
                 <div class="site-branding">
                     <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
@@ -108,3 +108,36 @@
             </div>
         </nav>
     </header><!-- #masthead -->
+
+<script>
+(function() {
+    var header = document.getElementById('masthead');
+    var ann = document.querySelector('.announcement-bar');
+    if (!header) return;
+
+    function getAnnHeight() {
+        return ann ? ann.offsetHeight : 0;
+    }
+
+    // Position header below announcement bar
+    function positionHeader() {
+        var ah = getAnnHeight();
+        header.style.top = ah + 'px';
+        document.body.style.paddingTop = (ah + header.offsetHeight) + 'px';
+    }
+
+    function onScroll() {
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('load', positionHeader);
+    window.addEventListener('resize', positionHeader);
+    positionHeader();
+    onScroll();
+})();
+</script>
