@@ -217,6 +217,68 @@ get_header();
             </div>
         </section>
 
+        <!-- ================ TRUST BADGES ================ -->
+        <section class="trust-section">
+            <div class="trust-container">
+                <div class="trust-grid">
+
+                    <div class="trust-item">
+                        <div class="trust-icon">
+                            <!-- Warranty / Medal -->
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1a1a1a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="20" cy="15" r="9"/>
+                                <circle cx="20" cy="15" r="4.5"/>
+                                <path d="M14 22l-3 12 9-4 9 4-3-12"/>
+                                <text x="20" y="18" text-anchor="middle" fill="#1a1a1a" stroke="none" font-size="8" font-family="Jost,sans-serif" font-weight="600">5</text>
+                            </svg>
+                        </div>
+                        <p class="trust-label">5 Años de Garantía</p>
+                    </div>
+
+                    <div class="trust-item">
+                        <div class="trust-icon">
+                            <!-- Delivery truck -->
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1a1a1a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="12" width="22" height="14" rx="1"/>
+                                <path d="M24 18h7l5 5v5h-12z"/>
+                                <circle cx="11" cy="28" r="3"/>
+                                <circle cx="30" cy="28" r="3"/>
+                                <line x1="14" y1="28" x2="27" y2="28"/>
+                            </svg>
+                        </div>
+                        <p class="trust-label">Envío Gratis a Partir de $2,000</p>
+                    </div>
+
+                    <div class="trust-item">
+                        <div class="trust-icon">
+                            <!-- Shield / Quality -->
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1a1a1a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 4L6 10v10c0 9.33 5.97 15.71 14 18 8.03-2.29 14-8.67 14-18V10L20 4z"/>
+                                <polyline points="14,20 18,24 26,16"/>
+                            </svg>
+                        </div>
+                        <p class="trust-label">Calidad Segura</p>
+                    </div>
+
+                    <div class="trust-item">
+                        <div class="trust-icon">
+                            <!-- Gem / Premium materials -->
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1a1a1a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="8,15 20,6 32,15 20,35"/>
+                                <line x1="8" y1="15" x2="32" y2="15"/>
+                                <line x1="14" y1="15" x2="20" y2="35"/>
+                                <line x1="26" y1="15" x2="20" y2="35"/>
+                                <line x1="12" y1="15" x2="20" y2="6"/>
+                                <line x1="28" y1="15" x2="20" y2="6"/>
+                            </svg>
+                        </div>
+                        <p class="trust-label">Materiales Premium</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
         <!-- ================ AS SEEN ON ================ -->
         <section class="as-seen-section">
             <div class="as-seen-container">
