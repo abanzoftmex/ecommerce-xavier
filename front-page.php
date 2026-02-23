@@ -20,12 +20,12 @@ get_header();
         ?>
         <section class="hero-section">
             <canvas id="heroParticles" class="hero-particles-canvas"></canvas>
-            <div class="hero-content">
+            <div class="hero-content" style="position:relative;z-index:10;display:block;visibility:visible;opacity:1;padding:80px;max-width:480px;">
                 <div class="hero-text">
-                    <h1>The Charm Shop is <em>open</em>.<br>Stack accordingly.</h1>
-                    <div class="hero-buttons">
-                        <a href="<?php echo esc_url( $shop_url ); ?>" class="btn btn-primary">SHOP ALL CHARMS</a>
-                        <a href="<?php echo esc_url( $shop_url ); ?>?filter=category" class="btn btn-secondary">SHOP BY CATEGORY</a>
+                    <h1 style="color:#1a1a1a;font-family:'Cormorant Garamond',Georgia,serif;font-size:48px;font-weight:300;line-height:1.15;margin-bottom:36px;visibility:visible;opacity:1;display:block;-webkit-text-fill-color:#1a1a1a;">The Charm Shop is <em style="font-style:italic;color:#1a1a1a;-webkit-text-fill-color:#1a1a1a;">open</em>.<br>Stack accordingly.</h1>
+                    <div class="hero-buttons" style="display:flex;gap:16px;flex-wrap:wrap;">
+                        <a href="<?php echo esc_url( $shop_url ); ?>" class="btn btn-primary" style="display:inline-block;padding:12px 24px;background:#1a1a1a;color:#fff;border:1.5px solid #1a1a1a;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:1.2px;text-decoration:none;border-radius:0;-webkit-text-fill-color:#fff;">SHOP ALL CHARMS</a>
+                        <a href="<?php echo esc_url( $shop_url ); ?>?filter=category" class="btn btn-secondary" style="display:inline-block;padding:12px 24px;background:transparent;color:#1a1a1a;border:1.5px solid #1a1a1a;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:1.2px;text-decoration:none;border-radius:0;-webkit-text-fill-color:#1a1a1a;">SHOP BY CATEGORY</a>
                     </div>
                 </div>
             </div>
