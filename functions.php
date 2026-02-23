@@ -10,6 +10,14 @@
 // =============================================
 
 function astra_child_enqueue_styles() {
+    // 1. Cargar CSS del tema padre (Astra)
+    wp_enqueue_style(
+        'astra-theme-css',
+        get_template_directory_uri() . '/style.css',
+        array(),
+        wp_get_theme( 'astra' )->get( 'Version' )
+    );
+    // 2. Cargar nuestro CSS encima del padre
     wp_enqueue_style(
         'astra-child-style',
         get_stylesheet_uri(),
@@ -18,6 +26,7 @@ function astra_child_enqueue_styles() {
     );
 }
 add_action( 'wp_enqueue_scripts', 'astra_child_enqueue_styles', 1 );
+
 
 // =============================================
 // 2. SOPORTE PARA WOOCOMMERCE
