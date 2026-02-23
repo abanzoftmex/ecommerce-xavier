@@ -25,6 +25,7 @@ jobs:
           local-dir: ./
           server-dir: public_html/wp-content/themes/astra-child/
           exclude: |
-            **/.git*
-            **/.github*
-            **/node_modules/**
+            .git/**
+            .github/**
+            node_modules/**
+            .gitignore
