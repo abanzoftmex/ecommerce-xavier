@@ -17,7 +17,12 @@
 <?php wp_body_open(); ?>
 
 <div id="page" class="site">
-    
+
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+        Enjoy 20% Off Your First Order: Code <a href="<?php echo esc_url( home_url('/shop/') ); ?>"><strong>HEY20</strong></a>
+    </div>
+
     <header id="masthead" class="site-header">
         <!-- Top Navigation Bar -->
         <nav class="main-navigation">

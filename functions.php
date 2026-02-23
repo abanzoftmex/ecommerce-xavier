@@ -21,6 +21,14 @@ function astra_child_enqueue_styles() {
         array( 'astra-parent-style' ),
         wp_get_theme()->get( 'Version' )
     );
+
+    // Google Fonts – Cormorant Garamond (editorial serif) + Jost (clean sans)
+    wp_enqueue_style(
+        'astra-child-google-fonts',
+        'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap',
+        array(),
+        null
+    );
 }
 add_action( 'wp_enqueue_scripts', 'astra_child_enqueue_styles' );
 
