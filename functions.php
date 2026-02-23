@@ -1,89 +1,15 @@
 <?php
 /**
- * Child Theme - Ecommerce Xavier
- * Toma control total sobre Astra + Elementor
+ * Child Theme - Ecommerce Xavier (Astra Child)
  *
  * @package Astra Child
  */
-
-// =============================================
-// DESHABILITAR ELEMENTOR COMPLETAMENTE
-// Si ya lo eliminaste del admin, este bloque
-// simplemente no hace nada (no causa errores).
-// =============================================
-add_action( 'plugins_loaded', function() {
-    // Desactivar Elementor básico
-    if ( function_exists( 'is_plugin_active' ) ) {
-        if ( is_plugin_active( 'elementor/elementor.php' ) ) {
-            deactivate_plugins( 'elementor/elementor.php', true );
-        }
-        if ( is_plugin_active( 'elementor-pro/elementor-pro.php' ) ) {
-            deactivate_plugins( 'elementor-pro/elementor-pro.php', true );
-        }
-    }
-}, 0 );
-
-// También eliminar todos los hooks de Elementor si aún está cargado
-add_action( 'init', function() {
-    if ( class_exists( '\Elementor\Plugin' ) ) {
-        remove_all_actions( 'elementor/init' );
-        remove_all_filters( 'template_include' );
-        // Re-agregar nuestro filtro después de limpiar todo
-        add_filter( 'template_include', 'astra_child_kill_elementor_on_front', 999 );
-    }
-}, 0 );
-
-// =============================================
-// 0. FORZAR TEMPLATE POR DEFECTO EN FRONT PAGE
-//    (Bypásar el post meta que Elementor pone)
-// =============================================
-
-/**
- * Elementor guarda '_wp_page_template' = 'elementor_canvas' (o
- * 'elementor_header_footer') en la base de datos para la página de
- * inicio. Este filtro intercepta esa lectura y devuelve 'default'
- * para que WordPress siga la jerarquía normal de templates y cargue
- * NUESTRO front-page.php del child theme.
- */
-add_filter( 'get_post_metadata', function( $value, $object_id, $meta_key, $single ) {
-
-    // Solo nos interesa el meta que define el template de la página
-    if ( '_wp_page_template' !== $meta_key ) {
-        return $value;
-    }
-
-    // Solo aplicar al front page estático configurado en Ajustes > Lectura
-    $front_page_id = (int) get_option( 'page_on_front' );
-    if ( $front_page_id > 0 && (int) $object_id === $front_page_id ) {
-        return $single ? 'default' : array( 'default' );
-    }
-
-    return $value;
-}, 99, 4 );
-
-/**
- * También desactivar la detección de template de Elementor para
- * el front page antes de que WordPress decida qué archivo cargar.
- */
-add_filter( 'elementor/page_templates/canvas/override_page_template', function( $override ) {
-    return is_front_page() ? false : $override;
-} );
-
-add_filter( 'elementor/theme/need_override_location', function( $need ) {
-    return is_front_page() ? false : $need;
-} );
-
 
 // =============================================
 // 1. ESTILOS DEL CHILD THEME
 // =============================================
 
 function astra_child_enqueue_styles() {
-    // Cargar CSS del padre primero, luego el nuestro
-    wp_enqueue_style(
-        'astra-theme-css',
-        get_template_directory_uri() . '/style.css'
-    );
     wp_enqueue_style(
         'astra-child-style',
         get_stylesheet_uri(),
@@ -94,75 +20,7 @@ function astra_child_enqueue_styles() {
 add_action( 'wp_enqueue_scripts', 'astra_child_enqueue_styles', 1 );
 
 // =============================================
-// 2. DESACTIVAR ELEMENTOR EN TODA LA JERARQUÍA
-//    QUE NOS INTERESA CONTROLAR
-// =============================================
-
-/**
- * Desactiva el ThemeBuilder de Elementor Pro en la front page.
- * Corre en prioridad muy alta para quitar sus filtros
- * ANTES de que los ejecute.
- */
-function astra_child_kill_elementor_on_front( $template ) {
-
-    if ( ! is_front_page() ) {
-        return $template;
-    }
-
-    // Elementor Pro ThemeBuilder → prioridad 12
-    if ( class_exists( '\ElementorPro\Plugin' ) ) {
-        $module = \ElementorPro\Plugin::instance()->modules_manager->get_modules( 'theme-builder' );
-        if ( $module ) {
-            remove_filter( 'template_include', [ $module, 'template_include' ], 12 );
-        }
-    }
-
-    // Elementor básico frontend → prioridad 11
-    if ( class_exists( '\Elementor\Plugin' ) && isset( \Elementor\Plugin::$instance->frontend ) ) {
-        remove_filter(
-            'template_include',
-            [ \Elementor\Plugin::$instance->frontend, 'apply_builder_in_content' ],
-            11
-        );
-    }
-
-    // Devolver nuestro template del child theme
-    $child_template = get_stylesheet_directory() . '/front-page.php';
-    if ( file_exists( $child_template ) ) {
-        return $child_template;
-    }
-
-    return $template;
-}
-// Prioridad 999 para correr DESPUÉS de Elementor (12) y ANY page builder
-add_filter( 'template_include', 'astra_child_kill_elementor_on_front', 999 );
-
-// =============================================
-// 3. DESACTIVAR HOOKS DE ASTRA QUE
-//    INYECTAN CONTENIDO EN LA FRONT PAGE
-// =============================================
-
-function astra_child_disable_astra_overrides() {
-    if ( ! is_front_page() ) {
-        return;
-    }
-    // Header builder de Astra Pro
-    remove_action( 'astra_header',  'astra_header_markup' );
-    remove_action( 'astra_footer',  'astra_footer_markup' );
-    // Contenido de Astra
-    remove_action( 'astra_content_before', 'astra_primary_content_top' );
-    remove_action( 'astra_content_after',  'astra_primary_content_bottom' );
-    remove_action( 'astra_content_loop',   'astra_content_loop' );
-}
-add_action( 'wp', 'astra_child_disable_astra_overrides', 5 );
-
-// Apagar Header Builder de Astra Pro globalmente en front page
-add_filter( 'astra_header_enabled', function( $enabled ) {
-    return is_front_page() ? false : $enabled;
-} );
-
-// =============================================
-// 4. SOPORTE PARA WOOCOMMERCE
+// 2. SOPORTE PARA WOOCOMMERCE
 // =============================================
 
 function astra_child_woocommerce_support() {
@@ -181,7 +39,7 @@ add_filter( 'woocommerce_product_add_to_cart_text', function( $text, $product ) 
     return ( $product->get_type() === 'simple' ) ? 'Add to Cart' : $text;
 }, 10, 2 );
 
-// Actualizar fragmento del contador del carrito (AJAX)
+// Actualizar contador del carrito (AJAX)
 function astra_child_cart_fragments( $fragments ) {
     if ( function_exists( 'WC' ) ) {
         $count = WC()->cart->get_cart_contents_count();
@@ -192,7 +50,7 @@ function astra_child_cart_fragments( $fragments ) {
 add_filter( 'woocommerce_add_to_cart_fragments', 'astra_child_cart_fragments' );
 
 // =============================================
-// 5. MENÚS Y SOPORTE DE IMÁGENES
+// 3. MENÚS Y TAMAÑOS DE IMÁGENES
 // =============================================
 
 add_action( 'init', function() {
@@ -208,19 +66,19 @@ add_action( 'after_setup_theme', function() {
 } );
 
 // =============================================
-// 6. CLASES DEL BODY
+// 4. CLASES DEL BODY
 // =============================================
 
 add_filter( 'body_class', function( $classes ) {
     if ( is_front_page() ) {
         $classes[] = 'home-page';
-        $classes[] = 'child-theme-active'; // ← útil para debug desde DevTools
+        $classes[] = 'child-theme-active';
     }
     return $classes;
 } );
 
 // =============================================
-// 7. BREADCRUMBS PERSONALIZADOS DE WOOCOMMERCE
+// 5. BREADCRUMBS WOOCOMMERCE
 // =============================================
 
 add_filter( 'woocommerce_breadcrumb_defaults', function() {
@@ -235,7 +93,7 @@ add_filter( 'woocommerce_breadcrumb_defaults', function() {
 } );
 
 // =============================================
-// 8. SHORTCODE PRODUCTOS DESTACADOS
+// 6. SHORTCODE PRODUCTOS DESTACADOS
 // =============================================
 
 add_shortcode( 'featured_products', function( $atts ) {
@@ -265,7 +123,7 @@ add_shortcode( 'featured_products', function( $atts ) {
 } );
 
 // =============================================
-// 9. NEWSLETTER AJAX
+// 7. NEWSLETTER AJAX
 // =============================================
 
 function astra_child_newsletter_signup() {
@@ -276,7 +134,6 @@ function astra_child_newsletter_signup() {
     if ( ! is_email( $email ) ) {
         wp_send_json_error( 'Invalid email address' );
     }
-    // TODO: integrar con servicio de email marketing (Mailchimp, etc.)
     wp_send_json_success( 'Successfully subscribed!' );
 }
 add_action( 'wp_ajax_newsletter_signup',        'astra_child_newsletter_signup' );
