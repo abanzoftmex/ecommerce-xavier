@@ -7,6 +7,47 @@
  */
 
 // =============================================
+// 0. FORZAR TEMPLATE POR DEFECTO EN FRONT PAGE
+//    (Bypásar el post meta que Elementor pone)
+// =============================================
+
+/**
+ * Elementor guarda '_wp_page_template' = 'elementor_canvas' (o
+ * 'elementor_header_footer') en la base de datos para la página de
+ * inicio. Este filtro intercepta esa lectura y devuelve 'default'
+ * para que WordPress siga la jerarquía normal de templates y cargue
+ * NUESTRO front-page.php del child theme.
+ */
+add_filter( 'get_post_metadata', function( $value, $object_id, $meta_key, $single ) {
+
+    // Solo nos interesa el meta que define el template de la página
+    if ( '_wp_page_template' !== $meta_key ) {
+        return $value;
+    }
+
+    // Solo aplicar al front page estático configurado en Ajustes > Lectura
+    $front_page_id = (int) get_option( 'page_on_front' );
+    if ( $front_page_id > 0 && (int) $object_id === $front_page_id ) {
+        return $single ? 'default' : array( 'default' );
+    }
+
+    return $value;
+}, 99, 4 );
+
+/**
+ * También desactivar la detección de template de Elementor para
+ * el front page antes de que WordPress decida qué archivo cargar.
+ */
+add_filter( 'elementor/page_templates/canvas/override_page_template', function( $override ) {
+    return is_front_page() ? false : $override;
+} );
+
+add_filter( 'elementor/theme/need_override_location', function( $need ) {
+    return is_front_page() ? false : $need;
+} );
+
+
+// =============================================
 // 1. ESTILOS DEL CHILD THEME
 // =============================================
 
