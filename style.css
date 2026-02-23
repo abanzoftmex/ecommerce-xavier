@@ -682,9 +682,9 @@ body {
 }
 
 .trust-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px 80px;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 48px 80px !important;
 }
 
 .trust-item {
