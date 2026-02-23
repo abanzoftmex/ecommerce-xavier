@@ -10,22 +10,19 @@
 // =============================================
 
 function astra_child_enqueue_styles() {
-    // 1. Cargar CSS del tema padre (Astra)
     wp_enqueue_style(
-        'astra-theme-css',
-        get_template_directory_uri() . '/style.css',
-        array(),
-        wp_get_theme( 'astra' )->get( 'Version' )
+        'astra-parent-style',
+        get_template_directory_uri() . '/style.css'
     );
-    // 2. Cargar nuestro CSS encima del padre
+
     wp_enqueue_style(
         'astra-child-style',
-        get_stylesheet_uri(),
-        array( 'astra-theme-css' ),
+        get_stylesheet_directory_uri() . '/style.css',
+        array( 'astra-parent-style' ),
         wp_get_theme()->get( 'Version' )
     );
 }
-add_action( 'wp_enqueue_scripts', 'astra_child_enqueue_styles', 1 );
+add_action( 'wp_enqueue_scripts', 'astra_child_enqueue_styles' );
 
 
 // =============================================
