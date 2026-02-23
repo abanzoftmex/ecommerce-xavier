@@ -279,13 +279,41 @@ get_header();
             </div>
         </section>
 
-        <!-- ================ AS SEEN ON ================ -->
-        <section class="as-seen-section">
-            <div class="as-seen-container">
-                <h2 class="as-seen-title"><em>As Seen On MV</em></h2>
-                <div class="as-seen-placeholder">
-                    <p>Próximamente — agrega imágenes a esta sección.</p>
+        <!-- ================ PRODUCT GALLERY ================ -->
+        <section class="gallery-section" style="padding:64px 0;background:#fff;">
+            <div class="gallery-container" style="max-width:1440px;margin:0 auto;padding:0 40px;">
+                <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:32px;font-weight:300;font-style:italic;text-align:center;margin-bottom:40px;color:#1a1a1a;-webkit-text-fill-color:#1a1a1a;"><em>As Seen On MV</em></h2>
+                <?php
+                $gallery_query = new WP_Query( array(
+                    'post_type'      => 'product',
+                    'posts_per_page' => 8,
+                    'post_status'    => 'publish',
+                    'orderby'        => 'date',
+                    'order'          => 'DESC',
+                    'meta_query'     => array(
+                        array(
+                            'key'     => '_thumbnail_id',
+                            'compare' => 'EXISTS',
+                        ),
+                    ),
+                ) );
+
+                if ( $gallery_query->have_posts() ) :
+                ?>
+                <div class="gallery-grid" style="display:grid;grid-template-columns:repeat(4, 1fr);gap:4px;">
+                    <?php while ( $gallery_query->have_posts() ) : $gallery_query->the_post(); ?>
+                    <a href="<?php the_permalink(); ?>" class="gallery-item" style="display:block;position:relative;aspect-ratio:1/1;overflow:hidden;background:#f0efed;">
+                        <?php the_post_thumbnail( 'medium_large', array(
+                            'class' => 'gallery-item-img',
+                            'style' => 'width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease,opacity 0.4s ease;',
+                            'loading' => 'lazy',
+                        ) ); ?>
+                    </a>
+                    <?php endwhile; wp_reset_postdata(); ?>
                 </div>
+                <?php else : ?>
+                <p style="text-align:center;color:#999;font-family:'Jost',sans-serif;font-size:14px;">Agrega productos con imagen para ver la galería.</p>
+                <?php endif; ?>
             </div>
         </section>
 

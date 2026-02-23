@@ -713,42 +713,16 @@ body {
 }
 
 /* =====================
-   AS SEEN ON SECTION
+   PRODUCT GALLERY
 ===================== */
 
-.as-seen-section {
-    padding: 72px 0 48px;
-    background: #fff;
+.gallery-item:hover .gallery-item-img {
+    transform: scale(1.06);
+    opacity: 0.9;
 }
 
-.as-seen-container {
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 0 40px;
-}
-
-.as-seen-title {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 32px;
-    font-weight: 300;
-    text-align: center;
-    margin-bottom: 32px;
-    color: #1a1a1a;
-    font-style: italic;
-}
-
-.as-seen-title em {
-    font-style: italic;
-}
-
-.as-seen-placeholder {
-    text-align: center;
-    padding: 40px 0;
-    color: #bbb;
-    font-family: 'Jost', sans-serif;
-    font-size: 14px;
-    border: 1px dashed #ddd;
-    border-radius: 4px;
+.gallery-item {
+    text-decoration: none;
 }
 
 /* =====================
