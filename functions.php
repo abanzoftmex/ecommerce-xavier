@@ -10,15 +10,15 @@
 // =============================================
 
 function astra_child_enqueue_styles() {
-    wp_enqueue_style(
-        'astra-parent-style',
-        get_template_directory_uri() . '/style.css'
-    );
+    // Astra carga su propio CSS con el handle 'astra-theme-css'.
+    // Encolamos el child DESPUÉS de ese handle para asegurar cascada correcta.
+    $parent_handle = wp_style_is( 'astra-theme-css', 'registered' ) ? 'astra-theme-css' : false;
+    $deps = $parent_handle ? array( $parent_handle ) : array();
 
     wp_enqueue_style(
         'astra-child-style',
         get_stylesheet_directory_uri() . '/style.css',
-        array( 'astra-parent-style' ),
+        $deps,
         wp_get_theme()->get( 'Version' )
     );
 
@@ -30,7 +30,7 @@ function astra_child_enqueue_styles() {
         null
     );
 }
-add_action( 'wp_enqueue_scripts', 'astra_child_enqueue_styles' );
+add_action( 'wp_enqueue_scripts', 'astra_child_enqueue_styles', 20 );
 
 
 // =============================================

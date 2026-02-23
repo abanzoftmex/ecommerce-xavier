@@ -6,11 +6,7 @@ Description: Child theme para ecommerce Xavier
 Text Domain: astra-child
 */
 
-/* =====================
-   IMPORTS & RESET
-===================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap');
 
 * {
     margin: 0;
@@ -1088,4 +1084,117 @@ body {
     .legal-links {
         justify-content: center;
     }
+}
+
+/* =====================================================
+   OVERRIDES DE ALTA ESPECIFICIDAD — ANTI-ASTRA
+   Aseguran que los estilos del child theme prevalezcan
+   sobre los defaults del parent theme Astra.
+===================================================== */
+
+/* Reset botones de Astra que aparecen en naranja/rojo */
+.cat-nav-btn,
+.rec-nav-btn,
+.as-seen-nav {
+    background: none !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: #aaa !important;
+    padding: 4px 8px !important;
+    font-size: 20px !important;
+    line-height: 1 !important;
+    min-height: auto !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+.cat-nav-btn:hover,
+.rec-nav-btn:hover,
+.as-seen-nav:hover {
+    color: #1a1a1a !important;
+    background: none !important;
+    background-color: transparent !important;
+}
+
+/* Grids / Flex — los layouts más críticos */
+.category-track {
+    display: flex !important;
+    gap: 24px !important;
+}
+
+.trending-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 32px !important;
+}
+
+.rec-track {
+    display: flex !important;
+    gap: 20px !important;
+}
+
+.as-seen-track {
+    display: flex !important;
+    gap: 4px !important;
+}
+
+.category-card {
+    flex: 0 0 calc(20% - 20px) !important;
+    min-width: 180px !important;
+}
+
+.rec-card {
+    flex: 0 0 220px !important;
+}
+
+.as-seen-slide {
+    flex: 0 0 calc(100% / 5.5) !important;
+}
+
+/* Tipografía base — anular fuentes por defecto de Astra */
+.hero-text h1,
+.category-header h2,
+.trending-title,
+.recommended-header h2,
+.as-seen-title {
+    font-family: 'Cormorant Garamond', Georgia, serif !important;
+}
+
+.category-label,
+.trending-label,
+.trending-desc,
+.rec-card-title,
+.rec-card-price,
+.btn-comprar,
+.btn-shopall,
+.btn {
+    font-family: 'Jost', sans-serif !important;
+}
+
+/* Botones propios del child theme */
+.btn-comprar {
+    display: inline-block !important;
+    background: none !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid #1a1a1a !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 0 3px 0 !important;
+    color: #1a1a1a !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    letter-spacing: 1.5px !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+    min-height: auto !important;
+    line-height: 1.5 !important;
+}
+
+.btn-comprar:hover {
+    color: #b8a98a !important;
+    border-color: #b8a98a !important;
+    background: none !important;
 }
