@@ -45,30 +45,49 @@ get_header();
                 <div class="category-track-wrapper">
                     <div class="category-track" id="categoryTrack">
                         <?php
-                        $categories = array(
-                            array( 'name' => 'RINGS',     'slug' => 'rings',     'img_index' => 0 ),
-                            array( 'name' => 'NECKLACES', 'slug' => 'necklaces', 'img_index' => 1 ),
-                            array( 'name' => 'EARRINGS',  'slug' => 'earrings',  'img_index' => 2 ),
-                            array( 'name' => 'BRACELETS', 'slug' => 'bracelets', 'img_index' => 3 ),
-                            array( 'name' => 'PENDANTS',  'slug' => 'pendants',  'img_index' => 4 ),
-                        );
-                        // CSS backgrounds via nth-child, but also provide data-index
-                        foreach ( $categories as $i => $cat ) :
-                            $cat_url = function_exists( 'get_term_link' )
-                                ? get_term_link( $cat['slug'], 'product_cat' )
-                                : home_url( '/product-category/' . $cat['slug'] . '/' );
-                            if ( is_wp_error( $cat_url ) ) {
-                                $cat_url = home_url( '/product-category/' . $cat['slug'] . '/' );
-                            }
+                        // Obtener categorías reales de WooCommerce, excluyendo "Uncategorized"
+                        $product_categories = get_terms( array(
+                            'taxonomy'   => 'product_cat',
+                            'hide_empty' => true,           // solo categorías con productos
+                            'orderby'    => 'menu_order',   // respeta el orden configurado en WP
+                            'order'      => 'ASC',
+                            'exclude'    => array( get_option( 'default_product_cat' ) ), // excluye "Uncategorized"
+                        ) );
+
+                        if ( ! empty( $product_categories ) && ! is_wp_error( $product_categories ) ) :
+                            foreach ( $product_categories as $cat ) :
+                                $cat_url       = get_term_link( $cat );
+                                $thumbnail_id  = get_term_meta( $cat->term_id, 'thumbnail_id', true );
+                                $img_src       = $thumbnail_id
+                                    ? wp_get_attachment_image_url( $thumbnail_id, 'medium' )
+                                    : '';
                         ?>
-                        <div class="category-card" data-index="<?php echo $i; ?>">
+                        <div class="category-card">
                             <a href="<?php echo esc_url( $cat_url ); ?>" class="category-card-link">
-                                <div class="category-img-wrap cat-img-<?php echo $i + 1; ?>">
+                                <div class="category-img-wrap">
+                                    <?php if ( $img_src ) : ?>
+                                        <img
+                                            src="<?php echo esc_url( $img_src ); ?>"
+                                            alt="<?php echo esc_attr( $cat->name ); ?>"
+                                            class="category-img"
+                                            loading="lazy"
+                                        >
+                                    <?php else : ?>
+                                        <!-- Placeholder si la categoría no tiene imagen asignada -->
+                                        <div class="category-img-placeholder">
+                                            <span><?php echo esc_html( $cat->name[0] ); ?></span>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
-                                <p class="category-label"><?php echo esc_html( $cat['name'] ); ?></p>
+                                <p class="category-label"><?php echo esc_html( strtoupper( $cat->name ) ); ?></p>
                             </a>
                         </div>
-                        <?php endforeach; ?>
+                        <?php
+                            endforeach;
+                        else :
+                            echo '<p class="no-categories">No hay categorías disponibles todavía.</p>';
+                        endif;
+                        ?>
                     </div>
                 </div>
 

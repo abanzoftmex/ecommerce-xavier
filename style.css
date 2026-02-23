@@ -361,30 +361,36 @@ body {
     transform: scale(1.02);
 }
 
-/* Each category card gets a cropped portion of the category grid image */
-.cat-img-1 {
-    background-image: url('images/category-grid.png');
-    background-position: 0% center;
+/* Imagen real de WooCommerce */
+.category-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.45s ease;
 }
 
-.cat-img-2 {
-    background-image: url('images/category-grid.png');
-    background-position: 25% center;
+.category-card:hover .category-img {
+    transform: scale(1.06);
 }
 
-.cat-img-3 {
-    background-image: url('images/category-grid.png');
-    background-position: 50% center;
+/* Fallback: cuando la categoría no tiene imagen configurada */
+.category-img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ece9e2 0%, #d9d5cc 100%);
 }
 
-.cat-img-4 {
-    background-image: url('images/category-grid.png');
-    background-position: 75% center;
-}
-
-.cat-img-5 {
-    background-image: url('images/category-grid.png');
-    background-position: 100% center;
+.category-img-placeholder span {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 56px;
+    font-weight: 300;
+    color: #b8a98a;
+    text-transform: uppercase;
 }
 
 .category-label {
