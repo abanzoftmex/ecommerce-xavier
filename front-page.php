@@ -366,11 +366,12 @@ get_header();
 
     // Gold palette
     var colors = [
-        'rgba(200, 169, 81, 0.55)',
-        'rgba(237, 217, 138, 0.45)',
-        'rgba(245, 226, 156, 0.40)',
-        'rgba(180, 150, 60, 0.50)',
-        'rgba(220, 190, 100, 0.35)',
+        'rgba(200, 169, 81, 0.85)',
+        'rgba(237, 217, 138, 0.75)',
+        'rgba(210, 180, 80, 0.80)',
+        'rgba(180, 150, 60, 0.90)',
+        'rgba(220, 190, 100, 0.70)',
+        'rgba(245, 226, 100, 0.75)',
     ];
 
     var NUM = 28;
@@ -384,12 +385,12 @@ get_header();
             y:       rand(0, canvas.height),
             vx:      rand(-0.18, 0.18),
             vy:      rand(-0.22, -0.08),
-            size:    rand(5, 16),
+            size:    rand(7, 20),
             rot:     rand(0, Math.PI * 2),
-            rotV:    rand(-0.008, 0.008),
+            rotV:    rand(-0.010, 0.010),
             alpha:   0,
-            alphaV:  rand(0.003, 0.007),
-            alphaMax:rand(0.35, 0.70),
+            alphaV:  rand(0.004, 0.009),
+            alphaMax:rand(0.65, 1.0),
             fading:  false,
             shape:   Math.floor(Math.random() * shapes.length),
             color:   colors[Math.floor(Math.random() * colors.length)],
