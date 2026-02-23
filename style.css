@@ -324,14 +324,16 @@ body {
 
 .category-track {
     display: flex;
+    flex-wrap: nowrap;
     gap: 24px;
     transition: transform 0.4s ease;
     will-change: transform;
 }
 
 .category-card {
-    flex: 0 0 calc(20% - 20px);
+    flex: 0 0 calc((100% - 4 * 24px) / 5);
     min-width: 180px;
+    max-width: 260px;
 }
 
 .category-card-link {
@@ -1045,11 +1047,49 @@ body {
 }
 
 /* Grids / Flex — los layouts más críticos */
-.category-track {
-    display: flex !important;
-    gap: 24px !important;
+.category-track-wrapper {
+    overflow: hidden !important;
+    width: 100% !important;
 }
 
+.category-track {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 24px !important;
+    align-items: flex-start !important;
+}
+
+.category-card {
+    flex: 0 0 calc((100% - 4 * 24px) / 5) !important;
+    min-width: 180px !important;
+    max-width: 260px !important;
+    float: none !important;
+    width: auto !important;
+}
+
+.category-card-link {
+    display: block !important;
+    text-decoration: none !important;
+    color: inherit !important;
+}
+
+.category-img-wrap {
+    width: 100% !important;
+    aspect-ratio: 3 / 4 !important;
+    overflow: hidden !important;
+    display: block !important;
+    background: #f0efed !important;
+}
+
+.category-img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+}
+
+
+/* Trending / Recomendados */
 .trending-grid {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
@@ -1058,19 +1098,15 @@ body {
 
 .rec-track {
     display: flex !important;
+    flex-wrap: nowrap !important;
     gap: 20px !important;
-}
-
-
-.category-card {
-    flex: 0 0 calc(20% - 20px) !important;
-    min-width: 180px !important;
+    align-items: flex-start !important;
 }
 
 .rec-card {
     flex: 0 0 220px !important;
+    float: none !important;
 }
-
 
 /* Tipografía base — anular fuentes por defecto de Astra */
 .hero-text h1,
