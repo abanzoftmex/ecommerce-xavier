@@ -97,34 +97,70 @@ get_header();
             </div>
         </section>
 
-        <!-- ================ WHAT'S NEW + TRENDING ================ -->
+        <!-- ================ TRENDING PRODUCTS ================ -->
+        <?php
+        // Buscar la categoría "trending" (por slug). Si no existe, usar los 2 más recientes.
+        $trending_cat  = get_term_by( 'slug', 'trending', 'product_cat' );
+        $trending_args = array(
+            'post_type'      => 'product',
+            'posts_per_page' => 2,
+            'post_status'    => 'publish',
+            'orderby'        => 'date',
+            'order'          => 'DESC',
+        );
+        if ( $trending_cat && ! is_wp_error( $trending_cat ) ) {
+            $trending_args['tax_query'] = array(
+                array(
+                    'taxonomy' => 'product_cat',
+                    'field'    => 'slug',
+                    'terms'    => 'trending',
+                ),
+            );
+            $section_title = 'Trending';
+        } else {
+            $section_title = 'Lo Más Nuevo';
+        }
+        $trending_query = new WP_Query( $trending_args );
+        ?>
+        <?php if ( $trending_query->have_posts() ) : ?>
         <section class="trending-section">
             <div class="trending-container">
-                <h2 class="trending-title">What's New + Trending?</h2>
+                <h2 class="trending-title"><?php echo esc_html( $section_title ); ?></h2>
                 <div class="trending-grid">
-                    <div class="trending-item trending-left">
-                        <div class="trending-img-wrap">
-                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/trending-editorial.png" alt="The Men's Edit" class="trending-img" style="object-position: left center;">
-                        </div>
+                    <?php while ( $trending_query->have_posts() ) : $trending_query->the_post();
+                        global $product;
+                        if ( ! $product ) $product = wc_get_product( get_the_ID() );
+                        $short_desc = $product ? $product->get_short_description() : get_the_excerpt();
+                        // Limpiar tags HTML del excerpt corto
+                        $short_desc = wp_strip_all_tags( $short_desc );
+                        // Limitar a ~120 caracteres
+                        if ( strlen( $short_desc ) > 120 ) {
+                            $short_desc = substr( $short_desc, 0, 120 ) . '…';
+                        }
+                    ?>
+                    <div class="trending-item">
+                        <a href="<?php the_permalink(); ?>" class="trending-card-link">
+                            <div class="trending-img-wrap">
+                                <?php if ( has_post_thumbnail() ) : ?>
+                                    <?php the_post_thumbnail( 'large', array( 'class' => 'trending-img' ) ); ?>
+                                <?php else : ?>
+                                    <div class="trending-img-placeholder"></div>
+                                <?php endif; ?>
+                            </div>
+                        </a>
                         <div class="trending-info">
-                            <p class="trending-label">THE MEN'S EDIT</p>
-                            <p class="trending-desc">Curated pieces for him, foolproof gifting for you. Thank us later.</p>
-                            <a href="<?php echo esc_url( $shop_url ); ?>" class="trending-shop-link">SHOP NOW</a>
+                            <p class="trending-label"><?php the_title(); ?></p>
+                            <?php if ( $short_desc ) : ?>
+                            <p class="trending-desc"><?php echo esc_html( $short_desc ); ?></p>
+                            <?php endif; ?>
+                            <a href="<?php the_permalink(); ?>" class="btn-comprar">Comprar ahora</a>
                         </div>
                     </div>
-                    <div class="trending-item trending-right">
-                        <div class="trending-img-wrap">
-                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/trending-editorial.png" alt="New Arrivals" class="trending-img" style="object-position: right center;">
-                        </div>
-                        <div class="trending-info">
-                            <p class="trending-label">NEW ARRIVALS</p>
-                            <p class="trending-desc">She stole the show, now steal her style. Shop our latest curated edit.</p>
-                            <a href="<?php echo esc_url( $shop_url ); ?>" class="trending-shop-link">SHOP NOW</a>
-                        </div>
-                    </div>
+                    <?php endwhile; wp_reset_postdata(); ?>
                 </div>
             </div>
         </section>
+        <?php endif; ?>
 
         <!-- ================ WE THINK YOU MAY LIKE ================ -->
         <section class="recommended-section">
