@@ -1,77 +1,93 @@
 <?php
 /**
- * Template para la página principal (home)
- * CHILD THEME OVERRIDE - No usar template de Astra/Elementor
- * 
+ * Template: Página de Inicio (Front Page)
+ * Child Theme Override — Astra Child / Ecommerce Xavier
+ *
+ * WordPress usa este archivo automáticamente como front-page
+ * cuando está configurado en Ajustes > Lectura.
+ *
  * @package Astra Child
  */
 
-// Asegurarse de que Elementor no sobreescriba este template
-define( 'ELEMENTOR_DISABLE_TYPOGRAPHY_SCHEMES', true );
+get_header();
+?>
 
-get_header(); ?>
-
-
-<div id="primary" class="content-area">
+<div id="primary" class="content-area child-front-page">
     <main id="main" class="site-main home-main" role="main">
-        
-        <!-- Hero Section -->
+
+        <!-- ===================== HERO ===================== -->
         <section class="hero-section">
             <div class="hero-content">
                 <div class="hero-text">
                     <h1>The Charm Shop is open. Stack accordingly.</h1>
                     <div class="hero-buttons">
-                        <a href="<?php echo get_permalink(wc_get_page_id('shop')); ?>" class="btn btn-primary">SHOP ALL CHARMS</a>
-                        <a href="#" class="btn btn-secondary">SHOP BY CATEGORY</a>
+                        <?php
+                        $shop_url = function_exists( 'wc_get_page_id' )
+                            ? get_permalink( wc_get_page_id( 'shop' ) )
+                            : home_url( '/shop/' );
+                        ?>
+                        <a href="<?php echo esc_url( $shop_url ); ?>" class="btn btn-primary">SHOP ALL CHARMS</a>
+                        <a href="<?php echo esc_url( $shop_url ); ?>" class="btn btn-secondary">SHOP BY CATEGORY</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Featured Products Section -->
+        <!-- ================ PRODUCTOS DESTACADOS ================ -->
         <section class="featured-products-section">
             <div class="container">
                 <div class="section-header">
                     <h2>Featured Products</h2>
                     <p>Discover our most popular items</p>
                 </div>
-                
+
                 <div class="products-grid">
                     <?php
-                    // Mostrar productos destacados
-                    $featured_query = new WP_Query(array(
-                        'post_type' => 'product',
-                        'meta_key' => '_featured',
-                        'meta_value' => 'yes',
-                        'posts_per_page' => 8
-                    ));
-                    
-                    if ($featured_query->have_posts()) :
-                        woocommerce_product_loop_start();
-                        while ($featured_query->have_posts()) :
+                    $featured_query = new WP_Query( array(
+                        'post_type'      => 'product',
+                        'posts_per_page' => 8,
+                        'meta_query'     => array(
+                            array(
+                                'key'     => '_featured',
+                                'value'   => 'yes',
+                                'compare' => '=',
+                            ),
+                        ),
+                    ) );
+
+                    if ( $featured_query->have_posts() ) :
+                        if ( function_exists( 'woocommerce_product_loop_start' ) ) {
+                            woocommerce_product_loop_start();
+                        }
+                        while ( $featured_query->have_posts() ) :
                             $featured_query->the_post();
-                            wc_get_template_part('content', 'product');
+                            if ( function_exists( 'wc_get_template_part' ) ) {
+                                wc_get_template_part( 'content', 'product' );
+                            }
                         endwhile;
-                        woocommerce_product_loop_end();
+                        if ( function_exists( 'woocommerce_product_loop_end' ) ) {
+                            woocommerce_product_loop_end();
+                        }
                         wp_reset_postdata();
                     else :
-                        echo '<p>No featured products found.</p>';
+                        echo '<p class="no-products">No featured products found.</p>';
                     endif;
                     ?>
                 </div>
             </div>
         </section>
 
-        <!-- Newsletter Section -->
+        <!-- ================== NEWSLETTER ================== -->
         <section class="newsletter-section">
             <div class="newsletter-content">
                 <h2>Join MV Circle for early sale access, birthday treats, a discount on your first order, and more.</h2>
-                <form class="newsletter-form">
-                    <input type="email" placeholder="Email Address" class="email-input">
-                    <button type="submit" class="btn btn-newsletter">JOIN NOW →</button>
+                <form class="newsletter-form" id="newsletter-signup-form">
+                    <?php wp_nonce_field( 'newsletter_nonce', 'newsletter_nonce_field' ); ?>
+                    <input type="email" placeholder="Email Address" class="email-input" required>
+                    <button type="submit" class="btn btn-newsletter">JOIN NOW &rarr;</button>
                 </form>
                 <p class="newsletter-disclaimer">
-                    We'll update you by email + SMS and you can unsubscribe at any time - Privacy Policy
+                    We'll update you by email &amp; SMS and you can unsubscribe at any time &mdash; Privacy Policy
                 </p>
             </div>
         </section>
