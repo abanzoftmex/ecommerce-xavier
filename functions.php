@@ -7,6 +7,33 @@
  */
 
 // =============================================
+// DESHABILITAR ELEMENTOR COMPLETAMENTE
+// Si ya lo eliminaste del admin, este bloque
+// simplemente no hace nada (no causa errores).
+// =============================================
+add_action( 'plugins_loaded', function() {
+    // Desactivar Elementor básico
+    if ( function_exists( 'is_plugin_active' ) ) {
+        if ( is_plugin_active( 'elementor/elementor.php' ) ) {
+            deactivate_plugins( 'elementor/elementor.php', true );
+        }
+        if ( is_plugin_active( 'elementor-pro/elementor-pro.php' ) ) {
+            deactivate_plugins( 'elementor-pro/elementor-pro.php', true );
+        }
+    }
+}, 0 );
+
+// También eliminar todos los hooks de Elementor si aún está cargado
+add_action( 'init', function() {
+    if ( class_exists( '\Elementor\Plugin' ) ) {
+        remove_all_actions( 'elementor/init' );
+        remove_all_filters( 'template_include' );
+        // Re-agregar nuestro filtro después de limpiar todo
+        add_filter( 'template_include', 'astra_child_kill_elementor_on_front', 999 );
+    }
+}, 0 );
+
+// =============================================
 // 0. FORZAR TEMPLATE POR DEFECTO EN FRONT PAGE
 //    (Bypásar el post meta que Elementor pone)
 // =============================================
