@@ -138,7 +138,7 @@ get_header();
                             $short_desc = substr( $short_desc, 0, 120 ) . '…';
                         }
                     ?>
-                    <div class="trending-item">
+                    <div class="trending-card">
                         <a href="<?php the_permalink(); ?>" class="trending-card-link">
                             <div class="trending-img-wrap">
                                 <?php if ( has_post_thumbnail() ) : ?>
