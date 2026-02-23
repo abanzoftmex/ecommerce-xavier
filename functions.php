@@ -1,4 +1,85 @@
 <?php
+/**
+ * Child Theme Principal - Ecommerce Xavier
+ * Toma control total sobre Astra Theme Parent
+ */
+
+// =============================================
+// DESACTIVAR ASTRA HOOKS QUE SOBREESCRIBEN
+// LOS TEMPLATES DEL CHILD THEME
+// =============================================
+
+function astra_child_disable_parent_overrides() {
+    // Desactivar el sistema de contenido de Astra (Customizer/Elementor override)
+    remove_action( 'astra_content_before', 'astra_primary_content_top' );
+    remove_action( 'astra_content_after', 'astra_primary_content_bottom' );
+
+    // Desactivar header de Astra para usar el nuestro
+    remove_action( 'astra_header', 'astra_header_markup' );
+
+    // Desactivar footer de Astra para usar el nuestro
+    remove_action( 'astra_footer', 'astra_footer_markup' );
+}
+add_action( 'wp', 'astra_child_disable_parent_overrides' );
+
+// Forzar que WordPress use NUESTRO front-page.php del child theme
+// ignorando cualquier template de Elementor o Page Builder
+function astra_child_force_front_page_template( $template ) {
+    if ( is_front_page() ) {
+        $child_template = get_stylesheet_directory() . '/front-page.php';
+        if ( file_exists( $child_template ) ) {
+            return $child_template;
+        }
+    }
+    return $template;
+}
+add_filter( 'template_include', 'astra_child_force_front_page_template', 999 );
+
+// Forzar que WordPress use NUESTRO header.php del child theme
+function astra_child_override_header() {
+    if ( file_exists( get_stylesheet_directory() . '/header.php' ) ) {
+        remove_all_actions( 'astra_header' );
+    }
+}
+add_action( 'get_header', 'astra_child_override_header', 0 );
+
+// Desactivar Astra Header Builder si está activo
+add_filter( 'astra_header_enabled', '__return_false' );
+
+// =============================================
+// DESACTIVAR ELEMENTOR EN LA FRONT PAGE
+// =============================================
+
+// Remover el filtro de Elementor que sobreescribe template_include
+function astra_child_remove_elementor_template( $template ) {
+    if ( is_front_page() ) {
+        // Remover el location manager de Elementor Pro si está activo
+        if ( class_exists( '\ElementorPro\Modules\ThemeBuilder\Module' ) ) {
+            $theme_builder_module = \ElementorPro\Modules\ThemeBuilder\Module::instance();
+            remove_filter( 'template_include', [ $theme_builder_module, 'template_include' ], 12 );
+        }
+        // También para Elementor básico
+        if ( class_exists( '\Elementor\Plugin' ) ) {
+            remove_filter( 'template_include', [ \Elementor\Plugin::$instance->front_end, 'apply_builder_in_content' ], 11 );
+        }
+    }
+    return $template;
+}
+add_filter( 'template_include', 'astra_child_remove_elementor_template', 5 );
+
+// Desactivar completamente Elementor en la front page
+function astra_child_disable_elementor_front_page() {
+    if ( is_front_page() ) {
+        add_filter( 'elementor/page_templates/canvas/override_page_template', '__return_false' );
+        add_filter( 'elementor_pro/theme_builder/conditions/get_location_templates', '__return_empty_array' );
+    }
+}
+add_action( 'wp', 'astra_child_disable_elementor_front_page', 1 );
+
+// =============================================
+// ESTILOS DEL CHILD THEME
+// =============================================
+
 function astra_child_enqueue_styles() {
     wp_enqueue_style(
         'astra-child-style',

@@ -1,11 +1,16 @@
 <?php
 /**
  * Template para la página principal (home)
+ * CHILD THEME OVERRIDE - No usar template de Astra/Elementor
  * 
  * @package Astra Child
  */
 
+// Asegurarse de que Elementor no sobreescriba este template
+define( 'ELEMENTOR_DISABLE_TYPOGRAPHY_SCHEMES', true );
+
 get_header(); ?>
+
 
 <div id="primary" class="content-area">
     <main id="main" class="site-main home-main" role="main">

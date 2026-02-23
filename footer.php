@@ -1,3 +1,10 @@
+<?php
+/**
+ * Footer personalizado para el child theme
+ * 
+ * @package Astra Child
+ */
+?>
     <footer id="colophon" class="site-footer">
         <div class="footer-content">
             <div class="footer-sections">
