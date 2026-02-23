@@ -17,9 +17,8 @@ get_header();
         $shop_url = function_exists( 'wc_get_page_id' )
             ? get_permalink( wc_get_page_id( 'shop' ) )
             : home_url( '/shop/' );
-        $hero_img = get_stylesheet_directory_uri() . '/images/hero-bg.png';
         ?>
-        <section class="hero-section" style="background-image: url('<?php echo esc_url( $hero_img ); ?>')">
+        <section class="hero-section">
             <div class="hero-content">
                 <div class="hero-text">
                     <h1>The Charm Shop is <em>open</em>.<br>Stack accordingly.</h1>
@@ -45,20 +44,19 @@ get_header();
                 <div class="category-track-wrapper">
                     <div class="category-track" id="categoryTrack">
                         <?php
-                        // Obtener categorías reales de WooCommerce, excluyendo "Uncategorized"
                         $product_categories = get_terms( array(
                             'taxonomy'   => 'product_cat',
-                            'hide_empty' => true,           // solo categorías con productos
-                            'orderby'    => 'menu_order',   // respeta el orden configurado en WP
+                            'hide_empty' => true,
+                            'orderby'    => 'menu_order',
                             'order'      => 'ASC',
-                            'exclude'    => array( get_option( 'default_product_cat' ) ), // excluye "Uncategorized"
+                            'exclude'    => array( get_option( 'default_product_cat' ) ),
                         ) );
 
                         if ( ! empty( $product_categories ) && ! is_wp_error( $product_categories ) ) :
                             foreach ( $product_categories as $cat ) :
-                                $cat_url       = get_term_link( $cat );
-                                $thumbnail_id  = get_term_meta( $cat->term_id, 'thumbnail_id', true );
-                                $img_src       = $thumbnail_id
+                                $cat_url      = get_term_link( $cat );
+                                $thumbnail_id = get_term_meta( $cat->term_id, 'thumbnail_id', true );
+                                $img_src      = $thumbnail_id
                                     ? wp_get_attachment_image_url( $thumbnail_id, 'medium' )
                                     : '';
                         ?>
@@ -73,7 +71,6 @@ get_header();
                                             loading="lazy"
                                         >
                                     <?php else : ?>
-                                        <!-- Placeholder si la categoría no tiene imagen asignada -->
                                         <div class="category-img-placeholder">
                                             <span><?php echo esc_html( $cat->name[0] ); ?></span>
                                         </div>
@@ -99,7 +96,6 @@ get_header();
 
         <!-- ================ TRENDING PRODUCTS ================ -->
         <?php
-        // Buscar la categoría "trending" (por slug). Si no existe, usar los 2 más recientes.
         $trending_cat  = get_term_by( 'slug', 'trending', 'product_cat' );
         $trending_args = array(
             'post_type'      => 'product',
@@ -131,9 +127,7 @@ get_header();
                         global $product;
                         if ( ! $product ) $product = wc_get_product( get_the_ID() );
                         $short_desc = $product ? $product->get_short_description() : get_the_excerpt();
-                        // Limpiar tags HTML del excerpt corto
                         $short_desc = wp_strip_all_tags( $short_desc );
-                        // Limitar a ~120 caracteres
                         if ( strlen( $short_desc ) > 120 ) {
                             $short_desc = substr( $short_desc, 0, 120 ) . '…';
                         }
@@ -202,7 +196,6 @@ get_header();
                                     <div class="rec-img-placeholder"></div>
                                 <?php endif; ?>
                                 <div class="rec-card-info">
-                                    <p class="rec-card-material">18k Gold Vermeil</p>
                                     <h3 class="rec-card-title"><?php the_title(); ?></h3>
                                     <?php if ( $price ) : ?>
                                     <p class="rec-card-price"><?php echo $price; ?></p>
@@ -214,31 +207,9 @@ get_header();
                             endwhile;
                             wp_reset_postdata();
                         else :
-                            // Fallback cards when no WooCommerce products
-                            $fallback_items = array(
-                                array('title' => 'Heart Station Chain Bracelet', 'price' => '$110'),
-                                array('title' => 'Heart Chain Necklace',         'price' => '$149'),
-                                array('title' => 'Siren Muse Mini Huggie Earrings','price' => '$70'),
-                                array('title' => 'February Birthstone Necklace', 'price' => '$149'),
-                                array('title' => 'February Birthstone Bracelet', 'price' => '$130'),
-                                array('title' => 'Gemstone Mini Huggie Earrings','price' => '$105'),
-                            );
-                            foreach ( $fallback_items as $idx => $item ) :
+                            echo '<p style="color:#999;font-family:\'Jost\',sans-serif;font-size:14px;">Agrega productos a tu tienda para verlos aquí.</p>';
+                        endif;
                         ?>
-                        <div class="rec-card">
-                            <?php if ( $idx < 3 ) : ?>
-                            <span class="rec-badge">Bestseller</span>
-                            <?php endif; ?>
-                            <div class="rec-card-link">
-                                <div class="rec-img-placeholder"></div>
-                                <div class="rec-card-info">
-                                    <p class="rec-card-material">18k Gold Vermeil</p>
-                                    <h3 class="rec-card-title"><?php echo esc_html($item['title']); ?></h3>
-                                    <p class="rec-card-price"><?php echo esc_html($item['price']); ?></p>
-                                </div>
-                            </div>
-                        </div>
-                        <?php endforeach; endif; ?>
                     </div>
                 </div>
             </div>
@@ -248,33 +219,8 @@ get_header();
         <section class="as-seen-section">
             <div class="as-seen-container">
                 <h2 class="as-seen-title"><em>As Seen On MV</em></h2>
-                <div class="as-seen-slider-wrapper">
-                    <button class="as-seen-nav as-seen-prev" aria-label="Previous">&larr;</button>
-                    <div class="as-seen-track-outer">
-                        <div class="as-seen-track" id="asSeenTrack">
-                            <div class="as-seen-slide">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/as-seen-on.png" alt="As Seen On MV - 1" class="as-seen-img" style="object-position: 0% center;">
-                            </div>
-                            <div class="as-seen-slide">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/as-seen-on.png" alt="As Seen On MV - 2" class="as-seen-img" style="object-position: 33.3% center;">
-                            </div>
-                            <div class="as-seen-slide">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/as-seen-on.png" alt="As Seen On MV - 3" class="as-seen-img" style="object-position: 66.6% center;">
-                            </div>
-                            <div class="as-seen-slide">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/as-seen-on.png" alt="As Seen On MV - 4" class="as-seen-img" style="object-position: 83.3% center;">
-                            </div>
-                            <div class="as-seen-slide">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/as-seen-on.png" alt="As Seen On MV - 5" class="as-seen-img" style="object-position: 100% center;">
-                            </div>
-                        </div>
-                    </div>
-                    <button class="as-seen-nav as-seen-next" aria-label="Next">&rarr;</button>
-                </div>
-                <div class="as-seen-dots">
-                    <span class="as-dot"></span>
-                    <span class="as-dot"></span>
-                    <span class="as-dot active"></span>
+                <div class="as-seen-placeholder">
+                    <p>Próximamente — agrega imágenes a esta sección.</p>
                 </div>
             </div>
         </section>
@@ -300,30 +246,26 @@ get_header();
 <script>
 (function() {
     // Category carousel
-    var catTrack    = document.getElementById('categoryTrack');
-    var catPrev     = document.querySelector('.cat-prev');
-    var catNext     = document.querySelector('.cat-next');
-    var catCardW    = 0;
-    var catOffset   = 0;
-    var catVisible  = 5;
+    var catTrack   = document.getElementById('categoryTrack');
+    var catPrev    = document.querySelector('.cat-prev');
+    var catNext    = document.querySelector('.cat-next');
+    var catOffset  = 0;
 
     function getCatCardW() {
         var card = catTrack && catTrack.querySelector('.category-card');
-        return card ? card.offsetWidth + 24 : 220; // gap 24
+        return card ? card.offsetWidth + 24 : 220;
     }
     function updateCat() {
         catTrack.style.transform = 'translateX(' + (-catOffset) + 'px)';
     }
     if (catPrev && catNext && catTrack) {
         catPrev.addEventListener('click', function() {
-            catCardW = getCatCardW();
-            catOffset = Math.max(0, catOffset - catCardW);
+            catOffset = Math.max(0, catOffset - getCatCardW());
             updateCat();
         });
         catNext.addEventListener('click', function() {
-            catCardW = getCatCardW();
             var maxOffset = Math.max(0, catTrack.scrollWidth - catTrack.parentElement.offsetWidth);
-            catOffset = Math.min(maxOffset, catOffset + catCardW);
+            catOffset = Math.min(maxOffset, catOffset + getCatCardW());
             updateCat();
         });
     }
@@ -350,40 +292,6 @@ get_header();
             var maxOffset = Math.max(0, recTrack.scrollWidth - recTrack.parentElement.offsetWidth);
             recOffset = Math.min(maxOffset, recOffset + getRecCardW());
             updateRec();
-        });
-    }
-
-    // As Seen On slider
-    var asTrack  = document.getElementById('asSeenTrack');
-    var asPrev   = document.querySelector('.as-seen-prev');
-    var asNext   = document.querySelector('.as-seen-next');
-    var asDots   = document.querySelectorAll('.as-dot');
-    var asOffset = 0;
-    var asIndex  = 0;
-
-    function getAsSlideW() {
-        var slide = asTrack && asTrack.querySelector('.as-seen-slide');
-        return slide ? slide.offsetWidth + 8 : 300;
-    }
-    function updateAs() {
-        asTrack.style.transform = 'translateX(' + (-asOffset) + 'px)';
-        asDots.forEach(function(d, i) {
-            d.classList.toggle('active', i === (asIndex % 3));
-        });
-    }
-    if (asPrev && asNext && asTrack) {
-        asPrev.addEventListener('click', function() {
-            var w = getAsSlideW();
-            asOffset = Math.max(0, asOffset - w);
-            asIndex = Math.max(0, asIndex - 1);
-            updateAs();
-        });
-        asNext.addEventListener('click', function() {
-            var w = getAsSlideW();
-            var maxOffset = Math.max(0, asTrack.scrollWidth - asTrack.parentElement.offsetWidth);
-            asOffset = Math.min(maxOffset, asOffset + w);
-            asIndex++;
-            updateAs();
         });
     }
 })();
