@@ -17,7 +17,7 @@ jobs:
       - name: 🚀 Deploy theme via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ftp.darkgray-goldfish-313788.hostingersite.com
+          server: 195.35.33.109
           username: u947001429.Xavier
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftp
