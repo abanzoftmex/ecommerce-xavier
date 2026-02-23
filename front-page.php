@@ -19,6 +19,7 @@ get_header();
             : home_url( '/shop/' );
         ?>
         <section class="hero-section">
+            <canvas id="heroParticles" class="hero-particles-canvas"></canvas>
             <div class="hero-content">
                 <div class="hero-text">
                     <h1>The Charm Shop is <em>open</em>.<br>Stack accordingly.</h1>
@@ -29,6 +30,7 @@ get_header();
                 </div>
             </div>
         </section>
+
 
         <!-- ================ SHOP BY CATEGORY ================ -->
         <section class="category-section">
@@ -294,6 +296,177 @@ get_header();
             updateRec();
         });
     }
+})();
+
+// ===================== HERO PARTICLES =====================
+(function() {
+    var canvas = document.getElementById('heroParticles');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var hero = canvas.parentElement;
+    var mouse = { x: -9999, y: -9999 };
+
+    function resize() {
+        canvas.width  = hero.offsetWidth;
+        canvas.height = hero.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    hero.addEventListener('mousemove', function(e) {
+        var rect = hero.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+    });
+    hero.addEventListener('mouseleave', function() {
+        mouse.x = -9999; mouse.y = -9999;
+    });
+
+    // Jewelry shapes: each is a function(ctx, size) that draws at (0,0)
+    var shapes = [
+        // Diamond ◆
+        function(c, s) {
+            c.beginPath();
+            c.moveTo(0, -s);
+            c.lineTo(s * 0.6, 0);
+            c.lineTo(0, s);
+            c.lineTo(-s * 0.6, 0);
+            c.closePath();
+        },
+        // Ring ○
+        function(c, s) {
+            c.beginPath();
+            c.arc(0, 0, s, 0, Math.PI * 2);
+            c.arc(0, 0, s * 0.6, 0, Math.PI * 2, true);
+        },
+        // 6-point star / sparkle ✦
+        function(c, s) {
+            c.beginPath();
+            for (var i = 0; i < 6; i++) {
+                var a = (i * Math.PI) / 3 - Math.PI / 2;
+                var r = (i % 2 === 0) ? s : s * 0.38;
+                i === 0 ? c.moveTo(Math.cos(a) * r, Math.sin(a) * r)
+                        : c.lineTo(Math.cos(a) * r, Math.sin(a) * r);
+            }
+            c.closePath();
+        },
+        // Oval gem
+        function(c, s) {
+            c.beginPath();
+            c.ellipse(0, 0, s, s * 0.65, 0, 0, Math.PI * 2);
+        },
+        // Small cross / plus charm
+        function(c, s) {
+            var t = s * 0.28;
+            c.beginPath();
+            c.rect(-t, -s, t * 2, s * 2);
+            c.rect(-s, -t, s * 2, t * 2);
+        }
+    ];
+
+    // Gold palette
+    var colors = [
+        'rgba(200, 169, 81, 0.55)',
+        'rgba(237, 217, 138, 0.45)',
+        'rgba(245, 226, 156, 0.40)',
+        'rgba(180, 150, 60, 0.50)',
+        'rgba(220, 190, 100, 0.35)',
+    ];
+
+    var NUM = 28;
+    var particles = [];
+
+    function rand(min, max) { return min + Math.random() * (max - min); }
+
+    function createParticle() {
+        return {
+            x:       rand(0, canvas.width),
+            y:       rand(0, canvas.height),
+            vx:      rand(-0.18, 0.18),
+            vy:      rand(-0.22, -0.08),
+            size:    rand(5, 16),
+            rot:     rand(0, Math.PI * 2),
+            rotV:    rand(-0.008, 0.008),
+            alpha:   0,
+            alphaV:  rand(0.003, 0.007),
+            alphaMax:rand(0.35, 0.70),
+            fading:  false,
+            shape:   Math.floor(Math.random() * shapes.length),
+            color:   colors[Math.floor(Math.random() * colors.length)],
+        };
+    }
+
+    for (var i = 0; i < NUM; i++) {
+        var p = createParticle();
+        p.alpha = rand(0, p.alphaMax); // start at random phase
+        particles.push(p);
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        particles.forEach(function(p) {
+            // Mouse repulsion — subtle parallax
+            var dx = p.x - mouse.x;
+            var dy = p.y - mouse.y;
+            var dist = Math.sqrt(dx * dx + dy * dy);
+            var repel = 90;
+            if (dist < repel && dist > 0) {
+                var force = (repel - dist) / repel * 0.4;
+                p.x += (dx / dist) * force;
+                p.y += (dy / dist) * force;
+            }
+
+            // Move
+            p.x += p.vx;
+            p.y += p.vy;
+
+            // Fade in / out
+            if (!p.fading) {
+                p.alpha += p.alphaV;
+                if (p.alpha >= p.alphaMax) { p.fading = true; }
+            } else {
+                p.alpha -= p.alphaV * 0.6;
+                if (p.alpha <= 0) {
+                    // Recycle
+                    Object.assign(p, createParticle());
+                    p.alpha = 0;
+                    p.fading = false;
+                }
+            }
+
+            // Wrap horizontal
+            if (p.x < -20) p.x = canvas.width + 20;
+            if (p.x > canvas.width + 20) p.x = -20;
+            // Respawn when off top
+            if (p.y < -20) {
+                p.y = canvas.height + 20;
+                p.x = rand(0, canvas.width);
+            }
+
+            p.rot += p.rotV;
+
+            // Draw
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rot);
+            ctx.globalAlpha = Math.max(0, Math.min(1, p.alpha));
+
+            shapes[p.shape](ctx, p.size);
+
+            // Fill + subtle stroke
+            ctx.fillStyle = p.color;
+            ctx.fill('evenodd');
+            ctx.strokeStyle = 'rgba(200, 169, 81, 0.3)';
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+
+            ctx.restore();
+        });
+
+        requestAnimationFrame(draw);
+    }
+    draw();
 })();
 </script>
 
