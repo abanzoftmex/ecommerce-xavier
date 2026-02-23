@@ -220,9 +220,9 @@ get_header();
         <!-- ================ TRUST BADGES ================ -->
         <section class="trust-section">
             <div class="trust-container">
-                <div class="trust-grid">
+                <div class="trust-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:48px 80px;">
 
-                    <div class="trust-item">
+                    <div class="trust-item" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
                         <div class="trust-icon">
                             <!-- Warranty / Medal -->
                             <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1a1a1a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
@@ -235,7 +235,7 @@ get_header();
                         <p class="trust-label">5 Años de Garantía</p>
                     </div>
 
-                    <div class="trust-item">
+                    <div class="trust-item" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
                         <div class="trust-icon">
                             <!-- Delivery truck -->
                             <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1a1a1a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
@@ -249,7 +249,7 @@ get_header();
                         <p class="trust-label">Envío Gratis a Partir de $2,000</p>
                     </div>
 
-                    <div class="trust-item">
+                    <div class="trust-item" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
                         <div class="trust-icon">
                             <!-- Shield / Quality -->
                             <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1a1a1a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
@@ -260,7 +260,7 @@ get_header();
                         <p class="trust-label">Calidad Segura</p>
                     </div>
 
-                    <div class="trust-item">
+                    <div class="trust-item" style="display:flex;flex-direction:column;align-items:center;text-align:center;">
                         <div class="trust-icon">
                             <!-- Gem / Premium materials -->
                             <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1a1a1a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
