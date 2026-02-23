@@ -18,14 +18,25 @@ get_header();
             ? get_permalink( wc_get_page_id( 'shop' ) )
             : home_url( '/shop/' );
         ?>
-        <section class="hero-section">
-            <canvas id="heroParticles" class="hero-particles-canvas"></canvas>
-            <div class="hero-content" style="position:relative;z-index:10;display:block;visibility:visible;opacity:1;padding:80px;max-width:480px;">
-                <div class="hero-text">
-                    <h1 style="color:#1a1a1a;font-family:'Cormorant Garamond',Georgia,serif;font-size:48px;font-weight:300;line-height:1.15;margin-bottom:36px;visibility:visible;opacity:1;display:block;-webkit-text-fill-color:#1a1a1a;">The Charm Shop is <em style="font-style:italic;color:#1a1a1a;-webkit-text-fill-color:#1a1a1a;">open</em>.<br>Stack accordingly.</h1>
-                    <div class="hero-buttons" style="display:flex;gap:16px;flex-wrap:wrap;">
-                        <a href="<?php echo esc_url( $shop_url ); ?>" class="btn btn-primary" style="display:inline-block;padding:12px 24px;background:#1a1a1a;color:#fff;border:1.5px solid #1a1a1a;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:1.2px;text-decoration:none;border-radius:0;-webkit-text-fill-color:#fff;">SHOP ALL CHARMS</a>
-                        <a href="<?php echo esc_url( $shop_url ); ?>?filter=category" class="btn btn-secondary" style="display:inline-block;padding:12px 24px;background:transparent;color:#1a1a1a;border:1.5px solid #1a1a1a;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:1.2px;text-decoration:none;border-radius:0;-webkit-text-fill-color:#1a1a1a;">SHOP BY CATEGORY</a>
+        <style>
+            #heroSection { position:relative;width:100%;min-height:540px;overflow:hidden;display:flex!important;align-items:center;background-color:#f0efed!important;background-image:none!important;isolation:isolate; }
+            #heroCanvas { position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;display:block!important; }
+            #heroContent { position:relative!important;z-index:10!important;display:block!important;visibility:visible!important;opacity:1!important;padding:80px!important;max-width:480px!important; }
+            #heroTitle { color:#1a1a1a!important;font-family:'Cormorant Garamond',Georgia,serif!important;font-size:48px!important;font-weight:300!important;line-height:1.15!important;margin-bottom:36px!important;visibility:visible!important;opacity:1!important;display:block!important;background:none!important;-webkit-text-fill-color:#1a1a1a!important; }
+            #heroTitle em { font-style:italic!important;color:#1a1a1a!important;-webkit-text-fill-color:#1a1a1a!important; }
+            #heroButtons { display:flex!important;gap:16px!important;flex-wrap:wrap!important;visibility:visible!important;opacity:1!important; }
+            #heroButtons a { display:inline-block!important;padding:12px 24px!important;font-family:'Jost',sans-serif!important;font-size:12px!important;font-weight:500!important;text-transform:uppercase!important;letter-spacing:1.2px!important;text-decoration:none!important;border-radius:0!important;visibility:visible!important;opacity:1!important; }
+            #heroBtnPrimary { background:#1a1a1a!important;color:#fff!important;border:1.5px solid #1a1a1a!important;-webkit-text-fill-color:#fff!important; }
+            #heroBtnSecondary { background:transparent!important;color:#1a1a1a!important;border:1.5px solid #1a1a1a!important;-webkit-text-fill-color:#1a1a1a!important; }
+        </style>
+        <section id="heroSection">
+            <canvas id="heroCanvas" class="hero-particles-canvas"></canvas>
+            <div id="heroContent">
+                <div>
+                    <h1 id="heroTitle">The Charm Shop is <em>open</em>.<br>Stack accordingly.</h1>
+                    <div id="heroButtons">
+                        <a id="heroBtnPrimary" href="<?php echo esc_url( $shop_url ); ?>">SHOP ALL CHARMS</a>
+                        <a id="heroBtnSecondary" href="<?php echo esc_url( $shop_url ); ?>?filter=category">SHOP BY CATEGORY</a>
                     </div>
                 </div>
             </div>
@@ -390,7 +401,7 @@ get_header();
 
 // ===================== HERO PARTICLES =====================
 (function() {
-    var canvas = document.getElementById('heroParticles');
+    var canvas = document.getElementById('heroCanvas');
     if (!canvas) return;
     var ctx = canvas.getContext('2d');
     var hero = canvas.parentElement;
