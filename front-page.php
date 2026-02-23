@@ -13,20 +13,17 @@ get_header();
     <main id="main" class="site-main home-main" role="main">
 
         <!-- ===================== HERO ===================== -->
-        <section class="hero-section">
-            <div class="hero-bg">
-                <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/hero-bg.png" alt="Jewelry Collection" class="hero-bg-img">
-            </div>
-            <div class="hero-overlay"></div>
+        <?php
+        $shop_url = function_exists( 'wc_get_page_id' )
+            ? get_permalink( wc_get_page_id( 'shop' ) )
+            : home_url( '/shop/' );
+        $hero_img = get_stylesheet_directory_uri() . '/images/hero-bg.png';
+        ?>
+        <section class="hero-section" style="background-image: url('<?php echo esc_url( $hero_img ); ?>')">
             <div class="hero-content">
                 <div class="hero-text">
                     <h1>The Charm Shop is <em>open</em>.<br>Stack accordingly.</h1>
                     <div class="hero-buttons">
-                        <?php
-                        $shop_url = function_exists( 'wc_get_page_id' )
-                            ? get_permalink( wc_get_page_id( 'shop' ) )
-                            : home_url( '/shop/' );
-                        ?>
                         <a href="<?php echo esc_url( $shop_url ); ?>" class="btn btn-primary">SHOP ALL CHARMS</a>
                         <a href="<?php echo esc_url( $shop_url ); ?>?filter=category" class="btn btn-secondary">SHOP BY CATEGORY</a>
                     </div>
