@@ -9,6 +9,7 @@ jobs:
   deploy-theme:
     name: 🎨 Deploy Child Theme
     runs-on: ubuntu-latest
+
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
@@ -16,13 +17,13 @@ jobs:
       - name: 🚀 Deploy theme via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: 195.35.33.109
-          username: u947001429.xavier
+          server: ftp.darkgray-goldfish-313788.hostingersite.com
+          username: u947001429.Xavier
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftp
           port: 21
           local-dir: ./
-          server-dir: /wp-content/themes/astra-child/
+          server-dir: wp-content/themes/astra-child/
           exclude: |
             .git/**
             .github/**
