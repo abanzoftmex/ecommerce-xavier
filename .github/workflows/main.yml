@@ -1,4 +1,4 @@
-name: Deploy Astra Child to Hostinger
+name: Deploy to Hostinger
 
 on:
   push:
@@ -6,15 +6,14 @@ on:
       - main
 
 jobs:
-  deploy:
-    name: 🚀 Deploy to Hostinger
+  deploy-theme:
+    name: 🎨 Deploy Child Theme
     runs-on: ubuntu-latest
-
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
 
-      - name: 🚀 Deploy via FTP
+      - name: 🚀 Deploy theme via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: 195.35.33.109
@@ -29,3 +28,22 @@ jobs:
             .github/**
             node_modules/**
             .gitignore
+            mu-plugins/**
+
+  deploy-muplugins:
+    name: 🔌 Deploy MU Plugins
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🚀 Deploy mu-plugins via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: 195.35.33.109
+          username: u947001429.xavier
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftp
+          port: 21
+          local-dir: ./mu-plugins/
+          server-dir: public_html/wp-content/mu-plugins/
