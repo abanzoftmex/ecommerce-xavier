@@ -189,6 +189,7 @@ body {
     display: flex;
     align-items: center;
     background-color: #f0efed;
+    isolation: isolate;
 }
 
 .hero-particles-canvas {
@@ -196,7 +197,7 @@ body {
     inset: 0;
     width: 100%;
     height: 100%;
-    z-index: 0;
+    z-index: -1;
     pointer-events: none;
     display: block;
 }
@@ -1023,6 +1024,8 @@ body {
 .hero-section {
     background-color: #f0efed !important;
     background-image: none !important;
+    isolation: isolate !important;
+    position: relative !important;
 }
 
 .hero-content {
