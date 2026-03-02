@@ -33,10 +33,10 @@ get_header();
             <canvas id="heroCanvas" class="hero-particles-canvas"></canvas>
             <div id="heroContent">
                 <div>
-                    <h1 id="heroTitle">The Charm Shop is <em>open</em>.<br>Stack accordingly.</h1>
+                    <h1 id="heroTitle"> <em>open</em>.<br>Stack accordingly.</h1>
                     <div id="heroButtons">
-                        <a id="heroBtnPrimary" href="<?php echo esc_url( $shop_url ); ?>">SHOP ALL CHARMS</a>
-                        <a id="heroBtnSecondary" href="<?php echo esc_url( $shop_url ); ?>?filter=category">SHOP BY CATEGORY</a>
+                        <a id="heroBtnPrimary" href="<?php echo esc_url( $shop_url ); ?>">Ve todos los productos</a>
+                        <a id="heroBtnSecondary" href="<?php echo esc_url( $shop_url ); ?>?filter=category">Compra por categoría</a>
                     </div>
                 </div>
             </div>
@@ -47,7 +47,7 @@ get_header();
         <section class="category-section">
             <div class="category-container">
                 <div class="category-header">
-                    <h2>Shop by Category</h2>
+                    <h2>Compra por categoría</h2>
                     <div class="category-nav">
                         <button class="cat-nav-btn cat-prev" aria-label="Previous">&larr;</button>
                         <button class="cat-nav-btn cat-next" aria-label="Next">&rarr;</button>
@@ -102,7 +102,7 @@ get_header();
                 </div>
 
                 <div class="category-shopall">
-                    <a href="<?php echo esc_url( $shop_url ); ?>" class="btn-shopall">SHOP ALL &rarr;</a>
+                    <a href="<?php echo esc_url( $shop_url ); ?>" class="btn-shopall">VER TODOS LOS PRODUCTOS &rarr;</a>
                 </div>
             </div>
         </section>
@@ -173,7 +173,7 @@ get_header();
         <section class="recommended-section">
             <div class="recommended-container">
                 <div class="recommended-header">
-                    <h2>We think you may like&hellip;</h2>
+                    <h2>Creemos que te puede gustar&hellip;</h2>
                     <div class="rec-nav">
                         <button class="rec-nav-btn rec-prev" aria-label="Previous">&larr;</button>
                         <button class="rec-nav-btn rec-next" aria-label="Next">&rarr;</button>
@@ -200,7 +200,7 @@ get_header();
                         ?>
                         <div class="rec-card">
                             <?php if ( $is_bestseller ) : ?>
-                            <span class="rec-badge">Bestseller</span>
+                            <span class="rec-badge">Productos más vendidos</span>
                             <?php endif; ?>
                             <a href="<?php the_permalink(); ?>" class="rec-card-link">
                                 <?php if ( has_post_thumbnail() ) : ?>
@@ -293,7 +293,7 @@ get_header();
         <!-- ================ PRODUCT GALLERY ================ -->
         <section class="gallery-section" style="padding:64px 0;background:#fff;">
             <div class="gallery-container" style="max-width:1440px;margin:0 auto;padding:0 40px;">
-                <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:32px;font-weight:300;font-style:italic;text-align:center;margin-bottom:40px;color:#1a1a1a;-webkit-text-fill-color:#1a1a1a;"><em>As Seen On MV</em></h2>
+                <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:32px;font-weight:300;font-style:italic;text-align:center;margin-bottom:40px;color:#1a1a1a;-webkit-text-fill-color:#1a1a1a;"><em>Nuestro últimos lanzamientos</em></h2>
                 <?php
                 $gallery_query = new WP_Query( array(
                     'post_type'      => 'product',
@@ -331,14 +331,14 @@ get_header();
         <!-- ================== NEWSLETTER ================== -->
         <section class="newsletter-section" style="background:#1a1a1a;color:#fff;padding:72px 20px;text-align:center;">
             <div class="newsletter-content">
-                <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:28px;font-weight:300;font-style:italic;line-height:1.45;margin-bottom:32px;max-width:560px;margin-left:auto;margin-right:auto;color:#fff;-webkit-text-fill-color:#fff;">Join MV Circle for early sale access, birthday treats, a discount on your first order, and more.</h2>
+                <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:28px;font-weight:300;font-style:italic;line-height:1.45;margin-bottom:32px;max-width:560px;margin-left:auto;margin-right:auto;color:#fff;-webkit-text-fill-color:#fff;">Inscríbete a nuestos avisos para recibir nuestras últimas novedades y ofertas exclusivas.</h2>
                 <form class="newsletter-form" id="newsletter-signup-form" style="display:flex;justify-content:center;gap:0;max-width:480px;margin:0 auto 18px;">
                     <?php wp_nonce_field( 'newsletter_nonce', 'newsletter_nonce_field' ); ?>
                     <input type="email" placeholder="EMAIL ADDRESS" class="email-input" required style="flex:1;padding:14px 20px;border:none;outline:none;font-size:13px;background:rgba(255,255,255,0.08);color:#fff;border-bottom:1px solid rgba(255,255,255,0.4);font-family:'Jost',sans-serif;letter-spacing:1px;-webkit-text-fill-color:#fff;">
-                    <button type="submit" class="btn btn-newsletter" style="background:#333;color:#fff;border:1px solid rgba(255,255,255,0.3);padding:14px 28px;cursor:pointer;font-family:'Jost',sans-serif;font-size:12px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;-webkit-text-fill-color:#fff;white-space:nowrap;">JOIN NOW &rarr;</button>
+                    <button type="submit" class="btn btn-newsletter" style="background:#333;color:#fff;border:1px solid rgba(255,255,255,0.3);padding:14px 28px;cursor:pointer;font-family:'Jost',sans-serif;font-size:12px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;-webkit-text-fill-color:#fff;white-space:nowrap;">INSCRÍBETE AHORA &rarr;</button>
                 </form>
                 <p class="newsletter-disclaimer" style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5;max-width:460px;margin:0 auto;font-family:'Jost',sans-serif;-webkit-text-fill-color:rgba(255,255,255,0.5);">
-                    We'll update you by email + SMS and you can unsubscribe at any time &mdash; <a href="#" style="color:rgba(255,255,255,0.7);text-decoration:underline;-webkit-text-fill-color:rgba(255,255,255,0.7);">Privacy Policy</a>.
+                    Te mantendremos informado por correo electrónico, y puedes darte de baja en cualquier momento &mdash; <a href="#" style="color:rgba(255,255,255,0.7);text-decoration:underline;-webkit-text-fill-color:rgba(255,255,255,0.7);">Política de privacidad</a>.
                 </p>
             </div>
         </section>
