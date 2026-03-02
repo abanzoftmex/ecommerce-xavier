@@ -169,7 +169,70 @@ add_shortcode( 'featured_products', function( $atts ) {
 } );
 
 // =============================================
-// 7. NEWSLETTER AJAX
+// 7. CUSTOM WALKER — CATÁLOGO MEGA-DROPDOWN
+// =============================================
+
+/**
+ * Extends Walker_Nav_Menu to auto-inject a WooCommerce categories dropdown
+ * beneath any menu item whose title is "Catálogo" (case-insensitive) or
+ * that has the custom CSS class "has-catalog-dropdown".
+ */
+class Xavier_Catalog_Walker extends Walker_Nav_Menu {
+
+    public function start_el( &$output, $item, $depth = 0, $args = null, $id = 0 ) {
+        // Tag the LI before the parent generates it
+        if ( $depth === 0 && $this->is_catalog_item( $item ) ) {
+            $item->classes[] = 'xv-has-dropdown';
+        }
+        parent::start_el( $output, $item, $depth, $args, $id );
+
+        // Append the dropdown HTML right after the <a> (still inside the <li>)
+        if ( $depth === 0 && $this->is_catalog_item( $item ) ) {
+            $output .= $this->catalog_dropdown_html();
+        }
+    }
+
+    private function is_catalog_item( $item ) {
+        return mb_strtolower( trim( $item->title ) ) === 'catálogo'
+            || in_array( 'has-catalog-dropdown', (array) $item->classes, true );
+    }
+
+    private function catalog_dropdown_html() {
+        if ( ! function_exists( 'get_terms' ) ) return '';
+
+        $cats = get_terms( array(
+            'taxonomy'   => 'product_cat',
+            'hide_empty' => true,
+            'parent'     => 0,
+            'exclude'    => array( get_option( 'default_product_cat' ) ),
+            'orderby'    => 'name',
+            'order'      => 'ASC',
+        ) );
+
+        if ( empty( $cats ) || is_wp_error( $cats ) ) return '';
+
+        $shop_url = function_exists( 'wc_get_page_id' )
+            ? get_permalink( wc_get_page_id( 'shop' ) )
+            : home_url( '/shop/' );
+
+        $html  = '<div class="xv-catalog-dropdown">';
+        $html .= '<ul class="xv-catalog-dropdown__list">';
+        $html .= '<li><a href="' . esc_url( $shop_url ) . '" class="xv-catalog-dropdown__link xv-catalog-dropdown__all">Ver Todo</a></li>';
+
+        foreach ( $cats as $cat ) {
+            $html .= '<li><a href="' . esc_url( get_term_link( $cat ) ) . '" class="xv-catalog-dropdown__link">'
+                   . esc_html( $cat->name ) . '</a></li>';
+        }
+
+        $html .= '</ul>';
+        $html .= '</div>';
+
+        return $html;
+    }
+}
+
+// =============================================
+// 8. NEWSLETTER AJAX
 // =============================================
 
 function astra_child_newsletter_signup() {

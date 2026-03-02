@@ -44,6 +44,7 @@ $cart_url = function_exists( 'wc_get_cart_url' )
                 'menu_class'     => 'xavier-nav-menu',
                 'container'      => false,
                 'fallback_cb'    => false,
+                'walker'         => new Xavier_Catalog_Walker(),
                 'items_wrap'     => '<ul id="%1$s" class="%2$s" style="display:flex;list-style:none;margin:0;padding:0;gap:28px;flex-wrap:nowrap;">%3$s</ul>',
             ) );
             ?>
@@ -114,9 +115,9 @@ $cart_url = function_exists( 'wc_get_cart_url' )
             header.style.background = '#1a1a1a';
             header.style.borderBottomColor = '#333';
             header.style.boxShadow = '0 2px 12px rgba(0,0,0,0.15)';
-            // Switch all text/icons to white
+            // Switch all text/icons to white (exclude dropdown links)
             header.querySelectorAll('.xavier-logo').forEach(function(el) { el.style.color = '#fff'; });
-            header.querySelectorAll('.xavier-nav-menu a').forEach(function(el) { el.style.color = 'rgba(255,255,255,0.85)'; });
+            header.querySelectorAll('.xavier-nav-menu > li > a').forEach(function(el) { el.style.color = 'rgba(255,255,255,0.85)'; });
             header.querySelectorAll('.xavier-icon-link').forEach(function(el) { el.style.color = '#fff'; });
             header.querySelectorAll('.xavier-search-form').forEach(function(el) { el.style.background = 'rgba(255,255,255,0.12)'; });
             header.querySelectorAll('.xavier-search-input').forEach(function(el) { el.style.color = '#fff'; });
@@ -125,9 +126,9 @@ $cart_url = function_exists( 'wc_get_cart_url' )
             header.style.background = 'transparent';
             header.style.borderBottomColor = 'rgba(255,255,255,0.1)';
             header.style.boxShadow = 'none';
-            // Switch back to dark
+            // Switch back to dark (exclude dropdown links)
             header.querySelectorAll('.xavier-logo').forEach(function(el) { el.style.color = '#1a1a1a'; });
-            header.querySelectorAll('.xavier-nav-menu a').forEach(function(el) { el.style.color = '#1a1a1a'; });
+            header.querySelectorAll('.xavier-nav-menu > li > a').forEach(function(el) { el.style.color = '#1a1a1a'; });
             header.querySelectorAll('.xavier-icon-link').forEach(function(el) { el.style.color = '#1a1a1a'; });
             header.querySelectorAll('.xavier-search-form').forEach(function(el) { el.style.background = 'rgba(0,0,0,0.05)'; });
             header.querySelectorAll('.xavier-search-input').forEach(function(el) { el.style.color = '#555'; });
@@ -148,7 +149,7 @@ $cart_url = function_exists( 'wc_get_cart_url' )
         li.style.listStyle = 'none';
         li.style.whiteSpace = 'nowrap';
     });
-    header.querySelectorAll('.xavier-nav-menu a').forEach(function(a) {
+    header.querySelectorAll('.xavier-nav-menu > li > a').forEach(function(a) {
         a.style.textDecoration = 'none';
         a.style.fontFamily = "'Jost', sans-serif";
         a.style.fontSize = '13px';

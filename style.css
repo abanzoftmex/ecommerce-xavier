@@ -246,6 +246,131 @@ body {
     justify-content: center;
 }
 
+/* =====================
+   CATÁLOGO MEGA-DROPDOWN
+===================== */
+
+/* The LI hosting the dropdown needs relative positioning */
+.xavier-nav-menu li.xv-has-dropdown {
+    position: relative;
+}
+
+/* Small chevron after the Catálogo link text */
+.xavier-nav-menu li.xv-has-dropdown > a::after {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg) translateY(-2px);
+    margin-left: 6px;
+    transition: transform 0.2s ease;
+    vertical-align: middle;
+}
+
+.xavier-nav-menu li.xv-has-dropdown:hover > a::after {
+    transform: rotate(-135deg) translateY(-2px);
+}
+
+/* Invisible bridge so mouse can travel from link to dropdown */
+.xavier-nav-menu li.xv-has-dropdown > a::before {
+    content: '';
+    position: absolute;
+    bottom: -16px;
+    left: 0;
+    right: 0;
+    height: 16px;
+}
+
+/* Dropdown panel */
+.xv-catalog-dropdown {
+    position: absolute;
+    top: calc(100% + 16px);
+    left: 50%;
+    transform: translateX(-50%) translateY(6px);
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+    padding: 24px 28px;
+    min-width: 220px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+    z-index: 2000;
+}
+
+/* Reveal on hover */
+.xavier-nav-menu li.xv-has-dropdown:hover .xv-catalog-dropdown {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Small caret at the top of the panel */
+.xv-catalog-dropdown::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-left: 1px solid #e8e8e8;
+    border-top: 1px solid #e8e8e8;
+    transform: translateX(-50%) rotate(45deg);
+}
+
+/* Category list */
+.xv-catalog-dropdown__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* Every link */
+.xv-catalog-dropdown__link {
+    display: block;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: #666;
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    padding: 7px 0;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease;
+    white-space: nowrap;
+}
+
+.xv-catalog-dropdown__link:hover {
+    color: #1a1a1a;
+    border-bottom-color: #1a1a1a;
+}
+
+/* "Ver Todo" header link */
+.xv-catalog-dropdown__all {
+    font-weight: 500;
+    color: #1a1a1a;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    padding-bottom: 14px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid #eee !important;
+}
+
+.xv-catalog-dropdown__all:hover {
+    border-bottom-color: #1a1a1a !important;
+}
+
+/* ============================================= */
+
 .mobile-menu-toggle {
     display: none;
 }
