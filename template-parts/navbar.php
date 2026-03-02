@@ -21,7 +21,7 @@ $cart_url = function_exists( 'wc_get_cart_url' )
 
 <!-- Announcement Bar -->
 <div id="announcementBar" style="background:#1a1a1a;color:#fff;text-align:center;padding:10px 20px;font-size:13px;letter-spacing:0.5px;font-family:'Jost',sans-serif;position:fixed;top:0;left:0;right:0;z-index:1001;">
-    Enjoy 20% Off Your First Order: Code <a href="<?php echo esc_url( $shop_url ); ?>" style="color:#fff;font-weight:600;text-decoration:underline;"><strong>HEY20</strong></a>
+    Aprovecha nuestro código al realizar tu compra en línea: Code <a href="<?php echo esc_url( $shop_url ); ?>" style="color:#fff;font-weight:600;text-decoration:underline;"><strong>HEY20</strong></a>
 </div>
 
 <!-- Main Header -->
@@ -30,8 +30,8 @@ $cart_url = function_exists( 'wc_get_cart_url' )
 
         <!-- Logo -->
         <div style="flex-shrink:0;">
-            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" style="text-decoration:none;font-family:'Jost',sans-serif;font-size:15px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#1a1a1a;white-space:nowrap;transition:color 0.35s ease;" class="xavier-logo">
-                <?php echo esc_html( strtoupper( get_bloginfo( 'name' ) ) ); ?>
+            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" style="text-decoration:none;display:flex;align-items:center;" class="xavier-logo">
+                <img src="<?php echo esc_url( content_url( 'uploads/2026/03/cropped-logo_light.webp' ) ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" style="height:40px;width:auto;transition:opacity 0.35s ease;" />
             </a>
         </div>
 
