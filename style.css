@@ -284,9 +284,8 @@ body {
     background: transparent !important;
 }
 
-/* Dropdown panel — hidden by default (display:none beats any specificity fight) */
+/* Dropdown panel — display is controlled 100% by JS (setProperty inline !important) */
 .xv-catalog-dropdown {
-    display: none !important;
     position: absolute !important;
     top: calc(100% + 16px) !important;
     left: 50% !important;
@@ -300,11 +299,6 @@ body {
     z-index: 9999 !important;
     list-style: none !important;
     margin: 0 !important;
-}
-
-/* JS adds this class on mouseenter */
-.xv-catalog-dropdown.xv-open {
-    display: block !important;
 }
 
 /* Small caret at the top of the panel */

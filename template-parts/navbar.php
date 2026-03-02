@@ -157,15 +157,23 @@ $cart_url = function_exists( 'wc_get_cart_url' )
         a.style.letterSpacing = '0.3px';
         a.style.transition = 'color 0.35s ease';
     });
-    // ── Catalog dropdown — runs after full DOM is ready ──
+    // ── Catalog dropdown ──
+    // Uses setProperty(...,'important') = inline !important, which beats
+    // every stylesheet rule including Astra's !important declarations.
+    function xvHide(el) { el.style.setProperty('display', 'none',  'important'); }
+    function xvShow(el) { el.style.setProperty('display', 'block', 'important'); }
+
     function xvInitDropdowns() {
-        document.querySelectorAll('.xv-has-dropdown').forEach(function(li) {
-            var panel = li.querySelector('.xv-catalog-dropdown');
-            if (!panel) return;
-            li.addEventListener('mouseenter', function() { panel.classList.add('xv-open'); });
-            li.addEventListener('mouseleave', function() { panel.classList.remove('xv-open'); });
+        document.querySelectorAll('.xv-catalog-dropdown').forEach(function(panel) {
+            xvHide(panel); // force-hide immediately
+            var li = panel.closest('.xv-has-dropdown');
+            if (!li) return;
+            li.addEventListener('mouseenter', function() { xvShow(panel); });
+            li.addEventListener('mouseleave', function() { xvHide(panel); });
         });
     }
+
+    // Run now if DOM exists, otherwise wait
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', xvInitDropdowns);
     } else {
