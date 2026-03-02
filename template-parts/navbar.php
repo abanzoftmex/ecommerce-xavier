@@ -53,7 +53,7 @@ $cart_url = function_exists( 'wc_get_cart_url' )
         <div style="display:flex;align-items:center;gap:16px;flex-shrink:0;" class="xavier-header-actions">
             <!-- Search -->
             <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" style="display:flex;align-items:center;background:rgba(0,0,0,0.05);padding:7px 14px;border-radius:20px;max-width:220px;transition:background 0.35s ease;" class="xavier-search-form">
-                <input type="search" placeholder="Search for a product" value="<?php echo get_search_query(); ?>" name="s" style="border:none;background:transparent;outline:none;flex:1;font-size:12px;color:#555;font-family:'Jost',sans-serif;min-width:120px;transition:color 0.35s ease;" class="xavier-search-input" />
+                <input type="search" placeholder="Buscador" value="<?php echo get_search_query(); ?>" name="s" style="border:none;background:transparent;outline:none;flex:1;font-size:12px;color:#555;font-family:'Jost',sans-serif;min-width:120px;transition:color 0.35s ease;" class="xavier-search-input" />
                 <input type="hidden" name="post_type" value="product" />
                 <button type="submit" style="border:none;background:transparent;cursor:pointer;padding:0;color:#666;transition:color 0.35s ease;" class="xavier-search-btn">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

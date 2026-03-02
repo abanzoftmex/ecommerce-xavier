@@ -35,7 +35,7 @@ get_header();
                 <div>
                     <h1 id="heroTitle"> <em>open</em>.<br>Stack accordingly.</h1>
                     <div id="heroButtons">
-                        <a id="heroBtnPrimary" href="<?php echo esc_url( $shop_url ); ?>">Ve todos los productos</a>
+                        <a id="heroBtnPrimary" href="<?php echo esc_url( $shop_url ); ?>">Ver todos los productos</a>
                         <a id="heroBtnSecondary" href="<?php echo esc_url( $shop_url ); ?>?filter=category">Compra por categoría</a>
                     </div>
                 </div>
