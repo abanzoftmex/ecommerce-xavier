@@ -252,120 +252,134 @@ body {
 
 /* The LI hosting the dropdown needs relative positioning */
 .xavier-nav-menu li.xv-has-dropdown {
-    position: relative;
+    position: relative !important;
 }
 
 /* Small chevron after the Catálogo link text */
 .xavier-nav-menu li.xv-has-dropdown > a::after {
-    content: '';
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-right: 1.5px solid currentColor;
-    border-bottom: 1.5px solid currentColor;
-    transform: rotate(45deg) translateY(-2px);
-    margin-left: 6px;
-    transition: transform 0.2s ease;
-    vertical-align: middle;
+    content: '' !important;
+    display: inline-block !important;
+    width: 6px !important;
+    height: 6px !important;
+    border-right: 1.5px solid currentColor !important;
+    border-bottom: 1.5px solid currentColor !important;
+    transform: rotate(45deg) translateY(-2px) !important;
+    margin-left: 6px !important;
+    transition: transform 0.2s ease !important;
+    vertical-align: middle !important;
 }
 
 .xavier-nav-menu li.xv-has-dropdown:hover > a::after {
-    transform: rotate(-135deg) translateY(-2px);
+    transform: rotate(-135deg) translateY(-2px) !important;
 }
 
 /* Invisible bridge so mouse can travel from link to dropdown */
 .xavier-nav-menu li.xv-has-dropdown > a::before {
-    content: '';
-    position: absolute;
-    bottom: -16px;
-    left: 0;
-    right: 0;
-    height: 16px;
+    content: '' !important;
+    position: absolute !important;
+    bottom: -16px !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 16px !important;
+    background: transparent !important;
 }
 
-/* Dropdown panel */
+/* Dropdown panel — hidden by default */
 .xv-catalog-dropdown {
-    position: absolute;
-    top: calc(100% + 16px);
-    left: 50%;
-    transform: translateX(-50%) translateY(6px);
-    background: #fff;
-    border: 1px solid #e8e8e8;
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
-    padding: 24px 28px;
-    min-width: 220px;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
-    z-index: 2000;
+    display: block !important;
+    position: absolute !important;
+    top: calc(100% + 16px) !important;
+    left: 50% !important;
+    transform: translateX(-50%) translateY(6px) !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    border: 1px solid #e8e8e8 !important;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18) !important;
+    padding: 24px 28px !important;
+    min-width: 220px !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s !important;
+    z-index: 9999 !important;
+    list-style: none !important;
+    margin: 0 !important;
 }
 
 /* Reveal on hover */
 .xavier-nav-menu li.xv-has-dropdown:hover .xv-catalog-dropdown {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transform: translateX(-50%) translateY(0);
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: translateX(-50%) translateY(0) !important;
 }
 
 /* Small caret at the top of the panel */
 .xv-catalog-dropdown::before {
-    content: '';
-    position: absolute;
-    top: -6px;
-    left: 50%;
-    width: 10px;
-    height: 10px;
-    background: #fff;
-    border-left: 1px solid #e8e8e8;
-    border-top: 1px solid #e8e8e8;
-    transform: translateX(-50%) rotate(45deg);
+    content: '' !important;
+    position: absolute !important;
+    top: -6px !important;
+    left: 50% !important;
+    width: 10px !important;
+    height: 10px !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    border-left: 1px solid #e8e8e8 !important;
+    border-top: 1px solid #e8e8e8 !important;
+    transform: translateX(-50%) rotate(45deg) !important;
 }
 
 /* Category list */
 .xv-catalog-dropdown__list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
 }
 
-/* Every link */
-.xv-catalog-dropdown__link {
-    display: block;
-    font-family: 'Jost', sans-serif;
-    font-size: 13px;
-    font-weight: 400;
-    color: #666;
-    text-decoration: none;
-    letter-spacing: 0.3px;
-    padding: 7px 0;
-    border-bottom: 1px solid transparent;
-    transition: color 0.2s ease, border-color 0.2s ease;
-    white-space: nowrap;
+/* Every link — override Astra color */
+.xv-catalog-dropdown .xv-catalog-dropdown__link,
+.xv-catalog-dropdown__list li a.xv-catalog-dropdown__link {
+    display: block !important;
+    font-family: 'Jost', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    color: #555555 !important;
+    -webkit-text-fill-color: #555555 !important;
+    text-decoration: none !important;
+    letter-spacing: 0.3px !important;
+    padding: 7px 0 !important;
+    border-bottom: 1px solid transparent !important;
+    transition: color 0.2s ease, border-color 0.2s ease !important;
+    white-space: nowrap !important;
+    background: transparent !important;
 }
 
-.xv-catalog-dropdown__link:hover {
-    color: #1a1a1a;
-    border-bottom-color: #1a1a1a;
+.xv-catalog-dropdown .xv-catalog-dropdown__link:hover,
+.xv-catalog-dropdown__list li a.xv-catalog-dropdown__link:hover {
+    color: #1a1a1a !important;
+    -webkit-text-fill-color: #1a1a1a !important;
+    border-bottom-color: #1a1a1a !important;
 }
 
 /* "Ver Todo" header link */
-.xv-catalog-dropdown__all {
-    font-weight: 500;
-    color: #1a1a1a;
-    text-transform: uppercase;
-    font-size: 11px;
-    letter-spacing: 1.2px;
-    padding-bottom: 14px;
-    margin-bottom: 4px;
-    border-bottom: 1px solid #eee !important;
+.xv-catalog-dropdown .xv-catalog-dropdown__all,
+.xv-catalog-dropdown__list li a.xv-catalog-dropdown__all {
+    font-weight: 500 !important;
+    color: #1a1a1a !important;
+    -webkit-text-fill-color: #1a1a1a !important;
+    text-transform: uppercase !important;
+    font-size: 11px !important;
+    letter-spacing: 1.2px !important;
+    padding-bottom: 14px !important;
+    margin-bottom: 4px !important;
+    border-bottom: 1px solid #eeeeee !important;
 }
 
-.xv-catalog-dropdown__all:hover {
+.xv-catalog-dropdown .xv-catalog-dropdown__all:hover,
+.xv-catalog-dropdown__list li a.xv-catalog-dropdown__all:hover {
     border-bottom-color: #1a1a1a !important;
 }
 

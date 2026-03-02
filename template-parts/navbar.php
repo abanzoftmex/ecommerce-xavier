@@ -142,6 +142,27 @@ $cart_url = function_exists( 'wc_get_cart_url' )
     positionHeader();
     onScroll();
 
+    // ── Catalog dropdown hover (inline-style to beat Astra specificity) ──
+    function xvDropdownHide(panel) {
+        panel.style.setProperty('opacity',     '0',       'important');
+        panel.style.setProperty('visibility',  'hidden',  'important');
+        panel.style.setProperty('pointer-events', 'none', 'important');
+        panel.style.setProperty('transform',   'translateX(-50%) translateY(6px)', 'important');
+    }
+    function xvDropdownShow(panel) {
+        panel.style.setProperty('opacity',     '1',       'important');
+        panel.style.setProperty('visibility',  'visible', 'important');
+        panel.style.setProperty('pointer-events', 'auto', 'important');
+        panel.style.setProperty('transform',   'translateX(-50%) translateY(0)',   'important');
+    }
+    document.querySelectorAll('.xv-has-dropdown').forEach(function(li) {
+        var panel = li.querySelector('.xv-catalog-dropdown');
+        if (!panel) return;
+        xvDropdownHide(panel);                              // init hidden
+        li.addEventListener('mouseenter', function() { xvDropdownShow(panel); });
+        li.addEventListener('mouseleave', function() { xvDropdownHide(panel); });
+    });
+
     // Style menu items inline (override Astra)
     header.querySelectorAll('.xavier-nav-menu li').forEach(function(li) {
         li.style.margin = '0';
