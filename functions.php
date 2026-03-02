@@ -215,16 +215,29 @@ class Xavier_Catalog_Walker extends Walker_Nav_Menu {
             ? get_permalink( wc_get_page_id( 'shop' ) )
             : home_url( '/shop/' );
 
-        $html  = '<div class="xv-catalog-dropdown">';
-        $html .= '<ul class="xv-catalog-dropdown__list">';
-        $html .= '<li><a href="' . esc_url( $shop_url ) . '" class="xv-catalog-dropdown__link xv-catalog-dropdown__all">Ver Todo</a></li>';
+        $html  = '<div class="xv-megamenu">';
+        $html .= '<div class="xv-megamenu__inner">';
+        $html .= '<p class="xv-megamenu__label">Categorías</p>';
+        $html .= '<ul class="xv-megamenu__list">';
 
         foreach ( $cats as $cat ) {
-            $html .= '<li><a href="' . esc_url( get_term_link( $cat ) ) . '" class="xv-catalog-dropdown__link">'
-                   . esc_html( $cat->name ) . '</a></li>';
+            $thumb = '';
+            if ( function_exists( 'get_term_meta' ) ) {
+                $thumb_id  = get_term_meta( $cat->term_id, 'thumbnail_id', true );
+                $thumb_url = $thumb_id ? wp_get_attachment_image_url( $thumb_id, 'thumbnail' ) : '';
+                if ( $thumb_url ) {
+                    $thumb = '<img src="' . esc_url( $thumb_url ) . '" alt="" class="xv-megamenu__cat-thumb" />';
+                }
+            }
+            $html .= '<li><a href="' . esc_url( get_term_link( $cat ) ) . '" class="xv-megamenu__link">'
+                   . $thumb
+                   . '<span>' . esc_html( $cat->name ) . '</span>'
+                   . '</a></li>';
         }
 
         $html .= '</ul>';
+        $html .= '<a href="' . esc_url( $shop_url ) . '" class="xv-megamenu__all">Ver todo el catálogo &rarr;</a>';
+        $html .= '</div>';
         $html .= '</div>';
 
         return $html;

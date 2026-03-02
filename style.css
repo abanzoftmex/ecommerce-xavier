@@ -247,127 +247,104 @@ body {
 }
 
 /* =====================
-   CATÁLOGO MEGA-DROPDOWN
+   CATÁLOGO MEGA-MENU
 ===================== */
 
-/* The LI hosting the dropdown needs relative positioning */
-.xavier-nav-menu li.xv-has-dropdown {
-    position: relative !important;
-}
-
-/* Small chevron after the Catálogo link text */
+/* Chevron on the Catálogo trigger */
 .xavier-nav-menu li.xv-has-dropdown > a::after {
     content: '' !important;
     display: inline-block !important;
-    width: 6px !important;
-    height: 6px !important;
+    width: 5px !important;
+    height: 5px !important;
     border-right: 1.5px solid currentColor !important;
     border-bottom: 1.5px solid currentColor !important;
     transform: rotate(45deg) translateY(-2px) !important;
-    margin-left: 6px !important;
-    transition: transform 0.2s ease !important;
+    margin-left: 5px !important;
     vertical-align: middle !important;
+    transition: transform 0.2s ease !important;
 }
 
-.xavier-nav-menu li.xv-has-dropdown:hover > a::after {
-    transform: rotate(-135deg) translateY(-2px) !important;
+/* Mega-menu panel — all critical layout/display via JS setProperty */
+.xv-megamenu {
+    border-top: 1px solid #eeeeee;
+    border-bottom: 1px solid #eeeeee;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
 }
 
-/* Invisible bridge so mouse can travel from link to dropdown */
-.xavier-nav-menu li.xv-has-dropdown > a::before {
-    content: '' !important;
-    position: absolute !important;
-    bottom: -16px !important;
-    left: 0 !important;
-    right: 0 !important;
-    height: 16px !important;
-    background: transparent !important;
+.xv-megamenu__inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 36px 60px 40px;
 }
 
-/* Dropdown panel — display is controlled 100% by JS (setProperty inline !important) */
-.xv-catalog-dropdown {
-    position: absolute !important;
-    top: calc(100% + 16px) !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    background: #ffffff !important;
-    background-color: #ffffff !important;
-    border: 1px solid #e8e8e8 !important;
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18) !important;
-    padding: 24px 28px !important;
-    min-width: 220px !important;
-    z-index: 9999 !important;
-    list-style: none !important;
-    margin: 0 !important;
+.xv-megamenu__label {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #999999;
+    margin: 0 0 20px 0;
 }
 
-/* Small caret at the top of the panel */
-.xv-catalog-dropdown::before {
-    content: '' !important;
-    position: absolute !important;
-    top: -6px !important;
-    left: 50% !important;
-    width: 10px !important;
-    height: 10px !important;
-    background: #ffffff !important;
-    background-color: #ffffff !important;
-    border-left: 1px solid #e8e8e8 !important;
-    border-top: 1px solid #e8e8e8 !important;
-    transform: translateX(-50%) rotate(45deg) !important;
+.xv-megamenu__list {
+    list-style: none;
+    margin: 0 0 28px 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 40px;
 }
 
-/* Category list */
-.xv-catalog-dropdown__list {
+.xv-megamenu__list li {
     list-style: none !important;
     margin: 0 !important;
     padding: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 2px !important;
 }
 
-/* Every link — override Astra color */
-.xv-catalog-dropdown .xv-catalog-dropdown__link,
-.xv-catalog-dropdown__list li a.xv-catalog-dropdown__link {
-    display: block !important;
+/* Category links — visual only, colors forced via JS */
+.xv-megamenu__link {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 10px !important;
     font-family: 'Jost', sans-serif !important;
-    font-size: 13px !important;
+    font-size: 15px !important;
     font-weight: 400 !important;
-    color: #555555 !important;
-    -webkit-text-fill-color: #555555 !important;
+    letter-spacing: 0.2px !important;
+    line-height: 1 !important;
     text-decoration: none !important;
-    letter-spacing: 0.3px !important;
-    padding: 7px 0 !important;
+    padding: 9px 0 !important;
     border-bottom: 1px solid transparent !important;
-    transition: color 0.2s ease, border-color 0.2s ease !important;
+    transition: border-color 0.2s ease !important;
     white-space: nowrap !important;
     background: transparent !important;
 }
 
-.xv-catalog-dropdown .xv-catalog-dropdown__link:hover,
-.xv-catalog-dropdown__list li a.xv-catalog-dropdown__link:hover {
-    color: #1a1a1a !important;
-    -webkit-text-fill-color: #1a1a1a !important;
-    border-bottom-color: #1a1a1a !important;
+.xv-megamenu__link:hover {
+    border-bottom-color: #c8a951 !important;
 }
 
-/* "Ver Todo" header link */
-.xv-catalog-dropdown .xv-catalog-dropdown__all,
-.xv-catalog-dropdown__list li a.xv-catalog-dropdown__all {
-    font-weight: 500 !important;
-    color: #1a1a1a !important;
-    -webkit-text-fill-color: #1a1a1a !important;
-    text-transform: uppercase !important;
+.xv-megamenu__cat-thumb {
+    width: 32px !important;
+    height: 32px !important;
+    object-fit: cover !important;
+    border-radius: 50% !important;
+    display: block !important;
+}
+
+/* "Ver todo" footer link */
+.xv-megamenu__all {
+    display: inline-block !important;
+    font-family: 'Jost', sans-serif !important;
     font-size: 11px !important;
-    letter-spacing: 1.2px !important;
-    padding-bottom: 14px !important;
-    margin-bottom: 4px !important;
-    border-bottom: 1px solid #eeeeee !important;
-}
-
-.xv-catalog-dropdown .xv-catalog-dropdown__all:hover,
-.xv-catalog-dropdown__list li a.xv-catalog-dropdown__all:hover {
-    border-bottom-color: #1a1a1a !important;
+    font-weight: 500 !important;
+    letter-spacing: 1.5px !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+    padding: 10px 24px !important;
+    border: 1px solid #1a1a1a !important;
+    transition: background 0.2s ease, color 0.2s ease !important;
+    background: transparent !important;
 }
 
 /* ============================================= */

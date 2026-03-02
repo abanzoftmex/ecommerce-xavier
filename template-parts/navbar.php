@@ -157,27 +157,87 @@ $cart_url = function_exists( 'wc_get_cart_url' )
         a.style.letterSpacing = '0.3px';
         a.style.transition = 'color 0.35s ease';
     });
-    // ── Catalog dropdown ──
-    // Uses setProperty(...,'important') = inline !important, which beats
-    // every stylesheet rule including Astra's !important declarations.
-    function xvHide(el) { el.style.setProperty('display', 'none',  'important'); }
-    function xvShow(el) { el.style.setProperty('display', 'block', 'important'); }
+    // ── Mega-menu: all critical styles via setProperty (inline !important) ──
+    var GOLD  = '#c8a951';
+    var DARK  = '#1a1a1a';
+    var WHITE = '#ffffff';
 
-    function xvInitDropdowns() {
-        document.querySelectorAll('.xv-catalog-dropdown').forEach(function(panel) {
-            xvHide(panel); // force-hide immediately
+    function xvApplyLinkStyles(panel) {
+        panel.querySelectorAll('.xv-megamenu__link span').forEach(function(span) {
+            span.style.setProperty('color',                DARK,  'important');
+            span.style.setProperty('-webkit-text-fill-color', DARK, 'important');
+        });
+        panel.querySelectorAll('.xv-megamenu__link').forEach(function(a) {
+            a.style.setProperty('color',                DARK,  'important');
+            a.style.setProperty('-webkit-text-fill-color', DARK, 'important');
+            a.style.setProperty('text-decoration', 'none', 'important');
+            a.addEventListener('mouseenter', function() {
+                this.style.setProperty('color',                GOLD, 'important');
+                this.style.setProperty('-webkit-text-fill-color', GOLD, 'important');
+            });
+            a.addEventListener('mouseleave', function() {
+                this.style.setProperty('color',                DARK, 'important');
+                this.style.setProperty('-webkit-text-fill-color', DARK, 'important');
+            });
+        });
+        var allLink = panel.querySelector('.xv-megamenu__all');
+        if (allLink) {
+            allLink.style.setProperty('color',                DARK,  'important');
+            allLink.style.setProperty('-webkit-text-fill-color', DARK, 'important');
+            allLink.style.setProperty('text-decoration', 'none', 'important');
+            allLink.addEventListener('mouseenter', function() {
+                this.style.setProperty('background', DARK,  'important');
+                this.style.setProperty('color',      WHITE, 'important');
+                this.style.setProperty('-webkit-text-fill-color', WHITE, 'important');
+            });
+            allLink.addEventListener('mouseleave', function() {
+                this.style.setProperty('background', 'transparent', 'important');
+                this.style.setProperty('color',      DARK,          'important');
+                this.style.setProperty('-webkit-text-fill-color', DARK, 'important');
+            });
+        }
+    }
+
+    function xvMegaInit() {
+        var hdr = document.getElementById('xavierHeader');
+        document.querySelectorAll('.xv-megamenu').forEach(function(panel) {
+            // Force-hide + apply all layout styles that Astra can override
+            var s = panel.style;
+            s.setProperty('display',           'none',    'important');
+            s.setProperty('position',          'fixed',   'important');
+            s.setProperty('left',              '0',       'important');
+            s.setProperty('right',             '0',       'important');
+            s.setProperty('width',             '100%',    'important');
+            s.setProperty('background',        WHITE,     'important');
+            s.setProperty('background-color',  WHITE,     'important');
+            s.setProperty('z-index',           '9998',    'important');
+            s.setProperty('margin',            '0',       'important');
+            s.setProperty('padding',           '0',       'important');
+            xvApplyLinkStyles(panel);
+
             var li = panel.closest('.xv-has-dropdown');
             if (!li) return;
-            li.addEventListener('mouseenter', function() { xvShow(panel); });
-            li.addEventListener('mouseleave', function() { xvHide(panel); });
+
+            function show() {
+                if (hdr) {
+                    var bottom = hdr.getBoundingClientRect().bottom;
+                    panel.style.setProperty('top', bottom + 'px', 'important');
+                }
+                panel.style.setProperty('display', 'block', 'important');
+            }
+            function hide() {
+                panel.style.setProperty('display', 'none', 'important');
+            }
+
+            li.addEventListener('mouseenter', show);
+            li.addEventListener('mouseleave', hide);
         });
     }
 
-    // Run now if DOM exists, otherwise wait
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', xvInitDropdowns);
+        document.addEventListener('DOMContentLoaded', xvMegaInit);
     } else {
-        xvInitDropdowns();
+        xvMegaInit();
     }
 })();
 </script>
