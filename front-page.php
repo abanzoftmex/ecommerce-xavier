@@ -70,7 +70,7 @@ get_header();
                                 $cat_url      = get_term_link( $cat );
                                 $thumbnail_id = get_term_meta( $cat->term_id, 'thumbnail_id', true );
                                 $img_src      = $thumbnail_id
-                                    ? wp_get_attachment_image_url( $thumbnail_id, 'medium' )
+                                    ? wp_get_attachment_image_url( $thumbnail_id, 'high' )
                                     : '';
                         ?>
                         <div class="category-card">
