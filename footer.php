@@ -11,7 +11,7 @@
                 
                 <!-- Help Section -->
                 <div class="footer-section">
-                    <h3>HELP</h3>
+                    <h3>AYUDA</h3>
                     <ul>
                         <li><a href="#">FAQ</a></li>
                         <li><a href="#">Guía de tallas</a></li>
@@ -22,7 +22,7 @@
 
                 <!-- Company Section -->
                 <div class="footer-section">
-                    <h3>COMPANY</h3>
+                    <h3>EMPRESA</h3>
                     <ul>
                         <li><a href="#">Nuestra Historia</a></li>
                         <li><a href="#">Contacto</a></li>
@@ -63,7 +63,7 @@
 
                 <!-- Social Section -->
                 <div class="footer-section">
-                    <h3>SOCIAL</h3>
+                    <h3>REDES SOCIALES</h3>
                     <ul>
                         <li><a href="#">Facebook</a></li>
                         <li><a href="#">Instagram</a></li>
