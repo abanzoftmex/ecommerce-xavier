@@ -201,36 +201,45 @@ $cart_url = function_exists( 'wc_get_cart_url' )
     function xvMegaInit() {
         var hdr = document.getElementById('xavierHeader');
         document.querySelectorAll('.xv-megamenu').forEach(function(panel) {
-            // Force-hide + apply all layout styles that Astra can override
+            // Apply all layout styles via setProperty so Astra cannot override
             var s = panel.style;
-            s.setProperty('display',           'none',    'important');
-            s.setProperty('position',          'fixed',   'important');
-            s.setProperty('left',              '0',       'important');
-            s.setProperty('right',             '0',       'important');
-            s.setProperty('width',             '100%',    'important');
-            s.setProperty('background',        WHITE,     'important');
-            s.setProperty('background-color',  WHITE,     'important');
-            s.setProperty('z-index',           '9998',    'important');
-            s.setProperty('margin',            '0',       'important');
-            s.setProperty('padding',           '0',       'important');
+            s.setProperty('display',          'none',  'important');
+            s.setProperty('position',         'fixed', 'important');
+            s.setProperty('left',             '0',     'important');
+            s.setProperty('right',            '0',     'important');
+            s.setProperty('width',            '100%',  'important');
+            s.setProperty('background',       WHITE,   'important');
+            s.setProperty('background-color', WHITE,   'important');
+            s.setProperty('z-index',          '9998',  'important');
+            s.setProperty('margin',           '0',     'important');
+            s.setProperty('padding',          '0',     'important');
             xvApplyLinkStyles(panel);
 
             var li = panel.closest('.xv-has-dropdown');
             if (!li) return;
 
+            var hideTimer = null;
+
             function show() {
+                clearTimeout(hideTimer);
                 if (hdr) {
-                    var bottom = hdr.getBoundingClientRect().bottom;
-                    panel.style.setProperty('top', bottom + 'px', 'important');
+                    panel.style.setProperty('top', hdr.getBoundingClientRect().bottom + 'px', 'important');
                 }
                 panel.style.setProperty('display', 'block', 'important');
             }
-            function hide() {
-                panel.style.setProperty('display', 'none', 'important');
+            function scheduleHide() {
+                hideTimer = setTimeout(function() {
+                    panel.style.setProperty('display', 'none', 'important');
+                }, 80);
             }
 
+            // Trigger: hover on the <li> (contains the "CATÁLOGO" link)
             li.addEventListener('mouseenter', show);
-            li.addEventListener('mouseleave', hide);
+            li.addEventListener('mouseleave', scheduleHide);
+
+            // Panel: cancel hide when mouse enters the panel itself
+            panel.addEventListener('mouseenter', function() { clearTimeout(hideTimer); });
+            panel.addEventListener('mouseleave', scheduleHide);
         });
     }
 

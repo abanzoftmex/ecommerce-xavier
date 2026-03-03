@@ -221,16 +221,7 @@ class Xavier_Catalog_Walker extends Walker_Nav_Menu {
         $html .= '<ul class="xv-megamenu__list">';
 
         foreach ( $cats as $cat ) {
-            $thumb = '';
-            if ( function_exists( 'get_term_meta' ) ) {
-                $thumb_id  = get_term_meta( $cat->term_id, 'thumbnail_id', true );
-                $thumb_url = $thumb_id ? wp_get_attachment_image_url( $thumb_id, 'thumbnail' ) : '';
-                if ( $thumb_url ) {
-                    $thumb = '<img src="' . esc_url( $thumb_url ) . '" alt="" class="xv-megamenu__cat-thumb" />';
-                }
-            }
             $html .= '<li><a href="' . esc_url( get_term_link( $cat ) ) . '" class="xv-megamenu__link">'
-                   . $thumb
                    . '<span>' . esc_html( $cat->name ) . '</span>'
                    . '</a></li>';
         }
