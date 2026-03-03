@@ -217,7 +217,7 @@ class Xavier_Catalog_Walker extends Walker_Nav_Menu {
 
         $html  = '<div class="xv-megamenu">';
         $html .= '<div class="xv-megamenu__inner">';
-        $html .= '<p class="xv-megamenu__label">Categorías</p>';
+        // Label removed per user request
         $html .= '<ul class="xv-megamenu__list">';
 
         foreach ( $cats as $cat ) {

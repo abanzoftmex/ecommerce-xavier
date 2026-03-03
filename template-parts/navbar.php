@@ -205,14 +205,18 @@ $cart_url = function_exists( 'wc_get_cart_url' )
             var s = panel.style;
             s.setProperty('display',          'none',  'important');
             s.setProperty('position',         'fixed', 'important');
-            s.setProperty('left',             '0',     'important');
-            s.setProperty('right',            '0',     'important');
-            s.setProperty('width',            '100%',  'important');
+            // Center the menu instead of full-width
+            s.setProperty('left',             '50%',   'important');
+            s.setProperty('right',            'auto',  'important');
+            s.setProperty('transform',        'translateX(-50%)', 'important');
+            s.setProperty('width',            'auto',  'important'); // adapt to content
+            s.setProperty('min-width',        '400px', 'important');
+            s.setProperty('max-width',        '95%',   'important');
+            
             s.setProperty('background',       WHITE,   'important');
             s.setProperty('background-color', WHITE,   'important');
             s.setProperty('z-index',          '9998',  'important');
             s.setProperty('margin',           '0',     'important');
-            s.setProperty('padding',          '0',     'important');
             xvApplyLinkStyles(panel);
 
             var li = panel.closest('.xv-has-dropdown');
