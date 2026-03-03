@@ -218,28 +218,30 @@ $cart_url = function_exists( 'wc_get_cart_url' )
             var li = panel.closest('.xv-has-dropdown');
             if (!li) return;
 
-            var hideTimer = null;
+            var active = false;
 
             function show() {
-                clearTimeout(hideTimer);
+                active = true;
                 if (hdr) {
                     panel.style.setProperty('top', hdr.getBoundingClientRect().bottom + 'px', 'important');
                 }
                 panel.style.setProperty('display', 'block', 'important');
             }
-            function scheduleHide() {
-                hideTimer = setTimeout(function() {
-                    panel.style.setProperty('display', 'none', 'important');
-                }, 80);
+            function hide() {
+                active = false;
+                panel.style.setProperty('display', 'none', 'important');
             }
 
-            // Trigger: hover on the <li> (contains the "CATÁLOGO" link)
-            li.addEventListener('mouseenter', show);
-            li.addEventListener('mouseleave', scheduleHide);
+            // Use mousemove on document: hide only when mouse is
+            // genuinely outside BOTH the trigger <li> and the panel.
+            document.addEventListener('mousemove', function(e) {
+                if (!active) return;
+                var overLi    = li.contains(e.target)    || li === e.target;
+                var overPanel = panel.contains(e.target) || panel === e.target;
+                if (!overLi && !overPanel) hide();
+            });
 
-            // Panel: cancel hide when mouse enters the panel itself
-            panel.addEventListener('mouseenter', function() { clearTimeout(hideTimer); });
-            panel.addEventListener('mouseleave', scheduleHide);
+            li.addEventListener('mouseenter', show);
         });
     }
 
