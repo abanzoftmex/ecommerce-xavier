@@ -163,53 +163,41 @@ $cart_url = function_exists( 'wc_get_cart_url' )
     var WHITE = '#ffffff';
 
     function xvApplyLinkStyles(panel) {
-        panel.querySelectorAll('.xv-megamenu__link span').forEach(function(span) {
-            span.style.setProperty('color',                DARK,  'important');
-            span.style.setProperty('-webkit-text-fill-color', DARK, 'important');
-        });
+        // Apply base styles to category links only, let CSS handle most styling
         panel.querySelectorAll('.xv-megamenu__link').forEach(function(a) {
             var span = a.querySelector('span');
             // Apply initial dark colors to both link and span
-            a.style.setProperty('color',                DARK,  'important');
-            a.style.setProperty('-webkit-text-fill-color', DARK, 'important');
+            a.style.setProperty('color',                '#333',  'important');
+            a.style.setProperty('-webkit-text-fill-color', '#333', 'important');
             a.style.setProperty('text-decoration', 'none', 'important');
             if (span) {
-                span.style.setProperty('color',                DARK,  'important');
-                span.style.setProperty('-webkit-text-fill-color', DARK, 'important');
+                span.style.setProperty('color',                '#333',  'important');
+                span.style.setProperty('-webkit-text-fill-color', '#333', 'important');
             }
             
             a.addEventListener('mouseenter', function() {
-                this.style.setProperty('color',                GOLD, 'important');
-                this.style.setProperty('-webkit-text-fill-color', GOLD, 'important');
+                this.style.setProperty('color',                '#c8a951', 'important');
+                this.style.setProperty('-webkit-text-fill-color', '#c8a951', 'important');
                 if (span) {
-                    span.style.setProperty('color',                GOLD, 'important');
-                    span.style.setProperty('-webkit-text-fill-color', GOLD, 'important');
+                    span.style.setProperty('color',                '#c8a951', 'important');
+                    span.style.setProperty('-webkit-text-fill-color', '#c8a951', 'important');
                 }
             });
             a.addEventListener('mouseleave', function() {
-                this.style.setProperty('color',                DARK, 'important');
-                this.style.setProperty('-webkit-text-fill-color', DARK, 'important');
+                this.style.setProperty('color',                '#333', 'important');
+                this.style.setProperty('-webkit-text-fill-color', '#333', 'important');
                 if (span) {
-                    span.style.setProperty('color',                DARK, 'important');
-                    span.style.setProperty('-webkit-text-fill-color', DARK, 'important');
+                    span.style.setProperty('color',                '#333', 'important');
+                    span.style.setProperty('-webkit-text-fill-color', '#333', 'important');
                 }
             });
         });
+        
+        // Style the "Ver todo" button - let CSS handle styling completely
         var allLink = panel.querySelector('.xv-megamenu__all');
         if (allLink) {
-            allLink.style.setProperty('color',                DARK,  'important');
-            allLink.style.setProperty('-webkit-text-fill-color', DARK, 'important');
             allLink.style.setProperty('text-decoration', 'none', 'important');
-            allLink.style.setProperty('border', 'none', 'important');
-            allLink.style.setProperty('background', 'transparent', 'important');
-            allLink.addEventListener('mouseenter', function() {
-                this.style.setProperty('color',      GOLD, 'important');
-                this.style.setProperty('-webkit-text-fill-color', GOLD, 'important');
-            });
-            allLink.addEventListener('mouseleave', function() {
-                this.style.setProperty('color',      DARK, 'important');
-                this.style.setProperty('-webkit-text-fill-color', DARK, 'important');
-            });
+            // Remove any overrides that conflict with our new gradient design
         }
     }
 
