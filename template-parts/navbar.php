@@ -163,14 +163,133 @@ $cart_url = function_exists( 'wc_get_cart_url' )
     var WHITE = '#ffffff';
 
     function xvApplyLinkStyles(panel) {
-        // Simple approach - let CSS do the work
+        // Force all megamenu styles via JavaScript to override Astra
+        
+        // Style the container
+        var inner = panel.querySelector('.xv-megamenu__inner');
+        if (inner) {
+            inner.style.setProperty('width', '100%', 'important');
+            inner.style.setProperty('margin', '0', 'important');
+            inner.style.setProperty('padding', '40px', 'important');
+            inner.style.setProperty('display', 'flex', 'important');
+            inner.style.setProperty('flex-direction', 'column', 'important');
+            inner.style.setProperty('align-items', 'center', 'important');
+            inner.style.setProperty('text-align', 'center', 'important');
+        }
+        
+        // Style the header
+        var header = panel.querySelector('.xv-megamenu__header');
+        if (header) {
+            header.style.setProperty('text-align', 'center', 'important');
+            header.style.setProperty('margin-bottom', '30px', 'important');
+        }
+        
+        var title = panel.querySelector('.xv-megamenu__title');
+        if (title) {
+            title.style.setProperty('font-family', 'Jost, sans-serif', 'important');
+            title.style.setProperty('font-size', '24px', 'important');
+            title.style.setProperty('font-weight', '600', 'important');
+            title.style.setProperty('color', '#1a1a1a', 'important');
+            title.style.setProperty('margin', '0 0 8px 0', 'important');
+            title.style.setProperty('text-decoration', 'none', 'important');
+        }
+        
+        var subtitle = panel.querySelector('.xv-megamenu__subtitle');
+        if (subtitle) {
+            subtitle.style.setProperty('font-family', 'Jost, sans-serif', 'important');
+            subtitle.style.setProperty('font-size', '14px', 'important');
+            subtitle.style.setProperty('color', '#666', 'important');
+            subtitle.style.setProperty('margin', '0', 'important');
+        }
+        
+        // Style the list
+        var list = panel.querySelector('.xv-megamenu__list');
+        if (list) {
+            list.style.setProperty('list-style', 'none', 'important');
+            list.style.setProperty('margin', '0 0 30px 0', 'important');
+            list.style.setProperty('padding', '0', 'important');
+            list.style.setProperty('display', 'flex', 'important');
+            list.style.setProperty('flex-wrap', 'wrap', 'important');
+            list.style.setProperty('justify-content', 'center', 'important');
+            list.style.setProperty('gap', '12px', 'important');
+            list.style.setProperty('width', '100%', 'important');
+        }
+        
+        // Style each category link
         panel.querySelectorAll('.xv-megamenu__link').forEach(function(a) {
+            // Base styles
+            a.style.setProperty('display', 'inline-block', 'important');
+            a.style.setProperty('font-family', 'Jost, sans-serif', 'important');
+            a.style.setProperty('font-size', '15px', 'important');
+            a.style.setProperty('font-weight', '500', 'important');
             a.style.setProperty('text-decoration', 'none', 'important');
+            a.style.setProperty('padding', '12px 20px', 'important');
+            a.style.setProperty('border', '2px solid #f0f0f0', 'important');
+            a.style.setProperty('border-radius', '25px', 'important');
+            a.style.setProperty('color', '#333', 'important');
+            a.style.setProperty('background', '#fafafa', 'important');
+            a.style.setProperty('transition', 'all 0.3s ease', 'important');
+            a.style.setProperty('white-space', 'nowrap', 'important');
+            a.style.setProperty('-webkit-text-fill-color', '#333', 'important');
+            a.style.setProperty('box-shadow', 'none', 'important');
+            a.style.setProperty('transform', 'none', 'important');
+            
+            // Hover events
+            a.addEventListener('mouseenter', function() {
+                this.style.setProperty('border-color', '#c8a951', 'important');
+                this.style.setProperty('background', '#c8a951', 'important');
+                this.style.setProperty('color', 'white', 'important');
+                this.style.setProperty('-webkit-text-fill-color', 'white', 'important');
+                this.style.setProperty('transform', 'translateY(-2px)', 'important');
+                this.style.setProperty('box-shadow', '0 5px 15px rgba(200, 169, 81, 0.3)', 'important');
+            });
+            
+            a.addEventListener('mouseleave', function() {
+                this.style.setProperty('border-color', '#f0f0f0', 'important');
+                this.style.setProperty('background', '#fafafa', 'important');
+                this.style.setProperty('color', '#333', 'important');
+                this.style.setProperty('-webkit-text-fill-color', '#333', 'important');
+                this.style.setProperty('transform', 'none', 'important');
+                this.style.setProperty('box-shadow', 'none', 'important');
+            });
         });
         
+        // Style the "Ver todo" button
         var allLink = panel.querySelector('.xv-megamenu__all');
         if (allLink) {
+            allLink.style.setProperty('display', 'inline-block', 'important');
+            allLink.style.setProperty('font-family', 'Jost, sans-serif', 'important');
+            allLink.style.setProperty('font-size', '14px', 'important');
+            allLink.style.setProperty('font-weight', '600', 'important');
+            allLink.style.setProperty('letter-spacing', '0.5px', 'important');
+            allLink.style.setProperty('text-transform', 'uppercase', 'important');
             allLink.style.setProperty('text-decoration', 'none', 'important');
+            allLink.style.setProperty('padding', '15px 30px', 'important');
+            allLink.style.setProperty('margin', '0', 'important');
+            allLink.style.setProperty('border', '2px solid #c8a951', 'important');
+            allLink.style.setProperty('border-radius', '30px', 'important');
+            allLink.style.setProperty('background', '#c8a951', 'important');
+            allLink.style.setProperty('color', 'white', 'important');
+            allLink.style.setProperty('-webkit-text-fill-color', 'white', 'important');
+            allLink.style.setProperty('transition', 'all 0.3s ease', 'important');
+            allLink.style.setProperty('box-shadow', 'none', 'important');
+            allLink.style.setProperty('transform', 'none', 'important');
+            
+            allLink.addEventListener('mouseenter', function() {
+                this.style.setProperty('background', 'white', 'important');
+                this.style.setProperty('color', '#c8a951', 'important');
+                this.style.setProperty('-webkit-text-fill-color', '#c8a951', 'important');
+                this.style.setProperty('transform', 'translateY(-2px)', 'important');
+                this.style.setProperty('box-shadow', '0 5px 15px rgba(200, 169, 81, 0.3)', 'important');
+            });
+            
+            allLink.addEventListener('mouseleave', function() {
+                this.style.setProperty('background', '#c8a951', 'important');
+                this.style.setProperty('color', 'white', 'important');
+                this.style.setProperty('-webkit-text-fill-color', 'white', 'important');
+                this.style.setProperty('transform', 'none', 'important');
+                this.style.setProperty('box-shadow', 'none', 'important');
+            });
         }
     }
 
@@ -183,18 +302,21 @@ $cart_url = function_exists( 'wc_get_cart_url' )
             s.setProperty('visibility',       'hidden', 'important');
             s.setProperty('opacity',          '0',     'important');
             s.setProperty('position',         'fixed', 'important');
-            // Center the menu instead of full-width
             s.setProperty('left',             '50%',   'important');
             s.setProperty('right',            'auto',  'important');
             s.setProperty('transform',        'translateX(-50%)', 'important');
-            s.setProperty('width',            'auto',  'important'); // adapt to content
-            s.setProperty('min-width',        '800px', 'important');
-            s.setProperty('max-width',        '1000px', 'important');
-            
-            s.setProperty('background',       WHITE,   'important');
-            s.setProperty('background-color', WHITE,   'important');
+            s.setProperty('width',            'auto',  'important');
+            s.setProperty('min-width',        '600px', 'important');
+            s.setProperty('max-width',        '800px', 'important');
+            s.setProperty('background',       'white', 'important');
+            s.setProperty('background-color', 'white', 'important');
+            s.setProperty('border-radius',    '15px',  'important');
+            s.setProperty('border',           '1px solid #e5e5e5', 'important');
+            s.setProperty('box-shadow',       '0 15px 50px rgba(0, 0, 0, 0.1)', 'important');
+            s.setProperty('padding',          '0',     'important');
             s.setProperty('z-index',          '9998',  'important');
             s.setProperty('margin',           '0',     'important');
+            
             xvApplyLinkStyles(panel);
 
             var li = panel.closest('.xv-has-dropdown');
