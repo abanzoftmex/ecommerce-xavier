@@ -218,30 +218,29 @@ $cart_url = function_exists( 'wc_get_cart_url' )
             var li = panel.closest('.xv-has-dropdown');
             if (!li) return;
 
-            var active = false;
+            var hideTimer = null;
 
             function show() {
-                active = true;
+                if (hideTimer) clearTimeout(hideTimer);
                 if (hdr) {
                     panel.style.setProperty('top', hdr.getBoundingClientRect().bottom + 'px', 'important');
                 }
                 panel.style.setProperty('display', 'block', 'important');
             }
-            function hide() {
-                active = false;
-                panel.style.setProperty('display', 'none', 'important');
+
+            function scheduleHide() {
+                hideTimer = setTimeout(function() {
+                    panel.style.setProperty('display', 'none', 'important');
+                }, 250); // Generous delay to bridge any gap
             }
 
-            // Use mousemove on document: hide only when mouse is
-            // genuinely outside BOTH the trigger <li> and the panel.
-            document.addEventListener('mousemove', function(e) {
-                if (!active) return;
-                var overLi    = li.contains(e.target)    || li === e.target;
-                var overPanel = panel.contains(e.target) || panel === e.target;
-                if (!overLi && !overPanel) hide();
-            });
-
+            // Mouse enters trigger or panel -> SHOW
             li.addEventListener('mouseenter', show);
+            panel.addEventListener('mouseenter', show);
+
+            // Mouse leaves trigger or panel -> WAIT, THEN HIDE
+            li.addEventListener('mouseleave', scheduleHide);
+            panel.addEventListener('mouseleave', scheduleHide);
         });
     }
 
