@@ -341,13 +341,13 @@ body {
     letter-spacing: 1.5px !important;
     text-transform: uppercase !important;
     text-decoration: none !important;
-    padding: 12px 0 !important;
-    margin-top: 8px !important;
+    padding: 12px 20px !important;
+    margin: 16px 0 8px 0 !important;
     border: none !important;
     background: transparent !important;
     text-align: center !important;
     transition: color 0.2s ease !important;
-    width: 100% !important;
+    width: auto !important;
 }
 
 .xv-megamenu__all:hover {

@@ -168,16 +168,31 @@ $cart_url = function_exists( 'wc_get_cart_url' )
             span.style.setProperty('-webkit-text-fill-color', DARK, 'important');
         });
         panel.querySelectorAll('.xv-megamenu__link').forEach(function(a) {
+            var span = a.querySelector('span');
+            // Apply initial dark colors to both link and span
             a.style.setProperty('color',                DARK,  'important');
             a.style.setProperty('-webkit-text-fill-color', DARK, 'important');
             a.style.setProperty('text-decoration', 'none', 'important');
+            if (span) {
+                span.style.setProperty('color',                DARK,  'important');
+                span.style.setProperty('-webkit-text-fill-color', DARK, 'important');
+            }
+            
             a.addEventListener('mouseenter', function() {
                 this.style.setProperty('color',                GOLD, 'important');
                 this.style.setProperty('-webkit-text-fill-color', GOLD, 'important');
+                if (span) {
+                    span.style.setProperty('color',                GOLD, 'important');
+                    span.style.setProperty('-webkit-text-fill-color', GOLD, 'important');
+                }
             });
             a.addEventListener('mouseleave', function() {
                 this.style.setProperty('color',                DARK, 'important');
                 this.style.setProperty('-webkit-text-fill-color', DARK, 'important');
+                if (span) {
+                    span.style.setProperty('color',                DARK, 'important');
+                    span.style.setProperty('-webkit-text-fill-color', DARK, 'important');
+                }
             });
         });
         var allLink = panel.querySelector('.xv-megamenu__all');
