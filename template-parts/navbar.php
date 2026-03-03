@@ -186,12 +186,14 @@ $cart_url = function_exists( 'wc_get_cart_url' )
             allLink.style.setProperty('-webkit-text-fill-color', DARK, 'important');
             allLink.style.setProperty('text-decoration', 'none', 'important');
             allLink.addEventListener('mouseenter', function() {
-                this.style.setProperty('background', DARK,  'important');
+                this.style.setProperty('background', GOLD,  'important');
+                this.style.setProperty('border-color', GOLD, 'important');
                 this.style.setProperty('color',      WHITE, 'important');
                 this.style.setProperty('-webkit-text-fill-color', WHITE, 'important');
             });
             allLink.addEventListener('mouseleave', function() {
                 this.style.setProperty('background', 'transparent', 'important');
+                this.style.setProperty('border-color', DARK,          'important');
                 this.style.setProperty('color',      DARK,          'important');
                 this.style.setProperty('-webkit-text-fill-color', DARK, 'important');
             });
