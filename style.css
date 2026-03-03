@@ -267,7 +267,7 @@ body {
 /* Mega-menu panel — all critical layout/display via JS setProperty */
 .xv-megamenu {
     border: 1px solid #eeeeee;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15);
 }
 
 .xv-megamenu__inner {
@@ -313,15 +313,15 @@ body {
     line-height: 1 !important;
     text-decoration: none !important;
     padding: 9px 0 !important;
-    border-bottom: 1px solid transparent !important;
-    transition: border-color 0.2s ease !important;
+    border-bottom: none !important;
+    transition: color 0.2s ease !important;
     white-space: nowrap !important;
     background: transparent !important;
     text-align: center !important;
 }
 
 .xv-megamenu__link:hover {
-    border-bottom-color: #c8a951 !important;
+    /* Remove border hover, color handled by JS */
 }
 
 .xv-megamenu__cat-thumb {
