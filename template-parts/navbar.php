@@ -163,41 +163,22 @@ $cart_url = function_exists( 'wc_get_cart_url' )
     var WHITE = '#ffffff';
 
     function xvApplyLinkStyles(panel) {
-        // Apply base styles to category links only, let CSS handle most styling
+        // Minimal JavaScript intervention - let CSS handle most styling
         panel.querySelectorAll('.xv-megamenu__link').forEach(function(a) {
-            var span = a.querySelector('span');
-            // Apply initial dark colors to both link and span
-            a.style.setProperty('color',                '#333',  'important');
-            a.style.setProperty('-webkit-text-fill-color', '#333', 'important');
+            var span = a.querySelector('span:not(.xv-category-icon)');
+            // Only set essential text decoration
             a.style.setProperty('text-decoration', 'none', 'important');
-            if (span) {
-                span.style.setProperty('color',                '#333',  'important');
-                span.style.setProperty('-webkit-text-fill-color', '#333', 'important');
-            }
             
-            a.addEventListener('mouseenter', function() {
-                this.style.setProperty('color',                '#c8a951', 'important');
-                this.style.setProperty('-webkit-text-fill-color', '#c8a951', 'important');
-                if (span) {
-                    span.style.setProperty('color',                '#c8a951', 'important');
-                    span.style.setProperty('-webkit-text-fill-color', '#c8a951', 'important');
-                }
-            });
-            a.addEventListener('mouseleave', function() {
-                this.style.setProperty('color',                '#333', 'important');
-                this.style.setProperty('-webkit-text-fill-color', '#333', 'important');
-                if (span) {
-                    span.style.setProperty('color',                '#333', 'important');
-                    span.style.setProperty('-webkit-text-fill-color', '#333', 'important');
-                }
-            });
+            // Let CSS handle colors completely, only manage on problematic elements
+            if (span) {
+                span.style.setProperty('color', 'inherit', 'important');
+            }
         });
         
-        // Style the "Ver todo" button - let CSS handle styling completely
+        // Style the "Ver todo" button minimally
         var allLink = panel.querySelector('.xv-megamenu__all');
         if (allLink) {
             allLink.style.setProperty('text-decoration', 'none', 'important');
-            // Remove any overrides that conflict with our new gradient design
         }
     }
 

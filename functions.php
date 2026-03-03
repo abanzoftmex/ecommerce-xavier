@@ -224,13 +224,15 @@ class Xavier_Catalog_Walker extends Walker_Nav_Menu {
         $html .= '<ul class="xv-megamenu__list">';
 
         foreach ( $cats as $cat ) {
+            $icon_letter = strtoupper(substr($cat->name, 0, 1));
             $html .= '<li><a href="' . esc_url( get_term_link( $cat ) ) . '" class="xv-megamenu__link">'
+                   . '<span class="xv-category-icon">' . $icon_letter . '</span>'
                    . '<span>' . esc_html( $cat->name ) . '</span>'
                    . '</a></li>';
         }
 
         $html .= '</ul>';
-        $html .= '<a href="' . esc_url( $shop_url ) . '" class="xv-megamenu__all">Ver todo el catálogo &rarr;</a>';
+        $html .= '<a href="' . esc_url( $shop_url ) . '" class="xv-megamenu__all">Ver todo el catálogo</a>';
         $html .= '</div>';
         $html .= '</div>';
 
