@@ -266,14 +266,28 @@ body {
 
 /* Mega-menu panel — all critical layout/display via JS setProperty */
 .xv-megamenu {
-    border: 1px solid #eeeeee;
-    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.2);
+    position: fixed !important;
+    top: 100% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background: white !important;
+    border-radius: 12px !important;
+    border: 1px solid #eeeeee !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15) !important;
+    padding: 32px !important;
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    z-index: 9999 !important;
+    min-width: 800px !important;
+    max-width: 1000px !important;
+    transition: all 0.3s ease !important;
 }
 
 .xv-megamenu__inner {
     width: 100%;
     margin: 0;
-    padding: 30px 40px;
+    padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -314,6 +328,7 @@ body {
     text-decoration: none !important;
     padding: 9px 0 !important;
     border-bottom: none !important;
+    color: #333 !important;
     transition: color 0.2s ease !important;
     white-space: nowrap !important;
     background: transparent !important;

@@ -219,14 +219,16 @@ $cart_url = function_exists( 'wc_get_cart_url' )
             // Apply all layout styles via setProperty so Astra cannot override
             var s = panel.style;
             s.setProperty('display',          'none',  'important');
+            s.setProperty('visibility',       'hidden', 'important');
+            s.setProperty('opacity',          '0',     'important');
             s.setProperty('position',         'fixed', 'important');
             // Center the menu instead of full-width
             s.setProperty('left',             '50%',   'important');
             s.setProperty('right',            'auto',  'important');
             s.setProperty('transform',        'translateX(-50%)', 'important');
             s.setProperty('width',            'auto',  'important'); // adapt to content
-            s.setProperty('min-width',        '400px', 'important');
-            s.setProperty('max-width',        '95%',   'important');
+            s.setProperty('min-width',        '800px', 'important');
+            s.setProperty('max-width',        '1000px', 'important');
             
             s.setProperty('background',       WHITE,   'important');
             s.setProperty('background-color', WHITE,   'important');
@@ -245,11 +247,15 @@ $cart_url = function_exists( 'wc_get_cart_url' )
                     panel.style.setProperty('top', hdr.getBoundingClientRect().bottom + 'px', 'important');
                 }
                 panel.style.setProperty('display', 'block', 'important');
+                panel.style.setProperty('visibility', 'visible', 'important');
+                panel.style.setProperty('opacity', '1', 'important');
             }
 
             function scheduleHide() {
                 hideTimer = setTimeout(function() {
                     panel.style.setProperty('display', 'none', 'important');
+                    panel.style.setProperty('visibility', 'hidden', 'important');
+                    panel.style.setProperty('opacity', '0', 'important');
                 }, 250); // Generous delay to bridge any gap
             }
 
