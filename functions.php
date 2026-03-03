@@ -218,21 +218,19 @@ class Xavier_Catalog_Walker extends Walker_Nav_Menu {
         $html  = '<div class="xv-megamenu" style="display: none !important; visibility: hidden !important; opacity: 0 !important;">';
         $html .= '<div class="xv-megamenu__inner">';
         $html .= '<div class="xv-megamenu__header">';
-        $html .= '<h3 class="xv-megamenu__title">Explora nuestras colecciones</h3>';
-        $html .= '<p class="xv-megamenu__subtitle">Descubre la joyería perfecta para cada ocasión</p>';
+        $html .= '<h3 class="xv-megamenu__title">Nuestras Colecciones</h3>';
+        $html .= '<p class="xv-megamenu__subtitle">Encuentra la joya perfecta</p>';
         $html .= '</div>';
         $html .= '<ul class="xv-megamenu__list">';
 
         foreach ( $cats as $cat ) {
-            $icon_letter = strtoupper(substr($cat->name, 0, 1));
             $html .= '<li><a href="' . esc_url( get_term_link( $cat ) ) . '" class="xv-megamenu__link">'
-                   . '<span class="xv-category-icon">' . $icon_letter . '</span>'
-                   . '<span>' . esc_html( $cat->name ) . '</span>'
+                   . esc_html( $cat->name )
                    . '</a></li>';
         }
 
         $html .= '</ul>';
-        $html .= '<a href="' . esc_url( $shop_url ) . '" class="xv-megamenu__all">Ver todo el catálogo</a>';
+        $html .= '<a href="' . esc_url( $shop_url ) . '" class="xv-megamenu__all">Ver todo el catálogo &rarr;</a>';
         $html .= '</div>';
         $html .= '</div>';
 

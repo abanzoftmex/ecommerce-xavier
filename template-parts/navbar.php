@@ -163,19 +163,11 @@ $cart_url = function_exists( 'wc_get_cart_url' )
     var WHITE = '#ffffff';
 
     function xvApplyLinkStyles(panel) {
-        // Minimal JavaScript intervention - let CSS handle most styling
+        // Simple approach - let CSS do the work
         panel.querySelectorAll('.xv-megamenu__link').forEach(function(a) {
-            var span = a.querySelector('span:not(.xv-category-icon)');
-            // Only set essential text decoration
             a.style.setProperty('text-decoration', 'none', 'important');
-            
-            // Let CSS handle colors completely, only manage on problematic elements
-            if (span) {
-                span.style.setProperty('color', 'inherit', 'important');
-            }
         });
         
-        // Style the "Ver todo" button minimally
         var allLink = panel.querySelector('.xv-megamenu__all');
         if (allLink) {
             allLink.style.setProperty('text-decoration', 'none', 'important');
