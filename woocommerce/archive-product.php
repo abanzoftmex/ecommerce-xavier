@@ -8,6 +8,19 @@
 
 get_header(); ?>
 
+<?php
+global $wp_query;
+
+$xv_current_page = max( 1, get_query_var( 'paged' ), get_query_var( 'page' ) );
+$xv_total        = isset( $wp_query->found_posts ) ? (int) $wp_query->found_posts : 0;
+$xv_shown        = isset( $wp_query->post_count ) ? (int) $wp_query->post_count : 0;
+$xv_total_pages  = isset( $wp_query->max_num_pages ) ? (int) $wp_query->max_num_pages : 0;
+
+$xv_paginate_base = str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) );
+$xv_add_args      = wp_unslash( $_GET );
+unset( $xv_add_args['paged'] );
+?>
+
 <style>
     /* ===== Shop Page ===== */
     #xvShop { max-width:1440px;margin:0 auto;padding:40px 40px 80px; }
@@ -78,10 +91,9 @@ get_header(); ?>
             }
         ?></h1>
         <?php
-        $total = $wp_query->found_posts;
-        if ( $total ) :
+        if ( $xv_total ) :
         ?>
-            <p id="xvShopCount"><?php echo esc_html( $total ); ?> producto<?php echo $total !== 1 ? 's' : ''; ?></p>
+            <p id="xvShopCount"><?php echo esc_html( $xv_total ); ?> producto<?php echo $xv_total !== 1 ? 's' : ''; ?></p>
         <?php endif; ?>
     </div>
 
@@ -108,7 +120,7 @@ get_header(); ?>
 
     <!-- Sort Bar -->
     <div id="xvSortBar">
-        <span id="xvResultCount">Mostrando <?php echo esc_html( $wp_query->post_count ); ?> de <?php echo esc_html( $total ); ?> productos</span>
+        <span id="xvResultCount">Mostrando <?php echo esc_html( $xv_shown ); ?> de <?php echo esc_html( $xv_total ); ?> productos</span>
         <form method="get">
             <select id="xvSortSelect" name="orderby" onchange="this.form.submit()">
                 <?php
@@ -181,17 +193,22 @@ get_header(); ?>
     </div>
 
     <!-- Pagination -->
+    <?php if ( $xv_total_pages > 1 ) : ?>
     <div id="xvPagination">
         <?php
         echo paginate_links( array(
-            'total'     => $wp_query->max_num_pages,
-            'current'   => max( 1, get_query_var( 'paged' ) ),
+            'base'      => $xv_paginate_base,
+            'format'    => '',
+            'total'     => $xv_total_pages,
+            'current'   => $xv_current_page,
             'prev_text' => '&larr;',
             'next_text' => '&rarr;',
             'type'      => 'plain',
+            'add_args'  => $xv_add_args,
         ) );
         ?>
     </div>
+    <?php endif; ?>
 
     <?php else : ?>
         <div id="xvNoProducts">
