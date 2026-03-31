@@ -327,6 +327,270 @@ body {
     letter-spacing: -0.5px;
 }
 
+/* =====================
+   CONTACT PAGE
+===================== */
+
+.xv-contact-page {
+    background: #fff;
+}
+
+.xv-contact-hero {
+    background: linear-gradient(135deg, #f1eeea 0%, #faf9f7 100%);
+    border-bottom: 1px solid #ebe7e2;
+    padding: 130px 20px 70px;
+}
+
+.xv-contact-hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.xv-contact-kicker {
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: #7d7468;
+    margin-bottom: 14px;
+}
+
+.xv-contact-hero h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(36px, 5vw, 58px);
+    line-height: 1.05;
+    font-weight: 400;
+    color: #1a1a1a;
+    margin: 0 0 14px;
+}
+
+.xv-contact-intro {
+    max-width: 700px;
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #4c4a46;
+    margin-bottom: 22px;
+}
+
+.xv-contact-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.xv-contact-tags span {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #d8d2c9;
+    background: #fff;
+    padding: 7px 13px;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.4px;
+    color: #433d35;
+}
+
+.xv-contact-main {
+    padding: 54px 20px 90px;
+}
+
+.xv-contact-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: 26px;
+}
+
+.xv-contact-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.xv-contact-card {
+    border: 1px solid #ece7df;
+    background: #faf8f5;
+    padding: 20px;
+}
+
+.xv-contact-card h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 28px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+}
+
+.xv-contact-card p {
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    color: #555047;
+    margin-bottom: 12px;
+}
+
+.xv-contact-card a {
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #1a1a1a;
+    border-bottom: 1px solid #1a1a1a;
+    padding-bottom: 2px;
+}
+
+.xv-contact-form-wrap {
+    border: 1px solid #ece7df;
+    background: #fff;
+    padding: 34px;
+}
+
+.xv-contact-form-wrap h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 42px;
+    line-height: 1.05;
+    font-weight: 400;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+}
+
+.xv-contact-form-wrap > p {
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    color: #686057;
+    margin-bottom: 22px;
+}
+
+.xv-contact-notice {
+    margin-bottom: 16px;
+    padding: 11px 13px;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    border: 1px solid;
+}
+
+.xv-contact-notice-success {
+    color: #1d5130;
+    border-color: #9bc6aa;
+    background: #edf9f0;
+}
+
+.xv-contact-notice-error {
+    color: #7d2b2b;
+    border-color: #ddb1b1;
+    background: #fff2f2;
+}
+
+.xv-contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.xv-contact-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.xv-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.xv-field label {
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: #5a544b;
+}
+
+.xv-field input,
+.xv-field textarea {
+    border: 1px solid #dad3c9;
+    background: #fff;
+    color: #1a1a1a;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    padding: 10px 12px;
+    outline: none;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.xv-field input:focus,
+.xv-field textarea:focus {
+    border-color: #b79e67;
+    box-shadow: 0 0 0 3px rgba(183, 158, 103, 0.14);
+}
+
+.xv-contact-submit {
+    align-self: flex-start;
+    border: 1px solid #1a1a1a;
+    background: #1a1a1a;
+    color: #fff;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 12px 22px;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.xv-contact-submit:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.xv-honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+@media (max-width: 960px) {
+    .xv-contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .xv-contact-cards {
+        order: 2;
+    }
+
+    .xv-contact-form-wrap {
+        order: 1;
+    }
+}
+
+@media (max-width: 640px) {
+    .xv-contact-hero {
+        padding: 118px 16px 56px;
+    }
+
+    .xv-contact-main {
+        padding: 42px 16px 70px;
+    }
+
+    .xv-contact-form-wrap {
+        padding: 24px 18px;
+    }
+
+    .xv-contact-form-wrap h2 {
+        font-size: 34px;
+    }
+
+    .xv-contact-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}
+
 .hero-text h1 em {
     font-style: italic;
     font-weight: 300;
@@ -1372,4 +1636,360 @@ body {
     color: #b8a98a !important;
     border-color: #b8a98a !important;
     background: none !important;
+}
+
+/* =====================
+   ACCOUNT + CART PAGES
+===================== */
+
+.woocommerce-account .site-content,
+.woocommerce-cart .site-content {
+    background: linear-gradient(180deg, #faf8f5 0%, #ffffff 28%);
+}
+
+.woocommerce-account .entry-header,
+.woocommerce-cart .entry-header {
+    text-align: center;
+    padding-top: 120px;
+    margin-bottom: 20px;
+}
+
+.woocommerce-account .entry-title,
+.woocommerce-cart .entry-title {
+    font-family: 'Cormorant Garamond', Georgia, serif !important;
+    font-size: clamp(34px, 5vw, 52px) !important;
+    font-weight: 400 !important;
+    color: #1a1a1a !important;
+    line-height: 1.1;
+}
+
+.woocommerce-account .entry-content,
+.woocommerce-cart .entry-content {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 20px 22px 80px;
+}
+
+.woocommerce-account .woocommerce {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 24px;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #e8e2d9;
+    background: #fff;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation li {
+    border-bottom: 1px solid #f1ede7;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation li:last-child {
+    border-bottom: 0;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation a {
+    display: block;
+    padding: 12px 16px;
+    text-decoration: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.4px;
+    color: #49443d;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation a:hover,
+.woocommerce-account .woocommerce-MyAccount-navigation .is-active a {
+    background: #1a1a1a;
+    color: #fff;
+}
+
+.woocommerce-account .woocommerce-MyAccount-content {
+    border: 1px solid #e8e2d9;
+    background: #fff;
+    padding: 24px;
+}
+
+.woocommerce-account .woocommerce-MyAccount-content p,
+.woocommerce-account .woocommerce-MyAccount-content label,
+.woocommerce-account .woocommerce-MyAccount-content td,
+.woocommerce-account .woocommerce-MyAccount-content th,
+.woocommerce-account .woocommerce-MyAccount-content li {
+    font-family: 'Jost', sans-serif;
+    color: #4c4842;
+}
+
+.woocommerce-account .woocommerce-MyAccount-content h2,
+.woocommerce-account .woocommerce-MyAccount-content h3 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 34px;
+    font-weight: 400;
+    color: #1a1a1a;
+}
+
+.woocommerce-account .woocommerce-MyAccount-content input,
+.woocommerce-account .woocommerce-MyAccount-content select,
+.woocommerce-account .woocommerce-MyAccount-content textarea {
+    border: 1px solid #d9d1c6;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    padding: 9px 12px;
+}
+
+.woocommerce-account .woocommerce-MyAccount-content input:focus,
+.woocommerce-account .woocommerce-MyAccount-content select:focus,
+.woocommerce-account .woocommerce-MyAccount-content textarea:focus {
+    border-color: #b79e67;
+    box-shadow: 0 0 0 3px rgba(183, 158, 103, 0.14);
+    outline: none;
+}
+
+.woocommerce-account .woocommerce-MyAccount-content .button,
+.woocommerce-cart .wc-proceed-to-checkout .checkout-button,
+.woocommerce-cart .actions .button,
+.woocommerce-cart .coupon .button {
+    background: #1a1a1a !important;
+    color: #fff !important;
+    border: 1px solid #1a1a1a !important;
+    border-radius: 0 !important;
+    font-family: 'Jost', sans-serif !important;
+    font-size: 12px !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
+    padding: 12px 18px !important;
+}
+
+.woocommerce-account .woocommerce-MyAccount-content .button:hover,
+.woocommerce-cart .wc-proceed-to-checkout .checkout-button:hover,
+.woocommerce-cart .actions .button:hover,
+.woocommerce-cart .coupon .button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.woocommerce-cart table.shop_table {
+    border: 1px solid #e8e2d9;
+    border-radius: 0;
+    background: #fff;
+}
+
+.woocommerce-cart table.shop_table th,
+.woocommerce-cart table.shop_table td {
+    border-color: #f1ede7;
+    font-family: 'Jost', sans-serif;
+    color: #4c4842;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.woocommerce-cart table.shop_table thead th {
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-size: 11px;
+    color: #6a645c;
+}
+
+.woocommerce-cart .product-name a,
+.woocommerce-cart .product-remove a {
+    color: #1a1a1a !important;
+}
+
+.woocommerce-cart .cart_totals {
+    border: 1px solid #e8e2d9;
+    background: #fff;
+    padding: 18px;
+}
+
+.woocommerce-cart .cart_totals h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 34px;
+    font-weight: 400;
+    color: #1a1a1a;
+}
+
+.woocommerce-cart .cart_totals table th,
+.woocommerce-cart .cart_totals table td {
+    font-family: 'Jost', sans-serif;
+    color: #4c4842;
+}
+
+.woocommerce-cart .coupon input.input-text {
+    border: 1px solid #d9d1c6;
+    min-height: 44px;
+    padding: 10px 12px;
+    font-family: 'Jost', sans-serif;
+}
+
+.woocommerce-account .woocommerce-message,
+.woocommerce-account .woocommerce-info,
+.woocommerce-cart .woocommerce-message,
+.woocommerce-cart .woocommerce-info {
+    border-top-color: #b79e67;
+    background: #fbf8f2;
+    color: #534d45;
+    font-family: 'Jost', sans-serif;
+}
+
+@media (max-width: 900px) {
+    .woocommerce-account .woocommerce {
+        grid-template-columns: 1fr;
+    }
+
+    .woocommerce-account .woocommerce-MyAccount-content,
+    .woocommerce-account .woocommerce-MyAccount-navigation ul {
+        width: 100%;
+    }
+}
+
+/* =====================
+   ABOUT PAGE
+===================== */
+
+.xv-about-page {
+    background: #fff;
+}
+
+.xv-about-hero {
+    padding: 130px 20px 76px;
+    background: linear-gradient(125deg, #f1ede7 0%, #f7f4ef 56%, #ffffff 100%);
+    border-bottom: 1px solid #ece6dc;
+}
+
+.xv-about-container {
+    max-width: 1160px;
+    margin: 0 auto;
+}
+
+.xv-about-hero h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(40px, 6vw, 64px);
+    line-height: 1.03;
+    color: #1a1a1a;
+    font-weight: 400;
+    margin-bottom: 14px;
+}
+
+.xv-about-hero p {
+    max-width: 740px;
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #4f4a42;
+}
+
+.xv-about-block {
+    padding: 60px 20px;
+}
+
+.xv-about-grid {
+    max-width: 1160px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 30px;
+    align-items: stretch;
+}
+
+.xv-about-card,
+.xv-about-highlight {
+    border: 1px solid #ece6dc;
+    background: #fff;
+    padding: 30px;
+}
+
+.xv-about-card h2,
+.xv-about-values h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 42px;
+    line-height: 1.08;
+    color: #1a1a1a;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.xv-about-card p,
+.xv-about-highlight p,
+.xv-about-values p,
+.xv-about-values li {
+    font-family: 'Jost', sans-serif;
+    color: #4f4a42;
+    line-height: 1.85;
+    font-size: 15px;
+}
+
+.xv-about-highlight {
+    background: #1a1a1a;
+    border-color: #1a1a1a;
+}
+
+.xv-about-highlight h3 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 34px;
+    color: #fff;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.xv-about-highlight p {
+    color: #ece8e2;
+}
+
+.xv-about-values {
+    max-width: 1160px;
+    margin: 0 auto;
+    border: 1px solid #ece6dc;
+    background: #faf8f5;
+    padding: 30px;
+}
+
+.xv-about-values ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.xv-about-cta {
+    max-width: 1160px;
+    margin: 24px auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.xv-about-cta a {
+    display: inline-block;
+    text-decoration: none;
+    font-family: 'Jost', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 12px;
+    padding: 12px 18px;
+}
+
+.xv-about-cta .xv-about-primary {
+    background: #1a1a1a;
+    color: #fff;
+    border: 1px solid #1a1a1a;
+}
+
+.xv-about-cta .xv-about-secondary {
+    background: transparent;
+    color: #1a1a1a;
+    border: 1px solid #1a1a1a;
+}
+
+@media (max-width: 860px) {
+    .xv-about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .xv-about-card,
+    .xv-about-highlight,
+    .xv-about-values {
+        padding: 22px;
+    }
 }

@@ -39,7 +39,12 @@ unset( $xv_add_args['paged'] );
     /* Sort bar */
     #xvSortBar { display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #eee; }
     #xvResultCount { font-family:'Jost',sans-serif;font-size:13px;color:#888; }
-    #xvSortSelect { font-family:'Jost',sans-serif;font-size:13px;color:#1a1a1a;padding:8px 12px;border:1px solid #ddd;background:#fff;cursor:pointer;outline:none; }
+    .xv-sort-wrap { position:relative;display:inline-flex;align-items:center; }
+    .xv-sort-icon { position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:12px;line-height:1;color:#1a1a1a;pointer-events:none;z-index:2; }
+    .xv-sort-chevron { position:absolute;right:12px;top:50%;width:8px;height:8px;border-right:1.5px solid #555;border-bottom:1.5px solid #555;transform:translateY(-70%) rotate(45deg);pointer-events:none;z-index:2; }
+    #xvSortSelect { -webkit-appearance:none;-moz-appearance:none;appearance:none;font-family:'Jost',sans-serif;font-size:13px;color:#1a1a1a;padding:8px 34px 8px 30px;border:1px solid #ddd;background:#fff;cursor:pointer;outline:none;min-width:190px; }
+    #xvSortSelect:hover,
+    #xvSortSelect:focus { border-color:#bdbdbd; }
 
     /* Product Grid */
     #xvProductGrid { display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:24px!important; }
@@ -71,7 +76,11 @@ unset( $xv_add_args['paged'] );
 
     /* Responsive */
     @media (max-width:1024px) { #xvProductGrid { grid-template-columns:repeat(3,1fr)!important; } }
-    @media (max-width:768px) { #xvProductGrid { grid-template-columns:repeat(2,1fr)!important; } #xvShop { padding:20px 20px 60px; } }
+    @media (max-width:768px) {
+        #xvProductGrid { grid-template-columns:repeat(2,1fr)!important; }
+        #xvShop { padding:20px 20px 60px; }
+        #xvSortBar { flex-direction:column;align-items:flex-start;gap:12px; }
+    }
     @media (max-width:480px) { #xvProductGrid { grid-template-columns:1fr!important; } }
 </style>
 
@@ -122,7 +131,9 @@ unset( $xv_add_args['paged'] );
     <div id="xvSortBar">
         <span id="xvResultCount">Mostrando <?php echo esc_html( $xv_shown ); ?> de <?php echo esc_html( $xv_total ); ?> productos</span>
         <form method="get">
-            <select id="xvSortSelect" name="orderby" onchange="this.form.submit()">
+            <div class="xv-sort-wrap">
+                <span class="xv-sort-icon" aria-hidden="true">↕</span>
+                <select id="xvSortSelect" name="orderby" onchange="this.form.submit()">
                 <?php
                 $orderby = isset( $_GET['orderby'] ) ? sanitize_text_field( $_GET['orderby'] ) : 'date';
                 $options = array(
@@ -136,7 +147,9 @@ unset( $xv_add_args['paged'] );
                 ?>
                     <option value="<?php echo esc_attr( $val ); ?>" <?php selected( $orderby, $val ); ?>><?php echo esc_html( $label ); ?></option>
                 <?php endforeach; ?>
-            </select>
+                </select>
+                <span class="xv-sort-chevron" aria-hidden="true"></span>
+            </div>
         </form>
     </div>
 
