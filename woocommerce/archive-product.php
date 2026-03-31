@@ -58,9 +58,10 @@ unset( $xv_add_args['paged'] );
     .xv-card-badge.xv-sale { background:#c0392b; }
     .xv-favorite-toggle { position:absolute;top:12px;right:12px;display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;border:1px solid rgba(26,26,26,0.16);background:rgba(255,255,255,0.9);color:#1a1a1a;cursor:pointer;z-index:3;transition:all 0.25s ease; }
     .xv-favorite-toggle:hover { border-color:#c8a951;color:#c8a951;transform:translateY(-1px); }
-    .xv-favorite-toggle svg { pointer-events:none; }
+    .xv-card-img-wrap .xv-favorite-toggle::before { content:'♡';font-size:18px;line-height:1;color:currentColor;font-family:'Jost',sans-serif; }
+    .xv-card-img-wrap .xv-favorite-toggle svg { display:none; }
     .xv-favorite-toggle.is-active { color:#c8a951;border-color:#c8a951;background:#fff; }
-    .xv-favorite-toggle.is-active svg { fill:currentColor; }
+    .xv-card-img-wrap .xv-favorite-toggle.is-active::before { content:'♥'; }
     .xv-card-name { font-family:'Jost',sans-serif!important;font-size:14px!important;font-weight:400!important;color:#1a1a1a!important;-webkit-text-fill-color:#1a1a1a!important;margin-bottom:4px!important;line-height:1.4; }
     .xv-card-price { font-family:'Jost',sans-serif;font-size:14px;font-weight:500;color:#1a1a1a; }
     .xv-card-price del { color:#999;font-weight:300;margin-right:6px;font-size:13px; }

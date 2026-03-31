@@ -78,6 +78,9 @@ get_header(); ?>
     .xv-related-favorite { position:absolute;top:10px;right:10px;display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;border:1px solid rgba(26,26,26,0.16);background:rgba(255,255,255,0.9);color:#1a1a1a;cursor:pointer;z-index:2;transition:all 0.25s ease; }
     .xv-related-favorite:hover { border-color:#c8a951;color:#c8a951; }
     .xv-related-favorite.is-active { color:#c8a951;border-color:#c8a951;background:#fff; }
+    .xv-related-favorite::before { content:'♡';font-size:16px;line-height:1;color:currentColor;font-family:'Jost',sans-serif; }
+    .xv-related-favorite svg { display:none; }
+    .xv-related-favorite.is-active::before { content:'♥'; }
     .xv-related-info-link { text-decoration:none;display:block; }
     .xv-related-card h3 { font-family:'Jost',sans-serif!important;font-size:14px!important;font-weight:400!important;color:#1a1a1a!important;-webkit-text-fill-color:#1a1a1a!important;margin-bottom:4px!important; }
     .xv-related-card .xv-rel-price { font-family:'Jost',sans-serif;font-size:14px;font-weight:500;color:#1a1a1a; }

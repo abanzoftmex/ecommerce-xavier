@@ -983,7 +983,15 @@ body {
 }
 
 .xv-home-favorite svg {
-    pointer-events: none;
+    display: none;
+}
+
+.xv-home-favorite::before {
+    content: '♡';
+    font-size: 16px;
+    line-height: 1;
+    color: currentColor;
+    font-family: 'Jost', sans-serif;
 }
 
 .xv-home-favorite:hover {
@@ -998,6 +1006,10 @@ body {
 
 .xv-home-favorite.is-active svg {
     fill: currentColor;
+}
+
+.xv-home-favorite.is-active::before {
+    content: '♥';
 }
 
 .rec-badge {
