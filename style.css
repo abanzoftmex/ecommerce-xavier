@@ -1993,3 +1993,81 @@ body {
         padding: 22px;
     }
 }
+
+/* =====================
+   WOOCOMMERCE FORCE OVERRIDES
+===================== */
+
+/* Ensure My Account columns do not inherit WooCommerce float layout */
+body.woocommerce-account .woocommerce {
+    display: grid !important;
+    grid-template-columns: 280px minmax(0, 1fr) !important;
+    gap: 24px !important;
+    align-items: start !important;
+}
+
+body.woocommerce-account .woocommerce-MyAccount-navigation,
+body.woocommerce-account .woocommerce-MyAccount-content {
+    float: none !important;
+    width: auto !important;
+    margin: 0 !important;
+}
+
+body.woocommerce-account .woocommerce-MyAccount-navigation {
+    align-self: start;
+}
+
+body.woocommerce-account .woocommerce-MyAccount-content {
+    min-width: 0;
+}
+
+/* Cart empty state + action button style from child theme */
+body.woocommerce-cart .cart-empty,
+body.woocommerce-cart .return-to-shop,
+body.woocommerce-cart .woocommerce-notices-wrapper .woocommerce-info {
+    font-family: 'Jost', sans-serif !important;
+    color: #4c4842 !important;
+}
+
+body.woocommerce-cart .woocommerce-notices-wrapper .woocommerce-info {
+    background: #f8f5ef !important;
+    border-top: 2px solid #b79e67 !important;
+}
+
+body.woocommerce-cart .return-to-shop .button,
+body.woocommerce-cart .return-to-shop .wc-backward,
+body.woocommerce-cart a.button.wc-backward,
+body.woocommerce-cart .wc-proceed-to-checkout a.checkout-button,
+body.woocommerce-cart .actions .button,
+body.woocommerce-cart .coupon .button {
+    background: #1a1a1a !important;
+    background-color: #1a1a1a !important;
+    border: 1px solid #1a1a1a !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    font-family: 'Jost', sans-serif !important;
+    font-size: 12px !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
+    padding: 12px 20px !important;
+    line-height: 1.2 !important;
+}
+
+body.woocommerce-cart .return-to-shop .button:hover,
+body.woocommerce-cart .return-to-shop .wc-backward:hover,
+body.woocommerce-cart a.button.wc-backward:hover,
+body.woocommerce-cart .wc-proceed-to-checkout a.checkout-button:hover,
+body.woocommerce-cart .actions .button:hover,
+body.woocommerce-cart .coupon .button:hover {
+    opacity: 0.92 !important;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 900px) {
+    body.woocommerce-account .woocommerce {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+}
