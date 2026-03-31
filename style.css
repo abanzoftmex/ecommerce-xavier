@@ -983,6 +983,12 @@ body {
     justify-content: center;
     width: 32px;
     height: 32px;
+    min-width: 32px;
+    max-width: 32px;
+    min-height: 32px;
+    max-height: 32px;
+    padding: 0;
+    margin: 0;
     border-radius: 50%;
     border: 1px solid rgba(26, 26, 26, 0.16);
     background: rgba(255, 255, 255, 0.92);
@@ -990,6 +996,11 @@ body {
     cursor: pointer;
     z-index: 2;
     transition: all 0.25s ease;
+    box-sizing: border-box;
+    aspect-ratio: 1;
+    flex-shrink: 0;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 .xv-home-favorite svg {
