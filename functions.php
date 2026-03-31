@@ -29,8 +29,87 @@ function astra_child_enqueue_styles() {
         array(),
         null
     );
+
+    wp_enqueue_script(
+        'xavier-wishlist',
+        get_stylesheet_directory_uri() . '/assets/js/xavier-wishlist.js',
+        array(),
+        wp_get_theme()->get( 'Version' ),
+        true
+    );
+
+    $shop_page_id = function_exists( 'wc_get_page_id' ) ? wc_get_page_id( 'shop' ) : 0;
+    $shop_url     = $shop_page_id > 0 ? get_permalink( $shop_page_id ) : home_url( '/shop/' );
+
+    wp_localize_script(
+        'xavier-wishlist',
+        'xavierWishlist',
+        array(
+            'storageKey'      => 'xv_favorites',
+            'cookieName'      => 'xv_favorites',
+            'favoritesPageUrl'=> add_query_arg( 'xv_favorites', '1', $shop_url ),
+            'inFavoritesView' => ( isset( $_GET['xv_favorites'] ) && '1' === sanitize_text_field( wp_unslash( $_GET['xv_favorites'] ) ) ) ? 1 : 0,
+        )
+    );
 }
 add_action( 'wp_enqueue_scripts', 'astra_child_enqueue_styles', 20 );
+
+// =============================================
+// 1b. WISHLIST HELPERS
+// =============================================
+
+function astra_child_get_favorite_ids_from_cookie() {
+    $raw_value = isset( $_COOKIE['xv_favorites'] ) ? wp_unslash( $_COOKIE['xv_favorites'] ) : '';
+
+    if ( '' === $raw_value ) {
+        return array();
+    }
+
+    $raw_value = sanitize_text_field( $raw_value );
+    $ids       = array();
+
+    if ( '[' === substr( $raw_value, 0, 1 ) ) {
+        $decoded = json_decode( $raw_value, true );
+        if ( is_array( $decoded ) ) {
+            $ids = $decoded;
+        }
+    } else {
+        $ids = explode( ',', $raw_value );
+    }
+
+    $ids = array_map( 'absint', (array) $ids );
+    $ids = array_filter( $ids );
+    $ids = array_values( array_unique( $ids ) );
+
+    return $ids;
+}
+
+function astra_child_is_favorites_view() {
+    return isset( $_GET['xv_favorites'] ) && '1' === sanitize_text_field( wp_unslash( $_GET['xv_favorites'] ) );
+}
+
+function astra_child_apply_favorites_filter_to_shop( $query ) {
+    if ( is_admin() || ! $query->is_main_query() || ! astra_child_is_favorites_view() ) {
+        return;
+    }
+
+    $is_product_listing = $query->is_post_type_archive( 'product' ) || $query->is_tax( array( 'product_cat', 'product_tag' ) );
+
+    if ( ! $is_product_listing ) {
+        return;
+    }
+
+    $favorite_ids = astra_child_get_favorite_ids_from_cookie();
+
+    if ( empty( $favorite_ids ) ) {
+        $query->set( 'post__in', array( 0 ) );
+        return;
+    }
+
+    $query->set( 'post__in', $favorite_ids );
+    $query->set( 'orderby', 'post__in' );
+}
+add_action( 'pre_get_posts', 'astra_child_apply_favorites_filter_to_shop' );
 
 
 // =============================================

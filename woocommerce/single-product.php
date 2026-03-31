@@ -51,8 +51,11 @@ get_header(); ?>
     #xvAddToCart:hover { background:#333!important; }
 
     /* Wishlist */
-    #xvWishlist { display:flex;align-items:center;gap:8px;font-family:'Jost',sans-serif;font-size:13px;color:#888;cursor:pointer;background:none;border:none;padding:0;margin-bottom:24px;transition:color 0.2s; }
+    #xvWishlist { display:inline-flex;align-items:center;gap:8px;font-family:'Jost',sans-serif;font-size:13px;color:#888;cursor:pointer;background:none;border:none;padding:0;margin-bottom:24px;transition:color 0.2s; }
     #xvWishlist:hover { color:#c8a951; }
+    .xv-favorite-toggle svg { pointer-events:none; }
+    .xv-favorite-toggle.is-active { color:#c8a951; }
+    .xv-favorite-toggle.is-active svg { fill:currentColor; }
 
     /* Delivery info */
     #xvDelivery { padding:20px 0;border-top:1px solid #eee; }
@@ -68,9 +71,14 @@ get_header(); ?>
     #xvRelated { max-width:1440px;margin:0 auto;padding:60px 40px 80px; }
     #xvRelatedTitle { font-family:'Cormorant Garamond',Georgia,serif!important;font-size:28px!important;font-weight:300!important;font-style:italic!important;text-align:center!important;margin-bottom:40px!important;color:#1a1a1a!important;-webkit-text-fill-color:#1a1a1a!important; }
     #xvRelatedGrid { display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:24px!important; }
-    .xv-related-card { text-decoration:none;display:block;transition:transform 0.3s ease; }
+    .xv-related-card { display:block;transition:transform 0.3s ease; }
     .xv-related-card:hover { transform:translateY(-4px); }
-    .xv-related-card img { width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#f0efed;margin-bottom:12px; }
+    .xv-related-media { position:relative;margin-bottom:12px; }
+    .xv-related-card img { width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#f0efed; }
+    .xv-related-favorite { position:absolute;top:10px;right:10px;display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;border:1px solid rgba(26,26,26,0.16);background:rgba(255,255,255,0.9);color:#1a1a1a;cursor:pointer;z-index:2;transition:all 0.25s ease; }
+    .xv-related-favorite:hover { border-color:#c8a951;color:#c8a951; }
+    .xv-related-favorite.is-active { color:#c8a951;border-color:#c8a951;background:#fff; }
+    .xv-related-info-link { text-decoration:none;display:block; }
     .xv-related-card h3 { font-family:'Jost',sans-serif!important;font-size:14px!important;font-weight:400!important;color:#1a1a1a!important;-webkit-text-fill-color:#1a1a1a!important;margin-bottom:4px!important; }
     .xv-related-card .xv-rel-price { font-family:'Jost',sans-serif;font-size:14px;font-weight:500;color:#1a1a1a; }
 
@@ -188,9 +196,9 @@ get_header(); ?>
                 <?php endif; ?>
             </div>
 
-            <button id="xvWishlist" type="button">
+            <button id="xvWishlist" type="button" class="xv-favorite-toggle" data-product-id="<?php echo esc_attr( $product->get_id() ); ?>" aria-label="Agregar a favoritos" aria-pressed="false">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                Agregar a favoritos
+                <span data-favorite-label>Agregar a favoritos</span>
             </button>
 
             <!-- Delivery Info -->
@@ -242,15 +250,26 @@ if ( ! empty( $related_ids ) ) :
         <?php while ( $related_query->have_posts() ) : $related_query->the_post();
             $rel_product = wc_get_product( get_the_ID() );
         ?>
-        <a href="<?php the_permalink(); ?>" class="xv-related-card">
-            <?php if ( has_post_thumbnail() ) : ?>
-                <?php the_post_thumbnail( 'medium_large', array( 'style' => 'width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#f0efed;margin-bottom:12px;' ) ); ?>
-            <?php else : ?>
-                <div style="width:100%;aspect-ratio:1/1;background:#f0efed;margin-bottom:12px;"></div>
-            <?php endif; ?>
-            <h3><?php the_title(); ?></h3>
-            <span class="xv-rel-price"><?php echo $rel_product ? $rel_product->get_price_html() : ''; ?></span>
-        </a>
+        <div class="xv-related-card" data-favorite-card="<?php echo esc_attr( get_the_ID() ); ?>">
+            <div class="xv-related-media">
+                <button type="button" class="xv-favorite-toggle xv-related-favorite" data-product-id="<?php echo esc_attr( get_the_ID() ); ?>" aria-label="Agregar a favoritos" aria-pressed="false">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                </button>
+                <a href="<?php the_permalink(); ?>">
+                    <?php if ( has_post_thumbnail() ) : ?>
+                        <?php the_post_thumbnail( 'medium_large', array( 'style' => 'width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#f0efed;' ) ); ?>
+                    <?php else : ?>
+                        <div style="width:100%;aspect-ratio:1/1;background:#f0efed;"></div>
+                    <?php endif; ?>
+                </a>
+            </div>
+            <a href="<?php the_permalink(); ?>" class="xv-related-info-link">
+                <h3><?php the_title(); ?></h3>
+                <span class="xv-rel-price"><?php echo $rel_product ? $rel_product->get_price_html() : ''; ?></span>
+            </a>
+        </div>
         <?php endwhile; wp_reset_postdata(); ?>
     </div>
 </div>

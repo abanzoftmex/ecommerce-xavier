@@ -15,6 +15,7 @@ $xv_current_page = max( 1, get_query_var( 'paged' ), get_query_var( 'page' ) );
 $xv_total        = isset( $wp_query->found_posts ) ? (int) $wp_query->found_posts : 0;
 $xv_shown        = isset( $wp_query->post_count ) ? (int) $wp_query->post_count : 0;
 $xv_total_pages  = isset( $wp_query->max_num_pages ) ? (int) $wp_query->max_num_pages : 0;
+$is_favorites_page = isset( $_GET['xv_favorites'] ) && '1' === sanitize_text_field( wp_unslash( $_GET['xv_favorites'] ) );
 
 $xv_paginate_base = str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) );
 $xv_add_args      = wp_unslash( $_GET );
@@ -55,6 +56,11 @@ unset( $xv_add_args['paged'] );
     .xv-card-img-placeholder { width:100%;aspect-ratio:3/4;background:#e8e6e3;display:flex;align-items:center;justify-content:center;color:#bbb;font-family:'Jost',sans-serif;font-size:13px; }
     .xv-card-badge { position:absolute;top:12px;left:12px;background:#1a1a1a;color:#fff;font-family:'Jost',sans-serif;font-size:10px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;padding:4px 10px;z-index:2; }
     .xv-card-badge.xv-sale { background:#c0392b; }
+    .xv-favorite-toggle { position:absolute;top:12px;right:12px;display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;border:1px solid rgba(26,26,26,0.16);background:rgba(255,255,255,0.9);color:#1a1a1a;cursor:pointer;z-index:3;transition:all 0.25s ease; }
+    .xv-favorite-toggle:hover { border-color:#c8a951;color:#c8a951;transform:translateY(-1px); }
+    .xv-favorite-toggle svg { pointer-events:none; }
+    .xv-favorite-toggle.is-active { color:#c8a951;border-color:#c8a951;background:#fff; }
+    .xv-favorite-toggle.is-active svg { fill:currentColor; }
     .xv-card-name { font-family:'Jost',sans-serif!important;font-size:14px!important;font-weight:400!important;color:#1a1a1a!important;-webkit-text-fill-color:#1a1a1a!important;margin-bottom:4px!important;line-height:1.4; }
     .xv-card-price { font-family:'Jost',sans-serif;font-size:14px;font-weight:500;color:#1a1a1a; }
     .xv-card-price del { color:#999;font-weight:300;margin-right:6px;font-size:13px; }
@@ -73,6 +79,7 @@ unset( $xv_add_args['paged'] );
 
     /* No products */
     #xvNoProducts { text-align:center;padding:80px 20px;font-family:'Jost',sans-serif;font-size:16px;color:#888; }
+    .xv-wishlist-empty-inline { text-align:center;margin-top:28px;font-family:'Jost',sans-serif;font-size:15px;color:#888; }
 
     /* Responsive */
     @media (max-width:1024px) { #xvProductGrid { grid-template-columns:repeat(3,1fr)!important; } }
@@ -91,7 +98,9 @@ unset( $xv_add_args['paged'] );
     <!-- Shop Header -->
     <div id="xvShopHeader">
         <h1 id="xvShopTitle"><?php
-            if ( is_product_category() ) {
+            if ( $is_favorites_page ) {
+                echo 'Favoritos';
+            } elseif ( is_product_category() ) {
                 single_cat_title();
             } elseif ( is_search() ) {
                 echo 'Resultados para: ' . esc_html( get_search_query() );
@@ -117,7 +126,7 @@ unset( $xv_add_args['paged'] );
     $current_cat = is_product_category() ? get_queried_object_id() : 0;
     $shop_url = get_permalink( wc_get_page_id( 'shop' ) );
 
-    if ( ! empty( $product_cats ) && ! is_wp_error( $product_cats ) ) :
+    if ( ! $is_favorites_page && ! empty( $product_cats ) && ! is_wp_error( $product_cats ) ) :
     ?>
     <div id="xvCatFilter">
         <a href="<?php echo esc_url( $shop_url ); ?>" class="xv-cat-pill <?php echo ! $current_cat ? 'xv-active' : ''; ?>">Todos</a>
@@ -129,8 +138,17 @@ unset( $xv_add_args['paged'] );
 
     <!-- Sort Bar -->
     <div id="xvSortBar">
-        <span id="xvResultCount">Mostrando <?php echo esc_html( $xv_shown ); ?> de <?php echo esc_html( $xv_total ); ?> productos</span>
+        <span id="xvResultCount">
+            <?php if ( $is_favorites_page ) : ?>
+                Mostrando <?php echo esc_html( $xv_shown ); ?> favorito<?php echo $xv_shown !== 1 ? 's' : ''; ?>
+            <?php else : ?>
+                Mostrando <?php echo esc_html( $xv_shown ); ?> de <?php echo esc_html( $xv_total ); ?> productos
+            <?php endif; ?>
+        </span>
         <form method="get">
+            <?php if ( $is_favorites_page ) : ?>
+                <input type="hidden" name="xv_favorites" value="1" />
+            <?php endif; ?>
             <div class="xv-sort-wrap">
                 <span class="xv-sort-icon" aria-hidden="true">↕</span>
                 <select id="xvSortSelect" name="orderby" onchange="this.form.submit()">
@@ -166,13 +184,25 @@ unset( $xv_add_args['paged'] );
             $terms = get_the_terms( get_the_ID(), 'product_cat' );
             $cat_name = ( $terms && ! is_wp_error( $terms ) ) ? $terms[0]->name : '';
         ?>
-        <div class="xv-product-card">
+        <div class="xv-product-card" data-favorite-card="<?php echo esc_attr( $product->get_id() ); ?>">
             <div class="xv-card-img-wrap">
                 <?php if ( $is_on_sale ) : ?>
                     <span class="xv-card-badge xv-sale">Oferta</span>
                 <?php elseif ( $is_featured ) : ?>
                     <span class="xv-card-badge">Destacado</span>
                 <?php endif; ?>
+
+                <button
+                    type="button"
+                    class="xv-favorite-toggle"
+                    data-product-id="<?php echo esc_attr( $product->get_id() ); ?>"
+                    aria-label="Agregar a favoritos"
+                    aria-pressed="false"
+                >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                </button>
 
                 <a href="<?php the_permalink(); ?>">
                     <?php if ( has_post_thumbnail() ) : ?>
@@ -225,7 +255,11 @@ unset( $xv_add_args['paged'] );
 
     <?php else : ?>
         <div id="xvNoProducts">
-            <p>No se encontraron productos.</p>
+            <?php if ( $is_favorites_page ) : ?>
+                <p>Aun no tienes productos favoritos.</p>
+            <?php else : ?>
+                <p>No se encontraron productos.</p>
+            <?php endif; ?>
             <a href="<?php echo esc_url( $shop_url ); ?>" style="display:inline-block;margin-top:20px;padding:12px 28px;background:#1a1a1a;color:#fff;text-decoration:none;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:1px;text-transform:uppercase;">Ver todos los productos</a>
         </div>
     <?php endif; ?>

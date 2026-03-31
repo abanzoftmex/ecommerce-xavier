@@ -146,15 +146,20 @@ get_header();
                         }
                     ?>
                     <div class="trending-card">
-                        <a href="<?php the_permalink(); ?>" class="trending-card-link">
-                            <div class="trending-img-wrap">
+                        <div class="trending-img-wrap">
+                            <button type="button" class="xv-favorite-toggle xv-home-favorite" data-product-id="<?php echo esc_attr( get_the_ID() ); ?>" aria-label="Agregar a favoritos" aria-pressed="false">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                </svg>
+                            </button>
+                            <a href="<?php the_permalink(); ?>" class="trending-card-link">
                                 <?php if ( has_post_thumbnail() ) : ?>
                                     <?php the_post_thumbnail( 'large', array( 'class' => 'trending-img' ) ); ?>
                                 <?php else : ?>
                                     <div class="trending-img-placeholder"></div>
                                 <?php endif; ?>
-                            </div>
-                        </a>
+                            </a>
+                        </div>
                         <div class="trending-info">
                             <p class="trending-label"><?php the_title(); ?></p>
                             <?php if ( $short_desc ) : ?>
@@ -202,6 +207,11 @@ get_header();
                             <?php if ( $is_bestseller ) : ?>
                             <span class="rec-badge">Productos más vendidos</span>
                             <?php endif; ?>
+                            <button type="button" class="xv-favorite-toggle xv-home-favorite" data-product-id="<?php echo esc_attr( get_the_ID() ); ?>" aria-label="Agregar a favoritos" aria-pressed="false">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                </svg>
+                            </button>
                             <a href="<?php the_permalink(); ?>" class="rec-card-link">
                                 <?php if ( has_post_thumbnail() ) : ?>
                                     <?php the_post_thumbnail( 'medium', array( 'class' => 'rec-img' ) ); ?>

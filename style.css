@@ -837,6 +837,7 @@ body {
     overflow: hidden;
     background: #f0efed;
     margin-bottom: 22px;
+    position: relative;
 }
 
 .trending-img {
@@ -961,6 +962,42 @@ body {
     flex: 0 0 220px;
     position: relative;
     background: #fff;
+}
+
+.xv-home-favorite {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid rgba(26, 26, 26, 0.16);
+    background: rgba(255, 255, 255, 0.92);
+    color: #1a1a1a;
+    cursor: pointer;
+    z-index: 2;
+    transition: all 0.25s ease;
+}
+
+.xv-home-favorite svg {
+    pointer-events: none;
+}
+
+.xv-home-favorite:hover {
+    border-color: #c8a951;
+    color: #c8a951;
+}
+
+.xv-home-favorite.is-active {
+    color: #c8a951;
+    border-color: #c8a951;
+}
+
+.xv-home-favorite.is-active svg {
+    fill: currentColor;
 }
 
 .rec-badge {

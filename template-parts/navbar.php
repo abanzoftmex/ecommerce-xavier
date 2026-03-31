@@ -17,6 +17,11 @@ $account_url = function_exists( 'wc_get_page_id' )
 $cart_url = function_exists( 'wc_get_cart_url' )
     ? wc_get_cart_url()
     : home_url( '/cart/' );
+
+$wishlist_url   = add_query_arg( 'xv_favorites', '1', $shop_url );
+$wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
+    ? count( astra_child_get_favorite_ids_from_cookie() )
+    : 0;
 ?>
 
 <!-- Announcement Bar -->
@@ -65,10 +70,11 @@ $cart_url = function_exists( 'wc_get_cart_url' )
             </form>
 
             <!-- Wishlist -->
-            <a href="#" style="color:#1a1a1a;text-decoration:none;display:flex;align-items:center;transition:color 0.35s ease,opacity 0.2s;" class="xavier-icon-link">
+            <a href="<?php echo esc_url( $wishlist_url ); ?>" style="color:#1a1a1a;text-decoration:none;display:flex;align-items:center;position:relative;transition:color 0.35s ease,opacity 0.2s;" class="xavier-icon-link xavier-wishlist-link" aria-label="Ver favoritos">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                 </svg>
+                <span class="xv-wishlist-count" style="position:absolute;top:-6px;right:-8px;background:#c8a951;color:#fff;border-radius:50%;width:16px;height:16px;font-size:10px;display:<?php echo $wishlist_count > 0 ? 'flex' : 'none'; ?>;align-items:center;justify-content:center;font-family:'Jost',sans-serif;"><?php echo esc_html( $wishlist_count ); ?></span>
             </a>
 
             <!-- Account -->
