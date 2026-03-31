@@ -22,13 +22,13 @@ body {
 }
 
 ::-moz-selection {
-    background-color: #c8a951;
-    color: #1a1a1a;
+    background-color: #c8a951 !important;
+    color: #1a1a1a !important;
 }
 
 ::selection {
-    background-color: #c8a951;
-    color: #1a1a1a;
+    background-color: #c8a951 !important;
+    color: #1a1a1a !important;
 }
 
 .container {
@@ -1015,9 +1015,14 @@ body {
     font-family: 'Jost', sans-serif;
 }
 
-.xv-home-favorite:hover {
-    border-color: #c8a951;
-    color: #c8a951;
+button.xv-home-favorite:hover {
+    border-color: #c8a951 !important;
+    color: #c8a951 !important;
+    -webkit-text-fill-color: #c8a951 !important;
+}
+
+button.xv-home-favorite:hover svg {
+    stroke: #c8a951 !important;
 }
 
 .xv-home-favorite.is-active {
