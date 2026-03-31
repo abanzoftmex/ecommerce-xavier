@@ -19,7 +19,7 @@ $contact_url = home_url( '/contact/' );
         <div class="xv-about-container">
             <h1>Nuestra historia se crea pieza por pieza</h1>
             <p>
-                En Xavier diseñamos joyería contemporánea con intención: formas limpias, materiales seleccionados y detalles que
+                En ANIKA diseñamos joyería contemporánea con intención: formas limpias, materiales seleccionados y detalles que
                 acompañan tu estilo todos los días. Creemos en piezas que se sienten personales y trascienden temporadas.
             </p>
         </div>
