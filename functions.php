@@ -89,6 +89,30 @@ function astra_child_get_favorite_ids_from_cookie() {
     return $ids;
 }
 
+function astra_child_get_favorite_ids_from_request() {
+    if ( ! isset( $_GET['xv_ids'] ) ) {
+        return array();
+    }
+
+    $raw_value = wp_unslash( $_GET['xv_ids'] );
+
+    if ( is_array( $raw_value ) ) {
+        $raw_value = implode( ',', $raw_value );
+    }
+
+    $raw_value = sanitize_text_field( (string) $raw_value );
+
+    if ( '' === $raw_value ) {
+        return array();
+    }
+
+    $ids = array_map( 'absint', explode( ',', $raw_value ) );
+    $ids = array_filter( $ids );
+    $ids = array_values( array_unique( $ids ) );
+
+    return $ids;
+}
+
 function astra_child_is_favorites_view() {
     return isset( $_GET['xv_favorites'] ) && '1' === sanitize_text_field( wp_unslash( $_GET['xv_favorites'] ) );
 }
@@ -104,7 +128,11 @@ function astra_child_apply_favorites_filter_to_shop( $query ) {
         return;
     }
 
-    $favorite_ids = astra_child_get_favorite_ids_from_cookie();
+    $favorite_ids = astra_child_get_favorite_ids_from_request();
+
+    if ( empty( $favorite_ids ) ) {
+        $favorite_ids = astra_child_get_favorite_ids_from_cookie();
+    }
 
     if ( empty( $favorite_ids ) ) {
         $query->set( 'post__in', array( 0 ) );
@@ -115,6 +143,18 @@ function astra_child_apply_favorites_filter_to_shop( $query ) {
     $query->set( 'orderby', 'post__in' );
 }
 add_action( 'pre_get_posts', 'astra_child_apply_favorites_filter_to_shop' );
+
+add_action( 'template_redirect', function() {
+    if ( ! astra_child_is_favorites_view() ) {
+        return;
+    }
+
+    if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+        define( 'DONOTCACHEPAGE', true );
+    }
+
+    nocache_headers();
+}, 0 );
 
 
 // =============================================

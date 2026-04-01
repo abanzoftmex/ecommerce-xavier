@@ -112,8 +112,16 @@ $wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
 
     function positionHeader() {
         var annH = ann ? ann.offsetHeight : 0;
+        var headerH = header.offsetHeight;
+        var offset = annH + headerH;
+        var visualOffset = Math.max(annH + 52, offset - 18);
+
+        if (document.body.classList.contains('home') || document.body.classList.contains('front-page')) {
+            visualOffset = Math.max(annH + 36, offset - 26);
+        }
+
         header.style.top = annH + 'px';
-        document.body.style.paddingTop = (annH + header.offsetHeight) + 'px';
+        document.body.style.paddingTop = visualOffset + 'px';
     }
 
     function onScroll() {

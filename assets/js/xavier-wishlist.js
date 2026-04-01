@@ -4,6 +4,7 @@
     var config = window.xavierWishlist || {};
     var STORAGE_KEY = config.storageKey || 'xv_favorites';
     var COOKIE_NAME = config.cookieName || 'xv_favorites';
+    var FAVORITES_URL = config.favoritesPageUrl || '/shop/?xv_favorites=1';
     var IN_FAVORITES_VIEW = Number(config.inFavoritesView || 0) === 1;
 
     function normalizeIds(ids) {
@@ -102,6 +103,37 @@
         });
     }
 
+    function buildFavoritesUrl(ids) {
+        var cleanIds = normalizeIds(ids || []);
+
+        try {
+            var url = new URL(FAVORITES_URL, window.location.origin);
+            url.searchParams.set('xv_favorites', '1');
+
+            if (cleanIds.length > 0) {
+                url.searchParams.set('xv_ids', cleanIds.join(','));
+            } else {
+                url.searchParams.delete('xv_ids');
+            }
+
+            // Force a fresh render for personalized favorites pages behind page cache.
+            url.searchParams.set('xv_rt', String(Date.now()));
+
+            return url.pathname + url.search + url.hash;
+        } catch (err) {
+            var idsPart = cleanIds.length > 0 ? '&xv_ids=' + encodeURIComponent(cleanIds.join(',')) : '';
+            return FAVORITES_URL + idsPart + '&xv_rt=' + Date.now();
+        }
+    }
+
+    function updateWishlistLinks(ids) {
+        var href = buildFavoritesUrl(ids);
+
+        document.querySelectorAll('.xavier-wishlist-link').forEach(function (link) {
+            link.setAttribute('href', href);
+        });
+    }
+
     function updateButton(button, ids) {
         var productId = Number(button.getAttribute('data-product-id'));
         if (!Number.isInteger(productId) || productId <= 0) {
@@ -156,6 +188,7 @@
 
     function syncUI(ids) {
         updateCounter(ids);
+        updateWishlistLinks(ids);
         updateButtons(ids);
         ensureFavoritesEmptyState();
     }
@@ -199,6 +232,15 @@
             }
 
             toggleFavorite(productId);
+        });
+
+        document.addEventListener('click', function (event) {
+            var wishlistLink = event.target.closest('.xavier-wishlist-link');
+            if (!wishlistLink) {
+                return;
+            }
+
+            wishlistLink.setAttribute('href', buildFavoritesUrl(readIds()));
         });
 
         window.addEventListener('storage', function (event) {
