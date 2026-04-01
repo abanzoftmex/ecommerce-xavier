@@ -2736,14 +2736,14 @@ body.woocommerce-account .woocommerce-MyAccount-navigation ul {
 }
 
 .xv-mobile-menu__close {
-    width: 32px;
+    width:76px;
     height: 32px;
     border: 1px solid #e8e2d9;
-    border-radius: 50%;
+    border-radius: 34%;
     background: #fff;
     color: #1a1a1a;
-    font-size: 22px;
-    line-height: 1;
+    font-size: 28px;
+    line-height: 0;
     cursor: pointer;
 }
 
