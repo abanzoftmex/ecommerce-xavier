@@ -2682,6 +2682,10 @@ body.woocommerce-account .woocommerce-MyAccount-navigation ul {
     transition: transform 0.22s ease, opacity 0.22s ease, background 0.22s ease;
 }
 
+#xavierHeader.scrolled .xavier-mobile-toggle span {
+    background: #fff;
+}
+
 .xv-mobile-menu-overlay {
     position: fixed;
     inset: 0;
