@@ -186,7 +186,6 @@ $wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
 
     function onScroll() {
         if (window.scrollY > 50) {
-            header.classList.add('scrolled');
             header.style.background = '#1a1a1a';
             header.style.borderBottomColor = '#333';
             header.style.boxShadow = '0 2px 12px rgba(0,0,0,0.15)';
@@ -197,8 +196,12 @@ $wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
             header.querySelectorAll('.xavier-search-form').forEach(function(el) { el.style.background = 'rgba(255,255,255,0.12)'; });
             header.querySelectorAll('.xavier-search-input').forEach(function(el) { el.style.color = '#fff'; });
             header.querySelectorAll('.xavier-search-btn').forEach(function(el) { el.style.color = 'rgba(255,255,255,0.7)'; });
+            header.querySelectorAll('.xavier-mobile-toggle').forEach(function(el) {
+                el.style.background = 'rgba(255,255,255,0.08)';
+                el.style.borderColor = 'rgba(255,255,255,0.45)';
+            });
+            header.querySelectorAll('.xavier-mobile-toggle span').forEach(function(el) { el.style.background = '#fff'; });
         } else {
-            header.classList.remove('scrolled');
             header.style.background = 'transparent';
             header.style.borderBottomColor = 'rgba(255,255,255,0.1)';
             header.style.boxShadow = 'none';
@@ -209,6 +212,11 @@ $wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
             header.querySelectorAll('.xavier-search-form').forEach(function(el) { el.style.background = 'rgba(0,0,0,0.05)'; });
             header.querySelectorAll('.xavier-search-input').forEach(function(el) { el.style.color = '#555'; });
             header.querySelectorAll('.xavier-search-btn').forEach(function(el) { el.style.color = '#666'; });
+            header.querySelectorAll('.xavier-mobile-toggle').forEach(function(el) {
+                el.style.background = '#fff';
+                el.style.borderColor = '#e8e2d9';
+            });
+            header.querySelectorAll('.xavier-mobile-toggle span').forEach(function(el) { el.style.background = '#1a1a1a'; });
         }
     }
 
