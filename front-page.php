@@ -30,6 +30,14 @@ get_header();
             #heroButtons a { display:inline-block!important;padding:12px 24px!important;font-family:'Jost',sans-serif!important;font-size:12px!important;font-weight:500!important;text-transform:uppercase!important;letter-spacing:1.2px!important;text-decoration:none!important;border-radius:0!important;visibility:visible!important;opacity:1!important; }
             #heroBtnPrimary { background:#1a1a1a!important;color:#fff!important;border:1.5px solid #1a1a1a!important;-webkit-text-fill-color:#fff!important; }
             #heroBtnSecondary { background:transparent!important;color:#1a1a1a!important;border:1.5px solid #1a1a1a!important;-webkit-text-fill-color:#1a1a1a!important; }
+
+            @media (max-width: 980px) {
+                #heroSection { min-height:460px!important; }
+                #heroContent { padding:56px 24px 40px!important; max-width:100%!important; }
+                #heroTitle { font-size:44px!important; line-height:1.02!important; margin-bottom:24px!important; }
+                #heroButtons { width:100%!important; gap:10px!important; }
+                #heroButtons a { width:100%!important; text-align:center!important; }
+            }
         </style>
         <section id="heroSection">
             <canvas id="heroCanvas" class="hero-particles-canvas"></canvas>

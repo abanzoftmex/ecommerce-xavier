@@ -2654,3 +2654,179 @@ body.woocommerce-account .woocommerce-MyAccount-navigation ul {
     transform: translateY(-2px);
     box-shadow: 0 14px 30px rgba(0, 0, 0, 0.075);
 }
+
+/* =====================
+   MOBILE NAVBAR + MENU
+===================== */
+
+.xavier-mobile-toggle {
+    display: none;
+    width: 34px;
+    height: 34px;
+    border: 1px solid #e8e2d9;
+    border-radius: 50%;
+    background: #fff;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.xavier-mobile-toggle span {
+    width: 14px;
+    height: 1.5px;
+    background: #1a1a1a;
+    display: block;
+    transition: transform 0.22s ease, opacity 0.22s ease, background 0.22s ease;
+}
+
+.xv-mobile-menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.22s ease;
+    z-index: 9996;
+}
+
+.xv-mobile-menu-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.xv-mobile-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(360px, 90vw);
+    height: 100dvh;
+    background: #fff;
+    border-left: 1px solid #e8e2d9;
+    transform: translateX(100%);
+    transition: transform 0.24s ease;
+    z-index: 9997;
+    display: flex;
+    flex-direction: column;
+}
+
+.xv-mobile-menu.is-open {
+    transform: translateX(0);
+}
+
+.xv-mobile-menu__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 16px;
+    border-bottom: 1px solid #f1ede7;
+}
+
+.xv-mobile-menu__header p {
+    margin: 0;
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+    color: #6a645c;
+}
+
+.xv-mobile-menu__close {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #e8e2d9;
+    border-radius: 50%;
+    background: #fff;
+    color: #1a1a1a;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.xv-mobile-menu__nav {
+    padding: 10px 16px;
+}
+
+.xv-mobile-nav-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.xv-mobile-nav-menu li {
+    border-bottom: 1px solid #f2eee8;
+}
+
+.xv-mobile-nav-menu a {
+    display: block;
+    padding: 13px 2px;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: #1a1a1a;
+    text-decoration: none;
+}
+
+.xv-mobile-menu__links {
+    margin-top: auto;
+    border-top: 1px solid #f1ede7;
+    padding: 12px 16px 16px;
+    display: grid;
+    gap: 8px;
+}
+
+.xv-mobile-menu__links a {
+    display: block;
+    border: 1px solid #e8e2d9;
+    padding: 10px 12px;
+    text-decoration: none;
+    color: #1a1a1a;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+}
+
+body.xv-mobile-menu-open {
+    overflow: hidden;
+}
+
+@media (max-width: 980px) {
+    #announcementBar {
+        padding: 8px 12px !important;
+        font-size: 10px !important;
+    }
+
+    #xavierHeader nav {
+        padding: 12px 14px 14px !important;
+        gap: 10px !important;
+    }
+
+    #xavierHeader .xavier-menu-wrap,
+    #xavierHeader .xavier-search-form {
+        display: none !important;
+    }
+
+    #xavierHeader .xavier-header-actions {
+        margin-left: auto !important;
+        gap: 10px !important;
+    }
+
+    #xavierHeader .xavier-logo img {
+        height: 34px !important;
+    }
+
+    #xavierHeader .xavier-icon-link svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .xavier-mobile-toggle {
+        display: inline-flex;
+    }
+}

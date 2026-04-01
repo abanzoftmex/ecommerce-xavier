@@ -97,10 +97,44 @@ $wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
                 <span class="cart-count" style="position:absolute;top:-6px;right:-8px;background:#c8a951;color:#fff;border-radius:50%;width:16px;height:16px;font-size:10px;display:<?php echo $header_cart_count > 0 ? 'flex' : 'none'; ?>;align-items:center;justify-content:center;font-family:'Jost',sans-serif;"><?php echo esc_html( $header_cart_count ); ?></span>
             </a>
             <?php endif; ?>
+
+            <button type="button" class="xavier-mobile-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="xvMobileMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
 
     </nav>
 </header>
+
+<div id="xvMobileMenuOverlay" class="xv-mobile-menu-overlay" aria-hidden="true"></div>
+
+<aside id="xvMobileMenu" class="xv-mobile-menu" aria-hidden="true" aria-label="Menu mobile">
+    <div class="xv-mobile-menu__header">
+        <p>Menu</p>
+        <button type="button" class="xv-mobile-menu__close" aria-label="Cerrar menu">×</button>
+    </div>
+
+    <nav class="xv-mobile-menu__nav" aria-label="Menu principal mobile">
+        <?php
+        wp_nav_menu( array(
+            'theme_location' => 'primary',
+            'menu_id'        => 'xavier-mobile-menu',
+            'menu_class'     => 'xv-mobile-nav-menu',
+            'container'      => false,
+            'fallback_cb'    => false,
+            'depth'          => 1,
+        ) );
+        ?>
+    </nav>
+
+    <div class="xv-mobile-menu__links">
+        <a href="<?php echo esc_url( $wishlist_url ); ?>">Favoritos</a>
+        <a href="<?php echo esc_url( $account_url ); ?>">Mi cuenta</a>
+        <a href="<?php echo esc_url( $cart_url ); ?>">Carrito</a>
+    </div>
+</aside>
 
 <?php if ( function_exists( 'WC' ) ) : ?>
 <div id="xvCartDrawerOverlay" class="xv-cart-drawer-overlay" aria-hidden="true"></div>
@@ -125,6 +159,10 @@ $wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
 (function() {
     var header = document.getElementById('xavierHeader');
     var ann = document.getElementById('announcementBar');
+    var mobileToggle = document.querySelector('.xavier-mobile-toggle');
+    var mobileMenu = document.getElementById('xvMobileMenu');
+    var mobileMenuOverlay = document.getElementById('xvMobileMenuOverlay');
+    var mobileMenuClose = mobileMenu ? mobileMenu.querySelector('.xv-mobile-menu__close') : null;
     var cartLink = document.querySelector('.xavier-cart-link');
     var cartDrawer = document.getElementById('xvCartDrawer');
     var cartDrawerOverlay = document.getElementById('xvCartDrawerOverlay');
@@ -158,6 +196,7 @@ $wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
             header.querySelectorAll('.xavier-search-form').forEach(function(el) { el.style.background = 'rgba(255,255,255,0.12)'; });
             header.querySelectorAll('.xavier-search-input').forEach(function(el) { el.style.color = '#fff'; });
             header.querySelectorAll('.xavier-search-btn').forEach(function(el) { el.style.color = 'rgba(255,255,255,0.7)'; });
+            header.querySelectorAll('.xavier-mobile-toggle span').forEach(function(el) { el.style.background = '#fff'; });
         } else {
             header.style.background = 'transparent';
             header.style.borderBottomColor = 'rgba(255,255,255,0.1)';
@@ -169,7 +208,28 @@ $wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
             header.querySelectorAll('.xavier-search-form').forEach(function(el) { el.style.background = 'rgba(0,0,0,0.05)'; });
             header.querySelectorAll('.xavier-search-input').forEach(function(el) { el.style.color = '#555'; });
             header.querySelectorAll('.xavier-search-btn').forEach(function(el) { el.style.color = '#666'; });
+            header.querySelectorAll('.xavier-mobile-toggle span').forEach(function(el) { el.style.background = '#1a1a1a'; });
         }
+    }
+
+    function openMobileMenu() {
+        if (!mobileMenu || !mobileMenuOverlay || !mobileToggle) return;
+        mobileMenu.classList.add('is-open');
+        mobileMenuOverlay.classList.add('is-open');
+        mobileMenu.setAttribute('aria-hidden', 'false');
+        mobileMenuOverlay.setAttribute('aria-hidden', 'false');
+        mobileToggle.setAttribute('aria-expanded', 'true');
+        document.body.classList.add('xv-mobile-menu-open');
+    }
+
+    function closeMobileMenu() {
+        if (!mobileMenu || !mobileMenuOverlay || !mobileToggle) return;
+        mobileMenu.classList.remove('is-open');
+        mobileMenuOverlay.classList.remove('is-open');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+        mobileMenuOverlay.setAttribute('aria-hidden', 'true');
+        mobileToggle.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('xv-mobile-menu-open');
     }
 
     function openCartDrawer() {
@@ -300,7 +360,32 @@ $wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
     if (cartLink) {
         cartLink.addEventListener('click', function(event) {
             event.preventDefault();
+            closeMobileMenu();
             openCartDrawer();
+        });
+    }
+
+    if (mobileToggle) {
+        mobileToggle.addEventListener('click', function() {
+            if (mobileMenu && mobileMenu.classList.contains('is-open')) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        });
+    }
+
+    if (mobileMenuOverlay) {
+        mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+    }
+
+    if (mobileMenuClose) {
+        mobileMenuClose.addEventListener('click', closeMobileMenu);
+    }
+
+    if (mobileMenu) {
+        mobileMenu.querySelectorAll('a').forEach(function(link) {
+            link.addEventListener('click', closeMobileMenu);
         });
     }
 
@@ -314,7 +399,14 @@ $wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
 
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
+            closeMobileMenu();
             closeCartDrawer();
+        }
+    });
+
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 980) {
+            closeMobileMenu();
         }
     });
 
