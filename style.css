@@ -1922,6 +1922,191 @@ button.xv-home-favorite:hover svg {
 }
 
 /* =====================
+   HERO OFFSET FIX (HOME)
+===================== */
+
+body.home #primary.child-front-page,
+body.front-page #primary.child-front-page,
+body.home #main.home-main,
+body.front-page #main.home-main {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+body.home #heroSection,
+body.front-page #heroSection {
+    margin-top: 0 !important;
+}
+
+/* =====================
+   CART DRAWER
+===================== */
+
+.xv-cart-drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 9997;
+}
+
+.xv-cart-drawer-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.xv-cart-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(420px, 92vw);
+    height: 100dvh;
+    background: #fff;
+    border-left: 1px solid #e8e2d9;
+    box-shadow: -16px 0 40px rgba(0, 0, 0, 0.18);
+    transform: translateX(100%);
+    transition: transform 0.28s ease;
+    z-index: 9998;
+    display: flex;
+    flex-direction: column;
+}
+
+.xv-cart-drawer.is-open {
+    transform: translateX(0);
+}
+
+.xv-cart-drawer__header {
+    padding: 22px 20px 16px;
+    border-bottom: 1px solid #f1ede7;
+    position: relative;
+}
+
+.xv-cart-drawer__kicker {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #8a8175;
+    margin: 0 0 4px;
+}
+
+.xv-cart-drawer__header h3 {
+    margin: 0;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 40px;
+    line-height: 1;
+    font-weight: 400;
+    color: #1a1a1a;
+}
+
+.xv-cart-drawer__close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    width: 34px;
+    height: 34px;
+    border: 1px solid #e8e2d9;
+    background: #fff;
+    color: #1a1a1a;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    line-height: 1;
+}
+
+.xv-cart-drawer__body {
+    flex: 1;
+    overflow: auto;
+    padding: 14px 16px 18px;
+}
+
+.xv-cart-drawer .woocommerce-mini-cart {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.xv-cart-drawer .woocommerce-mini-cart-item {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 12px;
+    align-items: start;
+    border-bottom: 1px solid #f1ede7;
+    padding: 12px 0;
+    position: relative;
+}
+
+.xv-cart-drawer .woocommerce-mini-cart-item a {
+    color: #1a1a1a;
+    text-decoration: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+}
+
+.xv-cart-drawer .woocommerce-mini-cart-item img {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    background: #f0efed;
+    border: 1px solid #ece6dc;
+}
+
+.xv-cart-drawer .woocommerce-mini-cart-item .quantity {
+    display: block;
+    margin-top: 4px;
+    color: #6a645c;
+    font-size: 12px;
+}
+
+.xv-cart-drawer .woocommerce-mini-cart__total,
+.xv-cart-drawer .woocommerce-mini-cart__buttons {
+    padding-top: 12px;
+}
+
+.xv-cart-drawer .woocommerce-mini-cart__total {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #ece6dc;
+    margin-top: 12px;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+}
+
+.xv-cart-drawer .woocommerce-mini-cart__buttons {
+    display: grid;
+    gap: 10px;
+}
+
+.xv-cart-drawer .woocommerce-mini-cart__buttons .button {
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+    border: 1px solid #1a1a1a;
+    background: #1a1a1a;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 11px;
+    font-family: 'Jost', sans-serif;
+    text-align: center;
+    padding: 12px 14px;
+}
+
+.xv-cart-drawer .woocommerce-mini-cart__buttons .button.checkout {
+    background: #c8a951;
+    border-color: #c8a951;
+    color: #1a1a1a;
+}
+
+body.xv-drawer-open {
+    overflow: hidden;
+}
+
+/* =====================
    ABOUT PAGE
 ===================== */
 

@@ -19,6 +19,8 @@ get_header();
             : home_url( '/shop/' );
         ?>
         <style>
+            #primary.child-front-page { margin:0!important;padding:0!important; }
+            #main.home-main { margin:0!important;padding:0!important; }
             #heroSection { position:relative;width:100%;min-height:540px;overflow:hidden;display:flex!important;align-items:center;background-color:#f0efed!important;background-image:none!important;isolation:isolate; }
             #heroCanvas { position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;display:block!important; }
             #heroContent { position:relative!important;z-index:10!important;display:block!important;visibility:visible!important;opacity:1!important;padding:80px!important;max-width:480px!important; }

@@ -93,9 +93,8 @@ $wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
                     <line x1="3" y1="6" x2="21" y2="6"></line>
                     <path d="M16 10a4 4 0 0 1-8 0"></path>
                 </svg>
-                <?php if ( WC()->cart->get_cart_contents_count() > 0 ) : ?>
-                    <span class="cart-count" style="position:absolute;top:-6px;right:-8px;background:#c8a951;color:#fff;border-radius:50%;width:16px;height:16px;font-size:10px;display:flex;align-items:center;justify-content:center;font-family:'Jost',sans-serif;"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
-                <?php endif; ?>
+                <?php $header_cart_count = WC()->cart->get_cart_contents_count(); ?>
+                <span class="cart-count" style="position:absolute;top:-6px;right:-8px;background:#c8a951;color:#fff;border-radius:50%;width:16px;height:16px;font-size:10px;display:<?php echo $header_cart_count > 0 ? 'flex' : 'none'; ?>;align-items:center;justify-content:center;font-family:'Jost',sans-serif;"><?php echo esc_html( $header_cart_count ); ?></span>
             </a>
             <?php endif; ?>
         </div>
@@ -103,11 +102,33 @@ $wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
     </nav>
 </header>
 
+<?php if ( function_exists( 'WC' ) ) : ?>
+<div id="xvCartDrawerOverlay" class="xv-cart-drawer-overlay" aria-hidden="true"></div>
+
+<aside id="xvCartDrawer" class="xv-cart-drawer" aria-hidden="true" aria-label="Carrito lateral">
+    <div class="xv-cart-drawer__header">
+        <p class="xv-cart-drawer__kicker">Seleccion actual</p>
+        <h3>Carrito</h3>
+        <button type="button" class="xv-cart-drawer__close" aria-label="Cerrar carrito">×</button>
+    </div>
+
+    <div class="xv-cart-drawer__body">
+        <div class="widget_shopping_cart_content">
+            <?php woocommerce_mini_cart(); ?>
+        </div>
+    </div>
+</aside>
+<?php endif; ?>
+
 <!-- Navbar Scroll Script -->
 <script>
 (function() {
     var header = document.getElementById('xavierHeader');
     var ann = document.getElementById('announcementBar');
+    var cartLink = document.querySelector('.xavier-cart-link');
+    var cartDrawer = document.getElementById('xvCartDrawer');
+    var cartDrawerOverlay = document.getElementById('xvCartDrawerOverlay');
+    var cartDrawerClose = cartDrawer ? cartDrawer.querySelector('.xv-cart-drawer__close') : null;
     if (!header) return;
 
     function positionHeader() {
@@ -150,11 +171,176 @@ $wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
         }
     }
 
+    function openCartDrawer() {
+        if (!cartDrawer || !cartDrawerOverlay) return;
+        cartDrawer.classList.add('is-open');
+        cartDrawerOverlay.classList.add('is-open');
+        cartDrawer.setAttribute('aria-hidden', 'false');
+        cartDrawerOverlay.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('xv-drawer-open');
+    }
+
+    function closeCartDrawer() {
+        if (!cartDrawer || !cartDrawerOverlay) return;
+        cartDrawer.classList.remove('is-open');
+        cartDrawerOverlay.classList.remove('is-open');
+        cartDrawer.setAttribute('aria-hidden', 'true');
+        cartDrawerOverlay.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('xv-drawer-open');
+    }
+
+    function refreshCartCountFromDOM() {
+        if (!cartLink) return;
+
+        var countEl = cartLink.querySelector('.cart-count');
+        if (!countEl) return;
+
+        var qtyNodes = document.querySelectorAll('#xvCartDrawer .woocommerce-mini-cart-item .quantity');
+        var totalCount = 0;
+
+        qtyNodes.forEach(function(node) {
+            var text = (node.textContent || '').trim();
+            var match = text.match(/^(\d+)\s*[×x]/);
+            if (match && match[1]) {
+                totalCount += parseInt(match[1], 10);
+            } else if (text) {
+                totalCount += 1;
+            }
+        });
+
+        countEl.textContent = String(totalCount);
+        countEl.style.display = totalCount > 0 ? 'flex' : 'none';
+    }
+
+    function applyWooFragments(fragments) {
+        if (!fragments) return;
+        Object.keys(fragments).forEach(function(selector) {
+            var html = fragments[selector];
+            document.querySelectorAll(selector).forEach(function(node) {
+                node.outerHTML = html;
+            });
+        });
+        refreshCartCountFromDOM();
+    }
+
+    function getAjaxAddToCartUrl() {
+        if (window.wc_add_to_cart_params && window.wc_add_to_cart_params.wc_ajax_url) {
+            return window.wc_add_to_cart_params.wc_ajax_url.replace('%%endpoint%%', 'add_to_cart');
+        }
+        return window.location.origin + '/?wc-ajax=add_to_cart';
+    }
+
+    function getFormProductId(form) {
+        var hidden = form.querySelector('input[name="add-to-cart"]');
+        if (hidden && hidden.value) {
+            return parseInt(hidden.value, 10);
+        }
+
+        var button = form.querySelector('button[name="add-to-cart"][value]');
+        if (button && button.value) {
+            return parseInt(button.value, 10);
+        }
+
+        return 0;
+    }
+
+    function ajaxAddToCart(form) {
+        var productId = getFormProductId(form);
+        if (!productId) return false;
+
+        // Let WooCommerce handle variable/grouped products with its own flow.
+        if (form.querySelector('input[name="variation_id"]')) {
+            return false;
+        }
+
+        var quantityInput = form.querySelector('[name="quantity"]');
+        var quantity = quantityInput ? parseInt(quantityInput.value, 10) : 1;
+        if (!quantity || quantity < 1) quantity = 1;
+
+        var payload = new URLSearchParams();
+        payload.set('product_id', String(productId));
+        payload.set('quantity', String(quantity));
+
+        fetch(getAjaxAddToCartUrl(), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            },
+            body: payload.toString(),
+            credentials: 'same-origin'
+        })
+        .then(function(response) { return response.json(); })
+        .then(function(data) {
+            if (!data || data.error) {
+                form.submit();
+                return;
+            }
+
+            applyWooFragments(data.fragments || {});
+            openCartDrawer();
+
+            if (window.jQuery) {
+                window.jQuery(document.body).trigger('added_to_cart', [data.fragments, data.cart_hash]);
+            }
+        })
+        .catch(function() {
+            form.submit();
+        });
+
+        return true;
+    }
+
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('load', positionHeader);
     window.addEventListener('resize', positionHeader);
     positionHeader();
     onScroll();
+
+    if (cartLink) {
+        cartLink.addEventListener('click', function(event) {
+            event.preventDefault();
+            openCartDrawer();
+        });
+    }
+
+    if (cartDrawerOverlay) {
+        cartDrawerOverlay.addEventListener('click', closeCartDrawer);
+    }
+
+    if (cartDrawerClose) {
+        cartDrawerClose.addEventListener('click', closeCartDrawer);
+    }
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeCartDrawer();
+        }
+    });
+
+    document.addEventListener('submit', function(event) {
+        var form = event.target;
+        if (!form || form.tagName !== 'FORM') return;
+
+        var hasQuickAdd = !!form.querySelector('.xv-quick-add');
+        var hasSingleAdd = !!form.querySelector('#xvAddToCart');
+        if (!hasQuickAdd && !hasSingleAdd) return;
+
+        if (ajaxAddToCart(form)) {
+            event.preventDefault();
+        }
+    });
+
+    var params = new URLSearchParams(window.location.search);
+    if (params.has('add-to-cart') || params.has('added-to-cart')) {
+        openCartDrawer();
+    }
+
+    if (window.jQuery) {
+        window.jQuery(document.body).on('added_to_cart', function(event, fragments) {
+            applyWooFragments(fragments || {});
+            openCartDrawer();
+        });
+    }
 
     // Style menu items inline (override Astra)
     header.querySelectorAll('.xavier-nav-menu li').forEach(function(li) {
