@@ -14,12 +14,17 @@ function astra_child_enqueue_styles() {
     // Encolamos el child DESPUÉS de ese handle para asegurar cascada correcta.
     $parent_handle = wp_style_is( 'astra-theme-css', 'registered' ) ? 'astra-theme-css' : false;
     $deps = $parent_handle ? array( $parent_handle ) : array();
+    $theme_version = wp_get_theme()->get( 'Version' );
+    $style_path    = get_stylesheet_directory() . '/style.css';
+    $style_version = file_exists( $style_path ) ? filemtime( $style_path ) : $theme_version;
+    $wishlist_path = get_stylesheet_directory() . '/assets/js/xavier-wishlist.js';
+    $wishlist_ver  = file_exists( $wishlist_path ) ? filemtime( $wishlist_path ) : $theme_version;
 
     wp_enqueue_style(
         'astra-child-style',
         get_stylesheet_directory_uri() . '/style.css',
         $deps,
-        wp_get_theme()->get( 'Version' )
+        $style_version
     );
 
     // Google Fonts – Cormorant Garamond (editorial serif) + Jost (clean sans)
@@ -34,7 +39,7 @@ function astra_child_enqueue_styles() {
         'xavier-wishlist',
         get_stylesheet_directory_uri() . '/assets/js/xavier-wishlist.js',
         array(),
-        wp_get_theme()->get( 'Version' ),
+        $wishlist_ver,
         true
     );
 

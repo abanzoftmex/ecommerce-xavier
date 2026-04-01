@@ -55,7 +55,7 @@ unset( $xv_add_args['paged'] );
     .xv-card-img { width:100%;aspect-ratio:3/4;object-fit:cover;display:block!important;transition:opacity 0.3s ease,transform 0.4s ease; }
     .xv-card-img-placeholder { width:100%;aspect-ratio:3/4;background:#e8e6e3;display:flex;align-items:center;justify-content:center;color:#bbb;font-family:'Jost',sans-serif;font-size:13px; }
     .xv-card-badge { position:absolute;top:12px;left:12px;background:#1a1a1a;color:#fff;font-family:'Jost',sans-serif;font-size:10px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;padding:4px 10px;z-index:2; }
-    .xv-card-badge.xv-sale { background:#c0392b; }
+    .xv-card-badge.xv-sale { background:#c8a951;color:#1a1a1a; }
     .xv-favorite-toggle { position:absolute;top:12px;right:12px;display:flex;align-items:center;justify-content:center;width:34px;height:34px;min-width:34px;max-width:34px;min-height:34px;max-height:34px;padding:0;margin:0;border-radius:50%;border:1px solid rgba(26,26,26,0.16);background:rgba(255,255,255,0.9);color:#1a1a1a;cursor:pointer;z-index:3;transition:all 0.25s ease;box-sizing:border-box;aspect-ratio:1;flex-shrink:0;-webkit-appearance:none;appearance:none; }
     .xv-card-img-wrap button.xv-favorite-toggle:hover { border-color:#c8a951!important;color:#c8a951!important;-webkit-text-fill-color:#c8a951!important;transform:translateY(-1px); }
     .xv-card-img-wrap .xv-favorite-toggle::before { content:'♡';font-size:18px;line-height:1;color:currentColor;font-family:'Jost',sans-serif; }

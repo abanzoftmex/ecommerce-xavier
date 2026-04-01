@@ -196,7 +196,7 @@ get_header(); ?>
                 <?php elseif ( $product->is_type( 'variable' ) ) : ?>
                     <?php woocommerce_variable_add_to_cart(); ?>
                 <?php elseif ( ! $product->is_in_stock() ) : ?>
-                    <p style="font-family:'Jost',sans-serif;font-size:14px;color:#c0392b;font-weight:500;">Agotado</p>
+                    <p style="font-family:'Jost',sans-serif;font-size:14px;color:#1a1a1a;font-weight:500;">Agotado</p>
                 <?php endif; ?>
             </div>
 
