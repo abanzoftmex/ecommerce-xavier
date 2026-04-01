@@ -31,7 +31,7 @@ $wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
 
 <!-- Main Header -->
 <header id="xavierHeader" style="position:fixed;top:0;left:0;right:0;z-index:1000;background:transparent;border-bottom:1px solid rgba(255,255,255,0.1);transition:background 0.35s ease,border-color 0.35s ease,box-shadow 0.35s ease;">
-    <nav style="display:flex;align-items:center;justify-content:space-between;padding:16px 40px;max-width:1440px;margin:0 auto;gap:24px;">
+    <nav style="display:flex;align-items:center;justify-content:space-between;padding:14px 40px 18px;max-width:1440px;margin:0 auto;gap:24px;">
 
         <!-- Logo -->
         <div style="flex-shrink:0;">
@@ -135,10 +135,11 @@ $wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
         var annH = ann ? ann.offsetHeight : 0;
         var headerH = header.offsetHeight;
         var offset = annH + headerH;
-        var visualOffset = Math.max(annH + 52, offset - 18);
+        var visualGap = 12;
+        var visualOffset = offset + visualGap;
 
         if (document.body.classList.contains('home') || document.body.classList.contains('front-page')) {
-            visualOffset = Math.max(annH + 36, offset - 26);
+            visualOffset = offset + 8;
         }
 
         header.style.top = annH + 'px';

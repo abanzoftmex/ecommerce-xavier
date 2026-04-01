@@ -2608,3 +2608,49 @@ body.woocommerce-account .woocommerce-MyAccount-content h3 {
         grid-column: 1 !important;
     }
 }
+
+/* =====================
+   MICRO VISUAL POLISH
+===================== */
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+#xavierHeader {
+    backdrop-filter: saturate(120%) blur(6px);
+    -webkit-backdrop-filter: saturate(120%) blur(6px);
+}
+
+a,
+button,
+input[type="submit"],
+input[type="button"],
+.button {
+    transition: color 0.22s ease, background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
+}
+
+.xv-product-card,
+.category-card,
+.trending-card,
+.xv-about-card,
+.xv-about-values,
+.xv-contact-form-wrap,
+body.woocommerce-cart table.shop_table,
+body.woocommerce-cart .cart_totals,
+body.woocommerce-account .woocommerce-MyAccount-content,
+body.woocommerce-account .woocommerce-MyAccount-navigation ul {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.045);
+}
+
+.xv-product-card:hover,
+.category-card:hover,
+.trending-card:hover,
+.xv-about-card:hover,
+.xv-about-values:hover,
+.xv-contact-form-wrap:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.075);
+}
