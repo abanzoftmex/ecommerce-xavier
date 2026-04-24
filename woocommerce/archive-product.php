@@ -3,6 +3,22 @@
  * Custom Shop / Product Archive Page
  * Overrides WooCommerce default archive-product.php
  *
+ * GUIA RAPIDA PARA EDITAR ESTA PAGINA (Tienda / Catalogo):
+ * - TITULO DE LA PAGINA: se muestra automaticamente segun la categoria
+ *   Para cambiar el texto de "Tienda": busca echo 'Tienda';
+ * - FILTROS DE CATEGORIA (pastillas): se generan automaticamente desde
+ *   WordPress -> Productos -> Categorias
+ * - ORDEN DE PRODUCTOS (selector): edita el array $options con los textos
+ * - TARJETAS DE PRODUCTO: busca class="xv-product-card"
+ * - BOTON "ANADIR AL CARRITO" en cada tarjeta: busca class="xv-quick-add"
+ * - PAGINACION: se genera automaticamente
+ * Los estilos visuales estan en el bloque <style> al inicio del archivo
+ * COLORES CLAVE del catalogo:
+ *   Fondo de imagen sin foto: #f0efed (crema)
+ *   Boton hover: rgba(26,26,26,0.92) (negro semitransparente)
+ *   Pastilla activa: #1a1a1a (negro)
+ *   Insignia de oferta: #c8a951 (dorado)
+ *
  * @package Astra Child
  */
 

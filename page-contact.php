@@ -2,6 +2,18 @@
 /**
  * Contact page template for slug: /contact
  *
+ * GUIA RAPIDA PARA EDITAR ESTA PAGINA:
+ * - TITULO HERO: busca <h1>Estamos para ayudarte con tu compra</h1>
+ * - TEXTO DE INTRODUCCION: busca class="xv-contact-intro"
+ * - TAGS/CHIPS (atencion, respuesta...): busca class="xv-contact-tags"
+ * - DATOS DE WHATSAPP: busca <h2>WhatsApp</h2> y edita el numero
+ * - DATOS DE EMAIL: busca <h2>Email</h2>
+ * - DATOS DE UBICACION: busca <h2>Visitanos</h2>
+ * - TITULO DEL FORMULARIO: busca <h2>Cuentanos como te podemos ayudar</h2>
+ * - CAMPOS DEL FORMULARIO: cada campo tiene un <label> y un <input>
+ * - TEXTO DEL BOTON ENVIAR: busca class="xv-contact-submit"
+ * Los estilos visuales estan en style.css en la seccion CONTACT PAGE
+ *
  * @package Astra Child
  */
 

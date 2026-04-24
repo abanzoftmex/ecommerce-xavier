@@ -24,6 +24,14 @@ $wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
     : 0;
 ?>
 
+<!-- ═══════════════════════════════════════════════════════════
+     BARRA DE ANUNCIO (la barra negra superior con el código)
+     ═══════════════════════════════════════════════════════════
+     PARA EDITAR EL COLOR DE FONDO: cambia background:#1a1a1a  (negro actual)
+     PARA EDITAR EL COLOR DEL TEXTO: cambia color:#fff  (blanco actual)
+     PARA EDITAR EL TEXTO DEL ANUNCIO: cambia el texto dentro del <div>
+     PARA EDITAR EL CÓDIGO PROMOCIONAL: cambia "HEY20" por tu código
+     PARA OCULTAR LA BARRA: agrega display:none al style del <div> -->
 <!-- Announcement Bar -->
 <div id="announcementBar" style="background:#1a1a1a;color:#fff;text-align:center;padding:10px 20px;font-size:13px;letter-spacing:0.5px;font-family:'Jost',sans-serif;position:fixed;top:0;left:0;right:0;z-index:1001;">
     Aprovecha nuestro código al realizar tu compra en línea: Code <a href="<?php echo esc_url( $shop_url ); ?>" style="color:#fff;font-weight:600;text-decoration:underline;"><strong>HEY20</strong></a>
@@ -33,6 +41,12 @@ $wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
 <header id="xavierHeader" style="position:fixed;top:0;left:0;right:0;z-index:1000;background:transparent;border-bottom:1px solid rgba(255,255,255,0.1);transition:background 0.35s ease,border-color 0.35s ease,box-shadow 0.35s ease;">
     <nav style="display:flex;align-items:center;justify-content:space-between;padding:14px 40px 18px;max-width:1440px;margin:0 auto;gap:24px;">
 
+        <!-- ═══════════════════════════════════════════════════════════
+             LOGO EN LA BARRA DE NAVEGACIÓN
+             ═══════════════════════════════════════════════════════════
+             PARA CAMBIAR EL LOGO: edita la ruta de la imagen en src="..."  
+             PARA CAMBIAR EL TAMAÑO DEL LOGO: edita height:40px (número en px)
+             El archivo de imagen se sube en WordPress → Medios -->
         <!-- Logo -->
         <div style="flex-shrink:0;">
             <a href="<?php echo esc_url( home_url( '/' ) ); ?>" style="text-decoration:none;display:flex;align-items:center;" class="xavier-logo">
@@ -139,6 +153,13 @@ $wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
 <?php if ( function_exists( 'WC' ) ) : ?>
 <div id="xvCartDrawerOverlay" class="xv-cart-drawer-overlay" aria-hidden="true"></div>
 
+<!-- ═══════════════════════════════════════════════════════════
+     PANEL LATERAL DEL CARRITO (sidebar que aparece al agregar productos)
+     ═══════════════════════════════════════════════════════════
+     PARA CAMBIAR EL TEXTO "Seleccion actual": edita el <p class="xv-cart-drawer__kicker">
+     PARA CAMBIAR EL TÍTULO "Carrito": edita el <h3>
+     El estilo visual (colores, tamaño, sombra) se edita en style.css
+     buscando la sección "CART DRAWER" -->
 <aside id="xvCartDrawer" class="xv-cart-drawer" aria-hidden="true" aria-label="Carrito lateral">
     <div class="xv-cart-drawer__header">
         <p class="xv-cart-drawer__kicker">Seleccion actual</p>

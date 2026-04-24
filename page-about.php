@@ -2,6 +2,15 @@
 /**
  * About page template for slug: /about
  *
+ * GUIA RAPIDA PARA EDITAR:
+ * - TITULO PRINCIPAL: busca el <h1> en la seccion xv-about-hero
+ * - PARRAFO DE INTRO: el <p> justo despues del <h1>
+ * - "QUIENES SOMOS": busca <h2>Quienes somos</h2>
+ * - "NUESTRA PROMESA" (caja negra): class="xv-about-highlight"
+ * - "LO QUE NOS DEFINE" (lista): class="xv-about-values"
+ * - BOTONES: busca class="xv-about-cta"
+ * Los estilos estan en style.css en la seccion ABOUT PAGE
+ *
  * @package Astra Child
  */
 

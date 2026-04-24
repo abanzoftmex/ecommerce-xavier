@@ -3,6 +3,22 @@
  * Custom Single Product Page
  * Overrides WooCommerce default single-product.php
  *
+ * GUIA RAPIDA PARA EDITAR ESTA PAGINA (Pagina de Producto Individual):
+ * - NOMBRE DEL PRODUCTO: se toma automaticamente de WordPress
+ * - PRECIO: se toma automaticamente de WooCommerce
+ * - DESCRIPCION CORTA: se toma de WordPress -> Producto -> Descripcion corta
+ * - BOTON "ANADIR AL CARRITO": busca id="xvAddToCart"
+ *   Para cambiar el texto: edita >ANADIR AL CARRITO &rarr;
+ * - SECCION DE ENTREGA (envio gratis, garantia): busca id="xvDelivery"
+ *   Para cambiar los textos: edita los <p> dentro de ese div
+ * - PRODUCTOS RELACIONADOS (al final): busca id="xvRelated"
+ *   Para cambiar cuantos muestra: edita posts_per_page => 4
+ * Los estilos visuales estan en el bloque <style> al inicio del archivo
+ * COLORES CLAVE:
+ *   Precio: #1a1a1a (negro)
+ *   Estrellas de valoracion: #c8a951 (dorado)
+ *   Boton agregar al carrito: background #1a1a1a (negro)
+ *
  * @package Astra Child
  */
 

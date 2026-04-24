@@ -2,6 +2,13 @@
 /**
  * Footer personalizado para el child theme
  * 
+ * GUIA RAPIDA PARA EDITAR EL PIE DE PAGINA:
+ * - LINKS DE COLUMNAS (Ayuda, Empresa...): busca los bloques <div class="footer-section">
+ * - REDES SOCIALES: busca la seccion class="footer-section" que dice REDES SOCIALES
+ * - TELEFONO / EMAIL: busca la seccion class="footer-section" que dice Dudas o comentarios
+ * - COPYRIGHT: busca la seccion class="footer-bottom" -> class="copyright"
+ * - LOGO DEL FOOTER: busca <h2><?php bloginfo('name'); ?></h2>
+ * 
  * @package Astra Child
  */
 ?>
@@ -9,7 +16,11 @@
         <div class="footer-content">
             <div class="footer-sections">
                 
-                <!-- Help Section -->
+                <!-- ═══════════════════════════════════════════════════════════
+                     SECCION DE AYUDA / LINKS
+                     ═══════════════════════════════════════════════════════════
+                     PARA CAMBIAR LOS LINKS: edita el href="#" por la URL
+                     PARA CAMBIAR EL TEXTO: edita el texto dentro de <a> -->
                 <div class="footer-section">
                     <h3>AYUDA</h3>
                     <ul>
@@ -61,7 +72,11 @@
                     </ul>
                 </div>
 
-                <!-- Social Section -->
+                <!-- ═══════════════════════════════════════════════════════════
+                     SECCION DE REDES SOCIALES
+                     ═══════════════════════════════════════════════════════════
+                     PARA AGREGAR UNA RED: agrega un <li><a href="URL">Nombre</a></li>
+                     Asegurate de cambiar el # por el link real de tu red social -->
                 <div class="footer-section">
                     <h3>REDES SOCIALES</h3>
                     <ul>

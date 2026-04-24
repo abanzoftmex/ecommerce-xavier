@@ -3,6 +3,27 @@
  * Template: Página de Inicio (Front Page)
  * Child Theme Override — Astra Child / Ecommerce Xavier
  *
+ * GUÍA RÁPIDA PARA EDITAR ESTA PÁGINA:
+ * ─────────────────────────────────────────────────────────────
+ * • COLORES PRINCIPALES: busca en style.css la sección "PALETTE LOCK"
+ *   Los colores base son:
+ *     #1a1a1a = negro/oscuro principal
+ *     #c8a951 = dorado de la marca
+ *     #f0efed = crema de fondo
+ *     #fff    = blanco
+ * • TIPOGRAFÍAS: el sitio usa dos fuentes:
+ *     'Cormorant Garamond' → para títulos elegantes
+ *     'Jost'              → para textos y botones
+ * • SECCIONES DE ESTA PÁGINA (en orden):
+ *     1. HERO           — el gran banner con título y botones
+ *     2. CATEGORÍAS     — carrusel de categorías de producto
+ *     3. TRENDING       — productos destacados/trending
+ *     4. RECOMENDADOS   — carrusel de productos populares
+ *     5. TRUST BADGES   — íconos de garantías (envío, calidad…)
+ *     6. GALERÍA        — cuadrícula de productos recientes
+ *     7. NEWSLETTER     — sección de suscripción por email
+ * ─────────────────────────────────────────────────────────────
+ *
  * @package Astra Child
  */
 
@@ -12,6 +33,14 @@ get_header();
 <div id="primary" class="content-area child-front-page">
     <main id="main" class="site-main home-main" role="main">
 
+        <!-- ═══════════════════════════════════════════════════════════
+             SECCIÓN 1: HERO — Banner principal de la página de inicio
+             ═══════════════════════════════════════════════════════════
+             PARA EDITAR EL TÍTULO GRANDE: busca <h1 id="heroTitle">
+             PARA EDITAR LOS BOTONES: busca <a id="heroBtnPrimary"> y <a id="heroBtnSecondary">
+             PARA CAMBIAR EL COLOR DE FONDO DEL HERO: edita background-color:#f0efed
+             PARA CAMBIAR EL TAMAÑO DEL TÍTULO: edita font-size:48px en el bloque <style>
+             Los puntitos animados (partículas doradas) se controlan en el script al final -->
         <!-- ===================== HERO ===================== -->
         <?php
         $shop_url = function_exists( 'wc_get_page_id' )
@@ -53,6 +82,14 @@ get_header();
         </section>
 
 
+        <!-- ═══════════════════════════════════════════════════════════
+             SECCIÓN 2: CARRUSEL DE CATEGORÍAS
+             ═══════════════════════════════════════════════════════════
+             Las categorías se administran desde:
+             WordPress → Productos → Categorías
+             PARA CAMBIAR EL TÍTULO: busca <h2>Compra por categoría</h2>
+             PARA CAMBIAR EL BOTÓN INFERIOR: busca <a ...>VER TODOS LOS PRODUCTOS
+             Las imágenes de categoría se asignan en WordPress → Productos → Categorías → editar -->
         <!-- ================ SHOP BY CATEGORY ================ -->
         <section class="category-section">
             <div class="category-container">
@@ -117,6 +154,14 @@ get_header();
             </div>
         </section>
 
+        <!-- ═══════════════════════════════════════════════════════════
+             SECCIÓN 3: PRODUCTOS TRENDING
+             ═══════════════════════════════════════════════════════════
+             Muestra los 2 productos más recientes de la categoría "trending"
+             Si no existe la categoría "trending", muestra los 2 más nuevos
+             PARA CREAR LA CATEGORÍA: WordPress → Productos → Categorías → crear "trending"
+             PARA CAMBIAR CUÁNTOS PRODUCTOS MUESTRA: edita posts_per_page => 2
+             PARA CAMBIAR EL BOTÓN "Comprar ahora": busca class="btn-comprar" -->
         <!-- ================ TRENDING PRODUCTS ================ -->
         <?php
         $trending_cat  = get_term_by( 'slug', 'trending', 'product_cat' );
@@ -184,6 +229,12 @@ get_header();
         </section>
         <?php endif; ?>
 
+        <!-- ═══════════════════════════════════════════════════════════
+             SECCIÓN 4: CARRUSEL "CREEMOS QUE TE PUEDE GUSTAR"
+             ═══════════════════════════════════════════════════════════
+             PARA CAMBIAR EL TÍTULO: busca <h2>Creemos que te puede gustar
+             PARA CAMBIAR CUÁNTOS PRODUCTOS MUESTRA: edita posts_per_page => 8
+             Los productos se ordenan por popularidad (ventas) automáticamente -->
         <!-- ================ WE THINK YOU MAY LIKE ================ -->
         <section class="recommended-section">
             <div class="recommended-container">
@@ -248,6 +299,14 @@ get_header();
             </div>
         </section>
 
+        <!-- ═══════════════════════════════════════════════════════════
+             SECCIÓN 5: ÍCONOS DE CONFIANZA (Garantía, Envío, Calidad…)
+             ═══════════════════════════════════════════════════════════
+             PARA CAMBIAR EL TEXTO DE CADA ÍCONO: busca class="trust-label"
+             Ejemplo: <p class="trust-label">5 Años de Garantía</p>
+             PARA CAMBIAR LOS ÍCONOS: son SVG dibujados en código.
+             Si prefieres imágenes, reemplaza el bloque <svg>...</svg>
+             por <img src="tu-imagen.png" style="width:40px;"> -->
         <!-- ================ TRUST BADGES ================ -->
         <section class="trust-section">
             <div class="trust-container">
@@ -310,6 +369,14 @@ get_header();
             </div>
         </section>
 
+        <!-- ═══════════════════════════════════════════════════════════
+             SECCIÓN 6: GALERÍA DE PRODUCTOS RECIENTES
+             ═══════════════════════════════════════════════════════════
+             Muestra los últimos 8 productos que tengan imagen asignada
+             PARA CAMBIAR EL TÍTULO ITÁLICO: busca <em>Nuestro últimos lanzamientos</em>
+             PARA CAMBIAR EL FONDO: edita background:#fff en el style del <section>
+             PARA CAMBIAR CUÁNTOS MUESTRA: edita posts_per_page => 8
+             PARA CAMBIAR LAS COLUMNAS: edita grid-template-columns:repeat(4, 1fr) -->
         <!-- ================ PRODUCT GALLERY ================ -->
         <section class="gallery-section" style="padding:64px 0;background:#fff;">
             <div class="gallery-container" style="max-width:1440px;margin:0 auto;padding:0 40px;">
@@ -348,6 +415,14 @@ get_header();
             </div>
         </section>
 
+        <!-- ═══════════════════════════════════════════════════════════
+             SECCIÓN 7: SUSCRIPCIÓN AL NEWSLETTER
+             ═══════════════════════════════════════════════════════════
+             PARA CAMBIAR EL COLOR DE FONDO: edita background:#1a1a1a  (negro actual)
+             PARA CAMBIAR EL TEXTO DEL TÍTULO: busca el <h2> dentro de esta sección
+             PARA CAMBIAR EL TEXTO DEL BOTÓN: busca >INSCRÍBETE AHORA
+             PARA CAMBIAR EL TEXTO LEGAL: busca class="newsletter-disclaimer"
+             El formulario envía los datos por WordPress (wp_mail) -->
         <!-- ================== NEWSLETTER ================== -->
         <section class="newsletter-section" style="background:#1a1a1a;color:#fff;padding:72px 20px;text-align:center;">
             <div class="newsletter-content">

@@ -2003,6 +2003,11 @@ body.front-page #heroSection {
     color: #1a1a1a;
 }
 
+/* ─── Botón de cierre del carrito lateral ───
+   Para cambiar el tamaño del botón: edita width y height (actualmente 34px).
+   Para cambiar el color del borde: edita border-color (#e8e2d9 = gris claro).
+   Para cambiar el color de la X: edita color (#1a1a1a = negro).
+   Para cambiar la posición: edita top y right. */
 .xv-cart-drawer__close {
     position: absolute;
     top: 12px;
@@ -2014,7 +2019,12 @@ body.front-page #heroSection {
     color: #1a1a1a;
     border-radius: 50%;
     cursor: pointer;
-    font-size: 24px;
+    font-size: 20px;
+    /* Estas tres líneas centran la X dentro del círculo — no remover */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
     line-height: 1;
 }
 
