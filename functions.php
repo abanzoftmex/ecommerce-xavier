@@ -169,6 +169,42 @@ function astra_child_woocommerce_support() {
 }
 add_action( 'after_setup_theme', 'astra_child_woocommerce_support' );
 
+/**
+ * Prioritizar productos con imágenes y en existencia (In Stock).
+ * Esto asegura que el catálogo se vea siempre lleno y profesional.
+ */
+add_filter( 'posts_clauses', 'astra_child_custom_product_sorting', 100, 2 );
+function astra_child_custom_product_sorting( $clauses, $query ) {
+    global $wpdb;
+
+    // Solo aplicar en el frente, en el query principal de la tienda/categorías
+    if ( is_admin() || ! $query->is_main_query() ) {
+        return $clauses;
+    }
+
+    if ( is_shop() || is_product_category() || is_product_tag() || ( isset( $query->query_vars['post_type'] ) && 'product' === $query->query_vars['post_type'] ) ) {
+        
+        // Unimos con postmeta para stock y para imágenes
+        $clauses['join'] .= " LEFT JOIN {$wpdb->postmeta} AS xv_stock ON ({$wpdb->posts}.ID = xv_stock.post_id AND xv_stock.meta_key = '_stock_status') ";
+        $clauses['join'] .= " LEFT JOIN {$wpdb->postmeta} AS xv_thumb ON ({$wpdb->posts}.ID = xv_thumb.post_id AND xv_thumb.meta_key = '_thumbnail_id') ";
+
+        // Lógica de orden:
+        // 1. Stock (instock primero)
+        // 2. Tiene imagen (thumbnail_id no vacío primero)
+        // 3. El orden original (fecha, precio, etc)
+        $stock_order = " CASE WHEN xv_stock.meta_value = 'instock' THEN 0 ELSE 1 END ASC ";
+        $thumb_order = " CASE WHEN xv_thumb.meta_value IS NOT NULL AND xv_thumb.meta_value != '' THEN 0 ELSE 1 END ASC ";
+
+        if ( empty( $clauses['orderby'] ) ) {
+            $clauses['orderby'] = " $stock_order, $thumb_order, {$wpdb->posts}.post_date DESC ";
+        } else {
+            $clauses['orderby'] = " $stock_order, $thumb_order, " . $clauses['orderby'];
+        }
+    }
+
+    return $clauses;
+}
+
 // Productos por página en la tienda
 add_filter( 'loop_shop_per_page', function() { return 8; }, 20 );
 

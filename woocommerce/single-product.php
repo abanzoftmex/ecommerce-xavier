@@ -38,7 +38,7 @@ get_header(); ?>
     #xvGallery { display:grid!important;grid-template-columns:1fr 1fr!important;gap:4px!important; }
     .xv-gallery-img { width:100%;aspect-ratio:1/1;object-fit:cover;display:block!important;cursor:pointer;transition:opacity 0.3s ease;background:#f0efed; }
     .xv-gallery-img:hover { opacity:0.85; }
-    .xv-gallery-img.xv-main-img { grid-column:1/-1;aspect-ratio:4/5; }
+    .xv-gallery-img.xv-main-img { grid-column:1/-1;aspect-ratio:1/1; }
 
     /* Product Info */
     #xvInfo { position:sticky;top:120px; }

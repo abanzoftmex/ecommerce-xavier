@@ -723,7 +723,7 @@ body {
 
 .category-img-wrap {
     width: 100%;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 1 / 1;
     background: #f0efed;
     overflow: hidden;
     margin-bottom: 14px;
@@ -843,7 +843,7 @@ body {
 
 .trending-img-wrap {
     width: 100%;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
     background: #f0efed;
     margin-bottom: 22px;
