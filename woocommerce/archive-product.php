@@ -10,7 +10,7 @@
  *   WordPress -> Productos -> Categorias
  * - ORDEN DE PRODUCTOS (selector): edita el array $options con los textos
  * - TARJETAS DE PRODUCTO: busca class="xv-product-card"
- * - BOTON "ANADIR AL CARRITO" en cada tarjeta: busca class="xv-quick-add"
+ * - BOTONES DE TARJETA: "Ver detalles" + formulario con class="xv-quick-add" (AJAX en navbar)
  * - PAGINACION: se genera automaticamente
  * Los estilos visuales estan en el bloque <style> al inicio del archivo
  * COLORES CLAVE del catalogo:
@@ -56,10 +56,10 @@ unset( $xv_add_args['paged'] );
     /* Sort bar */
     #xvSortBar { display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #eee; }
     #xvResultCount { font-family:'Jost',sans-serif;font-size:13px;color:#888; }
-    .xv-sort-wrap { position:relative;display:inline-flex;align-items:center; }
-    .xv-sort-icon { position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:12px;line-height:1;color:#1a1a1a;pointer-events:none;z-index:2; }
+    .xv-sort-wrap { position:relative;display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap; }
+    .xv-sort-label { font-family:'Jost',sans-serif;font-size:13px;color:#1a1a1a;margin:0;white-space:nowrap; }
     .xv-sort-chevron { position:absolute;right:12px;top:50%;width:8px;height:8px;border-right:1.5px solid #555;border-bottom:1.5px solid #555;transform:translateY(-70%) rotate(45deg);pointer-events:none;z-index:2; }
-    #xvSortSelect { -webkit-appearance:none;-moz-appearance:none;appearance:none;font-family:'Jost',sans-serif;font-size:13px;color:#1a1a1a;padding:8px 34px 8px 30px;border:1px solid #ddd;background:#fff;cursor:pointer;outline:none;min-width:190px; }
+    #xvSortSelect { -webkit-appearance:none;-moz-appearance:none;appearance:none;font-family:'Jost',sans-serif;font-size:13px;color:#1a1a1a;padding:8px 34px 8px 12px;border:1px solid #ddd;background:#fff;cursor:pointer;outline:none;min-width:190px; }
     #xvSortSelect:hover,
     #xvSortSelect:focus { border-color:#bdbdbd; }
 
@@ -67,26 +67,46 @@ unset( $xv_add_args['paged'] );
     #xvProductGrid { display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:24px!important; }
     .xv-product-card { text-decoration:none;display:block;position:relative; }
     .xv-product-card:hover .xv-card-img { opacity:0.9;transform:scale(1.02); }
-    .xv-card-img-wrap { position:relative;overflow:hidden;background:#f0efed;margin-bottom:14px; }
+    .xv-card-img-wrap { position:relative;overflow:hidden;background:#f0efed;margin-bottom:0; }
     .xv-card-img { width:100%;aspect-ratio:1/1;object-fit:cover;display:block!important;transition:opacity 0.3s ease,transform 0.4s ease; }
     .xv-card-img-placeholder { width:100%;aspect-ratio:1/1;background:#e8e6e3;display:flex;align-items:center;justify-content:center;color:#bbb;font-family:'Jost',sans-serif;font-size:13px; }
     .xv-card-badge { position:absolute;top:12px;left:12px;background:#1a1a1a;color:#fff;font-family:'Jost',sans-serif;font-size:10px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;padding:4px 10px;z-index:2; }
     .xv-card-badge.xv-sale { background:#c8a951;color:#1a1a1a; }
-    .xv-favorite-toggle { position:absolute;top:12px;right:12px;display:flex;align-items:center;justify-content:center;width:34px;height:34px;min-width:34px;max-width:34px;min-height:34px;max-height:34px;padding:0;margin:0;border-radius:50%;border:1px solid rgba(26,26,26,0.16);background:rgba(255,255,255,0.9);color:#1a1a1a;cursor:pointer;z-index:3;transition:all 0.25s ease;box-sizing:border-box;aspect-ratio:1;flex-shrink:0;-webkit-appearance:none;appearance:none; }
-    .xv-card-img-wrap button.xv-favorite-toggle:hover { border-color:#c8a951!important;color:#c8a951!important;-webkit-text-fill-color:#c8a951!important;transform:translateY(-1px); }
-    .xv-card-img-wrap .xv-favorite-toggle::before { content:'♡';font-size:18px;line-height:1;color:currentColor;font-family:'Jost',sans-serif; }
-    .xv-card-img-wrap .xv-favorite-toggle svg { display:none; }
-    .xv-favorite-toggle.is-active { color:#c8a951;border-color:#c8a951;background:#fff; }
-    .xv-card-img-wrap .xv-favorite-toggle.is-active::before { content:'♥'; }
-    .xv-card-name { font-family:'Jost',sans-serif!important;font-size:14px!important;font-weight:400!important;color:#1a1a1a!important;-webkit-text-fill-color:#1a1a1a!important;margin-bottom:4px!important;line-height:1.4; }
+    .xv-favorite-toggle { position:absolute;top:12px;right:12px;display:flex;align-items:center;justify-content:center;width:34px;height:34px;min-width:34px;max-width:34px;min-height:34px;max-height:34px;padding:0;margin:0;border-radius:50%;border:1px solid rgba(26,26,26,0.16);background:rgba(255,255,255,0.9);color:#1a1a1a;cursor:pointer;z-index:3;transition:background 0.25s ease,border-color 0.25s ease,color 0.25s ease,transform 0.25s ease;box-sizing:border-box;aspect-ratio:1;flex-shrink:0;-webkit-appearance:none;appearance:none; }
+    .xv-card-img-wrap .xv-favorite-toggle::before { display:none;content:none; }
+    .xv-card-img-wrap .xv-favorite-toggle svg { display:block;width:18px;height:18px;flex-shrink:0;pointer-events:none; }
+    .xv-card-img-wrap .xv-favorite-toggle svg path { fill:none;stroke:currentColor;transition:fill 0.2s ease,stroke 0.2s ease; }
+    .xv-card-img-wrap button.xv-favorite-toggle:hover,
+    .xv-card-img-wrap button.xv-favorite-toggle:focus-visible { background:#c8a951!important;border-color:#c8a951!important;color:#fff!important;transform:translateY(-1px); }
+    .xv-card-img-wrap button.xv-favorite-toggle:hover svg path,
+    .xv-card-img-wrap button.xv-favorite-toggle:focus-visible svg path { fill:#fff!important;stroke:none!important; }
+    .xv-card-img-wrap .xv-favorite-toggle.is-active { color:#c8a951;border-color:#c8a951;background:#fff; }
+    .xv-card-img-wrap .xv-favorite-toggle.is-active svg path { fill:currentColor!important;stroke:none!important; }
+    .xv-card-img-wrap button.xv-favorite-toggle.is-active:hover,
+    .xv-card-img-wrap button.xv-favorite-toggle.is-active:focus-visible { background:#c8a951!important;border-color:#c8a951!important;color:#fff!important; }
+    .xv-card-img-wrap button.xv-favorite-toggle.is-active:hover svg path,
+    .xv-card-img-wrap button.xv-favorite-toggle.is-active:focus-visible svg path { fill:#fff!important;stroke:none!important; }
+
+    .xv-card-info { padding:14px 12px 16px; }
+    .xv-card-info-main { display:block;text-decoration:none;color:inherit; }
+    .xv-card-info-main:hover .xv-card-name { color:#555; }
+    .xv-card-name { font-family:'Jost',sans-serif!important;font-size:17px!important;font-weight:600!important;color:#1a1a1a!important;-webkit-text-fill-color:#1a1a1a!important;margin:0 0 8px!important;line-height:1.35!important;letter-spacing:-0.01em; }
     .xv-card-price { font-family:'Jost',sans-serif;font-size:14px;font-weight:500;color:#1a1a1a; }
     .xv-card-price del { color:#999;font-weight:300;margin-right:6px;font-size:13px; }
     .xv-card-price ins { text-decoration:none; }
-    .xv-card-cat { font-family:'Jost',sans-serif;font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px; }
+    .xv-card-cat { font-family:'Jost',sans-serif;font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 8px; }
 
-    /* Quick add */
-    .xv-quick-add { position:absolute;bottom:0;left:0;right:0;background:rgba(26,26,26,0.92);color:#fff;text-align:center;padding:10px;font-family:'Jost',sans-serif;font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase;opacity:0;transform:translateY(8px);transition:opacity 0.3s ease,transform 0.3s ease;cursor:pointer;border:none;width:100%; }
-    .xv-card-img-wrap:hover .xv-quick-add { opacity:1;transform:translateY(0); }
+    .xv-card-actions { display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;align-items:stretch; }
+    .xv-card-actions--pair .xv-card-btn--detail,
+    .xv-card-actions--pair form { flex:1;min-width:min(120px,100%); }
+    .xv-card-actions form { margin:0;display:flex; }
+    .xv-card-btn--detail { display:inline-flex;align-items:center;justify-content:center;padding:10px 12px;font-family:'Jost',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.6px;text-transform:uppercase;text-decoration:none;color:#1a1a1a;border:1px solid #ddd;background:#fff;transition:border-color 0.2s ease,color 0.2s ease,background 0.2s ease;text-align:center;box-sizing:border-box; }
+    .xv-card-btn--detail:hover { border-color:#1a1a1a;color:#1a1a1a; }
+    .xv-card-actions:not(.xv-card-actions--pair) .xv-card-btn--detail { width:100%; }
+
+    /* Añadir al carrito (lista): visible siempre; AJAX por class xv-quick-add en navbar */
+    .xv-card-actions .xv-quick-add { position:relative;opacity:1;transform:none;width:100%;padding:10px 12px;font-family:'Jost',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.6px;text-transform:uppercase;background:#1a1a1a;color:#fff;border:none;cursor:pointer;transition:opacity 0.2s ease,background 0.2s ease; }
+    .xv-card-actions .xv-quick-add:hover { background:rgba(26,26,26,0.88); }
 
     /* Pagination */
     #xvPagination { margin-top:48px;display:flex;justify-content:center;gap:8px; }
@@ -104,6 +124,11 @@ unset( $xv_add_args['paged'] );
         #xvProductGrid { grid-template-columns:repeat(2,1fr)!important; }
         #xvShop { padding:20px 20px 60px; }
         #xvSortBar { flex-direction:column;align-items:flex-start;gap:12px; }
+    }
+    @media (max-width:520px) {
+        .xv-card-actions--pair { flex-direction:column; }
+        .xv-card-actions--pair .xv-card-btn--detail,
+        .xv-card-actions--pair form { flex:none;width:100%;min-width:0; }
     }
     @media (max-width:480px) { #xvProductGrid { grid-template-columns:1fr!important; } }
 </style>
@@ -167,7 +192,7 @@ unset( $xv_add_args['paged'] );
                 <input type="hidden" name="xv_favorites" value="1" />
             <?php endif; ?>
             <div class="xv-sort-wrap">
-                <span class="xv-sort-icon" aria-hidden="true">↕</span>
+                <label for="xvSortSelect" class="xv-sort-label"><?php esc_html_e( 'Filtrar por:', 'astra-child' ); ?></label>
                 <select id="xvSortSelect" name="orderby" onchange="this.form.submit()">
                 <?php
                 $orderby = isset( $_GET['orderby'] ) ? sanitize_text_field( $_GET['orderby'] ) : 'date';
@@ -200,6 +225,7 @@ unset( $xv_add_args['paged'] );
             $is_featured = $product->is_featured();
             $terms = get_the_terms( get_the_ID(), 'product_cat' );
             $cat_name = ( $terms && ! is_wp_error( $terms ) ) ? $terms[0]->name : '';
+            $xv_show_add = $product->is_type( 'simple' ) && $product->is_in_stock();
         ?>
         <div class="xv-product-card" data-favorite-card="<?php echo esc_attr( $product->get_id() ); ?>">
             <div class="xv-card-img-wrap">
@@ -216,8 +242,8 @@ unset( $xv_add_args['paged'] );
                     aria-label="Agregar a favoritos"
                     aria-pressed="false"
                 >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                     </svg>
                 </button>
 
@@ -231,23 +257,28 @@ unset( $xv_add_args['paged'] );
                         <div class="xv-card-img-placeholder">Sin imagen</div>
                     <?php endif; ?>
                 </a>
-
-                <?php if ( $product->is_type( 'simple' ) && $product->is_in_stock() ) : ?>
-                    <form method="post" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', '' ) ); ?>">
-                        <input type="hidden" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" />
-                        <input type="hidden" name="quantity" value="1" />
-                        <button type="submit" class="xv-quick-add">AÑADIR AL CARRITO</button>
-                    </form>
-                <?php endif; ?>
             </div>
 
-            <a href="<?php the_permalink(); ?>" style="text-decoration:none;">
-                <?php if ( $cat_name ) : ?>
-                    <p class="xv-card-cat"><?php echo esc_html( $cat_name ); ?></p>
-                <?php endif; ?>
-                <h3 class="xv-card-name"><?php the_title(); ?></h3>
-                <div class="xv-card-price"><?php echo $product->get_price_html(); ?></div>
-            </a>
+            <div class="xv-card-info">
+                <a href="<?php the_permalink(); ?>" class="xv-card-info-main">
+                    <?php if ( $cat_name ) : ?>
+                        <p class="xv-card-cat"><?php echo esc_html( $cat_name ); ?></p>
+                    <?php endif; ?>
+                    <h3 class="xv-card-name"><?php the_title(); ?></h3>
+                    <div class="xv-card-price"><?php echo $product->get_price_html(); ?></div>
+                </a>
+
+                <div class="xv-card-actions<?php echo $xv_show_add ? ' xv-card-actions--pair' : ''; ?>">
+                    <a href="<?php the_permalink(); ?>" class="xv-card-btn--detail"><?php esc_html_e( 'Ver detalles', 'astra-child' ); ?></a>
+                    <?php if ( $xv_show_add ) : ?>
+                        <form method="post" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>">
+                            <input type="hidden" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" />
+                            <input type="hidden" name="quantity" value="1" />
+                            <button type="submit" class="xv-quick-add"><?php esc_html_e( 'Agregar al carrito', 'astra-child' ); ?></button>
+                        </form>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
         <?php endwhile; ?>
     </div>
