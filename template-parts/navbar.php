@@ -653,9 +653,10 @@ $wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
 
             function show() {
                 if (hideTimer) clearTimeout(hideTimer);
-                if (hdr) {
-                    panel.style.setProperty('top', hdr.getBoundingClientRect().bottom + 'px', 'important');
-                }
+                var anchor = li.querySelector(':scope > a');
+                var topPx = anchor ? anchor.getBoundingClientRect().bottom : (hdr ? hdr.getBoundingClientRect().bottom : 0);
+                // Ligero respiro bajo el enlace (antes se usaba el borde inferior del header y el panel quedaba muy abajo).
+                panel.style.setProperty('top', (Math.round(topPx) + 2) + 'px', 'important');
                 panel.style.setProperty('display', 'block', 'important');
                 panel.style.setProperty('visibility', 'visible', 'important');
                 panel.style.setProperty('opacity', '1', 'important');
