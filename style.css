@@ -2746,15 +2746,23 @@ body.woocommerce-account .woocommerce-MyAccount-navigation ul {
 }
 
 .xv-mobile-menu__close {
-    width:76px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
     border: 1px solid #e8e2d9;
-    border-radius: 34%;
+    border-radius: 50%;
     background: #fff;
     color: #1a1a1a;
-    font-size: 28px;
-    line-height: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
     cursor: pointer;
+}
+
+.xv-mobile-menu__close svg {
+    display: block;
+    pointer-events: none;
 }
 
 .xv-mobile-menu__nav {
