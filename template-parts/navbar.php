@@ -144,6 +144,7 @@ $wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
             'container'      => false,
             'fallback_cb'    => false,
             'depth'          => 1,
+            'walker'         => new Xavier_Mobile_Menu_Walker(),
         ) );
         ?>
     </nav>
@@ -163,13 +164,17 @@ $wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
      ═══════════════════════════════════════════════════════════
      PARA CAMBIAR EL TEXTO "Seleccion actual": edita el <p class="xv-cart-drawer__kicker">
      PARA CAMBIAR EL TÍTULO "Carrito": edita el <h3>
-     El estilo visual (colores, tamaño, sombra) se edita en style.css
-     buscando la sección "CART DRAWER" -->
+     El estilo visual se edita en style.css buscando la sección "CART DRAWER" -->
 <aside id="xvCartDrawer" class="xv-cart-drawer" aria-hidden="true" aria-label="Carrito lateral">
     <div class="xv-cart-drawer__header">
         <p class="xv-cart-drawer__kicker">Seleccion actual</p>
         <h3>Carrito</h3>
-        <button type="button" class="xv-cart-drawer__close" aria-label="Cerrar carrito">×</button>
+        <button type="button" class="xv-cart-drawer__close" aria-label="Cerrar carrito">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
     </div>
 
     <div class="xv-cart-drawer__body">
@@ -552,7 +557,7 @@ $wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
             a.style.setProperty('text-decoration', 'none', 'important');
             a.style.setProperty('padding', '12px 20px', 'important');
             a.style.setProperty('border', '2px solid #f0f0f0', 'important');
-            a.style.setProperty('border-radius', '25px', 'important');
+            a.style.setProperty('border-radius', '0', 'important');
             a.style.setProperty('color', '#333', 'important');
             a.style.setProperty('background', '#fafafa', 'important');
             a.style.setProperty('transition', 'all 0.3s ease', 'important');
@@ -594,7 +599,7 @@ $wishlist_count = function_exists( 'astra_child_get_favorite_ids_from_cookie' )
             allLink.style.setProperty('padding', '15px 30px', 'important');
             allLink.style.setProperty('margin', '0', 'important');
             allLink.style.setProperty('border', '2px solid #c8a951', 'important');
-            allLink.style.setProperty('border-radius', '30px', 'important');
+            allLink.style.setProperty('border-radius', '0', 'important');
             allLink.style.setProperty('background', '#c8a951', 'important');
             allLink.style.setProperty('color', 'white', 'important');
             allLink.style.setProperty('-webkit-text-fill-color', 'white', 'important');

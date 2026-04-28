@@ -398,6 +398,71 @@ class Xavier_Catalog_Walker extends Walker_Nav_Menu {
     }
 }
 
+/**
+ * Menú móvil: debajo del ítem «Catálogo» muestra enlaces a categorías de producto (misma fuente que el mega menú).
+ */
+class Xavier_Mobile_Menu_Walker extends Walker_Nav_Menu {
+
+    /**
+     * @param string   $output Menu HTML.
+     * @param WP_Post  $item   Item.
+     * @param int      $depth  Depth.
+     * @param stdClass $args   Args.
+     * @param int      $id     ID.
+     */
+    public function start_el( &$output, $item, $depth = 0, $args = null, $id = 0 ) {
+        parent::start_el( $output, $item, $depth, $args, $id );
+        if ( 0 === (int) $depth && $this->is_catalog_item( $item ) ) {
+            $output .= $this->mobile_catalog_submenu_html();
+        }
+    }
+
+    /**
+     * @param WP_Post $item Menu item.
+     */
+    private function is_catalog_item( $item ) {
+        return mb_strtolower( trim( $item->title ) ) === 'catálogo'
+            || in_array( 'has-catalog-dropdown', (array) $item->classes, true );
+    }
+
+    /**
+     * Lista de categorías (mismos criterios que Xavier_Catalog_Walker::catalog_dropdown_html).
+     */
+    private function mobile_catalog_submenu_html() {
+        if ( ! function_exists( 'WC' ) || ! taxonomy_exists( 'product_cat' ) ) {
+            return '';
+        }
+
+        $cats = get_terms(
+            array(
+                'taxonomy'   => 'product_cat',
+                'hide_empty' => true,
+                'parent'     => 0,
+                'exclude'    => array( get_option( 'default_product_cat' ) ),
+                'orderby'    => 'name',
+                'order'      => 'ASC',
+            )
+        );
+
+        if ( empty( $cats ) || is_wp_error( $cats ) ) {
+            return '';
+        }
+
+        $shop_url = function_exists( 'wc_get_page_id' )
+            ? get_permalink( wc_get_page_id( 'shop' ) )
+            : home_url( '/shop/' );
+
+        $html  = '<ul class="xv-mobile-catalog-sub" aria-label="' . esc_attr__( 'Categorías del catálogo', 'astra-child' ) . '">';
+        foreach ( $cats as $cat ) {
+            $html .= '<li><a href="' . esc_url( get_term_link( $cat ) ) . '">' . esc_html( $cat->name ) . '</a></li>';
+        }
+        $html .= '<li class="xv-mobile-catalog-sub__all"><a href="' . esc_url( $shop_url ) . '">' . esc_html__( 'Ver todo el catálogo', 'astra-child' ) . '</a></li>';
+        $html .= '</ul>';
+
+        return $html;
+    }
+}
+
 // =============================================
 // 8. NEWSLETTER AJAX
 // =============================================

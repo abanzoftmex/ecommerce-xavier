@@ -7,8 +7,7 @@
  * - NOMBRE DEL PRODUCTO: se toma automaticamente de WordPress
  * - PRECIO: se toma automaticamente de WooCommerce
  * - DESCRIPCION CORTA: se toma de WordPress -> Producto -> Descripcion corta
- * - BOTON "ANADIR AL CARRITO": busca id="xvAddToCart"
- *   Para cambiar el texto: edita >ANADIR AL CARRITO &rarr;
+ * - BOTON "ANADIR AL CARRITO": id="xvAddToCart" (texto + icono carrito en style del archivo)
  * - SECCION DE ENTREGA (envio gratis, garantia): busca id="xvDelivery"
  *   Para cambiar los textos: edita los <p> dentro de ese div
  * - PRODUCTOS RELACIONADOS (al final): busca id="xvRelated"
@@ -63,8 +62,11 @@ get_header(); ?>
     #xvQtyWrap { display:flex;align-items:center;gap:16px;margin-bottom:16px; }
     #xvQtyWrap label { font-family:'Jost',sans-serif;font-size:13px;font-weight:500;color:#1a1a1a;text-transform:uppercase;letter-spacing:0.8px; }
     #xvQtyWrap input[type="number"] { width:70px;padding:10px 12px;border:1px solid #ddd;font-family:'Jost',sans-serif;font-size:14px;text-align:center;outline:none;background:#fff;-webkit-appearance:none;-moz-appearance:textfield; }
-    #xvAddToCart { display:block!important;width:100%!important;padding:16px 32px!important;background:#1a1a1a!important;color:#fff!important;border:none!important;font-family:'Jost',sans-serif!important;font-size:13px!important;font-weight:500!important;letter-spacing:1.5px!important;text-transform:uppercase!important;cursor:pointer!important;transition:background 0.3s ease!important;-webkit-text-fill-color:#fff!important; }
+    #xvAddToCart { display:flex!important;align-items:center!important;justify-content:center!important;gap:12px!important;width:100%!important;padding:16px 32px!important;background:#1a1a1a!important;color:#fff!important;border:none!important;border-radius:0!important;font-family:'Jost',sans-serif!important;font-size:13px!important;font-weight:500!important;letter-spacing:1.5px!important;text-transform:uppercase!important;cursor:pointer!important;transition:background 0.3s ease!important;-webkit-text-fill-color:#fff!important;-webkit-appearance:none!important;appearance:none!important; }
     #xvAddToCart:hover { background:#333!important; }
+    #xvAddToCart .xv-addtocart-icon { flex-shrink:0;pointer-events:none; }
+    #xvCartForm .single_add_to_cart_button,
+    #xvCartForm .woocommerce-variation-add-to-cart .button { border-radius:0!important;-webkit-appearance:none!important;appearance:none!important; }
 
     /* Wishlist */
     #xvWishlist { display:inline-flex;align-items:center;gap:8px;font-family:'Jost',sans-serif;font-size:13px;color:#888;cursor:pointer;background:none;border:none;padding:0;margin-bottom:24px;transition:color 0.2s; }
@@ -84,29 +86,14 @@ get_header(); ?>
     #xvProductMeta a { color:#1a1a1a;text-decoration:none; }
     #xvProductMeta a:hover { text-decoration:underline; }
 
-    /* ===== Related Products ===== */
+    /* Related: rejilla y tarjetas en style.css (PRODUCT CARDS) */
     #xvRelated { max-width:1440px;margin:0 auto;padding:60px 40px 80px; }
     #xvRelatedTitle { font-family:'Cormorant Garamond',Georgia,serif!important;font-size:28px!important;font-weight:300!important;font-style:italic!important;text-align:center!important;margin-bottom:40px!important;color:#1a1a1a!important;-webkit-text-fill-color:#1a1a1a!important; }
-    #xvRelatedGrid { display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:24px!important; }
-    .xv-related-card { display:block;transition:transform 0.3s ease; }
-    .xv-related-card:hover { transform:translateY(-4px); }
-    .xv-related-media { position:relative;margin-bottom:12px; }
-    .xv-related-card img { width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#f0efed; }
-    .xv-related-favorite { position:absolute;top:10px;right:10px;display:flex;align-items:center;justify-content:center;width:32px;height:32px;min-width:32px;max-width:32px;min-height:32px;max-height:32px;padding:0;margin:0;border-radius:50%;border:1px solid rgba(26,26,26,0.16);background:rgba(255,255,255,0.9);color:#1a1a1a;cursor:pointer;z-index:2;transition:all 0.25s ease;box-sizing:border-box;aspect-ratio:1;flex-shrink:0;-webkit-appearance:none;appearance:none; }
-    .xv-related-media button.xv-related-favorite:hover { border-color:#c8a951!important;color:#c8a951!important;-webkit-text-fill-color:#c8a951!important; }
-    .xv-related-favorite.is-active { color:#c8a951;border-color:#c8a951;background:#fff; }
-    .xv-related-favorite::before { content:'♡';font-size:16px;line-height:1;color:currentColor;font-family:'Jost',sans-serif; }
-    .xv-related-favorite svg { display:none; }
-    .xv-related-favorite.is-active::before { content:'♥'; }
-    .xv-related-info-link { text-decoration:none;display:block; }
-    .xv-related-card h3 { font-family:'Jost',sans-serif!important;font-size:14px!important;font-weight:400!important;color:#1a1a1a!important;-webkit-text-fill-color:#1a1a1a!important;margin-bottom:4px!important; }
-    .xv-related-card .xv-rel-price { font-family:'Jost',sans-serif;font-size:14px;font-weight:500;color:#1a1a1a; }
 
     /* ===== Responsive ===== */
     @media (max-width: 900px) {
         #xvProductLayout { grid-template-columns:1fr!important;gap:32px!important; }
         #xvInfo { position:static; }
-        #xvRelatedGrid { grid-template-columns:repeat(2,1fr)!important; }
     }
     @media (max-width: 600px) {
         #xvProduct { padding:20px; }
@@ -207,7 +194,14 @@ get_header(); ?>
                             <label for="xvQty">Cantidad</label>
                             <input type="number" id="xvQty" name="quantity" value="1" min="1" max="<?php echo esc_attr( $product->get_max_purchase_quantity() > 0 ? $product->get_max_purchase_quantity() : '' ); ?>" />
                         </div>
-                        <button type="submit" id="xvAddToCart" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>">AÑADIR AL CARRITO &rarr;</button>
+                        <button type="submit" id="xvAddToCart" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>">
+                            <span class="xv-addtocart-label"><?php esc_html_e( 'Añadir al carrito', 'astra-child' ); ?></span>
+                            <svg class="xv-addtocart-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </button>
                     </form>
                 <?php elseif ( $product->is_type( 'variable' ) ) : ?>
                     <?php woocommerce_variable_add_to_cart(); ?>
@@ -267,30 +261,79 @@ if ( ! empty( $related_ids ) ) :
 <div id="xvRelated">
     <h2 id="xvRelatedTitle"><em>Tal vez te interese</em></h2>
     <div id="xvRelatedGrid">
-        <?php while ( $related_query->have_posts() ) : $related_query->the_post();
+        <?php
+        while ( $related_query->have_posts() ) :
+            $related_query->the_post();
             $rel_product = wc_get_product( get_the_ID() );
-        ?>
-        <div class="xv-related-card" data-favorite-card="<?php echo esc_attr( get_the_ID() ); ?>">
-            <div class="xv-related-media">
-                <button type="button" class="xv-favorite-toggle xv-related-favorite" data-product-id="<?php echo esc_attr( get_the_ID() ); ?>" aria-label="Agregar a favoritos" aria-pressed="false">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            if ( ! $rel_product ) {
+                continue;
+            }
+            $is_on_sale = $rel_product->is_on_sale();
+            $is_featured = $rel_product->is_featured();
+            $rel_terms = get_the_terms( get_the_ID(), 'product_cat' );
+            $cat_name = ( $rel_terms && ! is_wp_error( $rel_terms ) ) ? $rel_terms[0]->name : '';
+            $xv_show_add = $rel_product->is_type( 'simple' ) && $rel_product->is_in_stock();
+            ?>
+        <div class="xv-product-card" data-favorite-card="<?php echo esc_attr( $rel_product->get_id() ); ?>">
+            <div class="xv-card-img-wrap">
+                <?php if ( $is_on_sale ) : ?>
+                    <span class="xv-card-badge xv-sale"><?php esc_html_e( 'Oferta', 'astra-child' ); ?></span>
+                <?php elseif ( $is_featured ) : ?>
+                    <span class="xv-card-badge"><?php esc_html_e( 'Destacado', 'astra-child' ); ?></span>
+                <?php endif; ?>
+
+                <button
+                    type="button"
+                    class="xv-favorite-toggle"
+                    data-product-id="<?php echo esc_attr( $rel_product->get_id() ); ?>"
+                    aria-label="<?php esc_attr_e( 'Agregar a favoritos', 'astra-child' ); ?>"
+                    aria-pressed="false"
+                >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                     </svg>
                 </button>
+
                 <a href="<?php the_permalink(); ?>">
                     <?php if ( has_post_thumbnail() ) : ?>
-                        <?php the_post_thumbnail( 'medium_large', array( 'style' => 'width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#f0efed;' ) ); ?>
+                        <?php the_post_thumbnail(
+                            'medium_large',
+                            array(
+                                'class'   => 'xv-card-img',
+                                'loading' => 'lazy',
+                            )
+                        ); ?>
                     <?php else : ?>
-                        <div style="width:100%;aspect-ratio:1/1;background:#f0efed;"></div>
+                        <div class="xv-card-img-placeholder"><?php esc_html_e( 'Sin imagen', 'astra-child' ); ?></div>
                     <?php endif; ?>
                 </a>
             </div>
-            <a href="<?php the_permalink(); ?>" class="xv-related-info-link">
-                <h3><?php the_title(); ?></h3>
-                <span class="xv-rel-price"><?php echo $rel_product ? $rel_product->get_price_html() : ''; ?></span>
-            </a>
+
+            <div class="xv-card-info">
+                <a href="<?php the_permalink(); ?>" class="xv-card-info-main">
+                    <?php if ( $cat_name ) : ?>
+                        <p class="xv-card-cat"><?php echo esc_html( $cat_name ); ?></p>
+                    <?php endif; ?>
+                    <h3 class="xv-card-name"><?php the_title(); ?></h3>
+                    <div class="xv-card-price"><?php echo $rel_product->get_price_html(); ?></div>
+                </a>
+
+                <div class="xv-card-actions<?php echo $xv_show_add ? ' xv-card-actions--pair' : ''; ?>">
+                    <a href="<?php the_permalink(); ?>" class="xv-card-btn--detail"><?php esc_html_e( 'Ver detalles', 'astra-child' ); ?></a>
+                    <?php if ( $xv_show_add ) : ?>
+                        <form method="post" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $rel_product->get_permalink() ) ); ?>">
+                            <input type="hidden" name="add-to-cart" value="<?php echo esc_attr( $rel_product->get_id() ); ?>" />
+                            <input type="hidden" name="quantity" value="1" />
+                            <button type="submit" class="xv-quick-add"><?php esc_html_e( 'Agregar al carrito', 'astra-child' ); ?></button>
+                        </form>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
-        <?php endwhile; wp_reset_postdata(); ?>
+            <?php
+        endwhile;
+        wp_reset_postdata();
+        ?>
     </div>
 </div>
 <?php endif; endif; ?>

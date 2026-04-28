@@ -63,50 +63,7 @@ unset( $xv_add_args['paged'] );
     #xvSortSelect:hover,
     #xvSortSelect:focus { border-color:#bdbdbd; }
 
-    /* Product Grid */
-    #xvProductGrid { display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:24px!important; }
-    .xv-product-card { text-decoration:none;display:block;position:relative; }
-    .xv-product-card:hover .xv-card-img { opacity:0.9;transform:scale(1.02); }
-    .xv-card-img-wrap { position:relative;overflow:hidden;background:#f0efed;margin-bottom:0; }
-    .xv-card-img { width:100%;aspect-ratio:1/1;object-fit:cover;display:block!important;transition:opacity 0.3s ease,transform 0.4s ease; }
-    .xv-card-img-placeholder { width:100%;aspect-ratio:1/1;background:#e8e6e3;display:flex;align-items:center;justify-content:center;color:#bbb;font-family:'Jost',sans-serif;font-size:13px; }
-    .xv-card-badge { position:absolute;top:12px;left:12px;background:#1a1a1a;color:#fff;font-family:'Jost',sans-serif;font-size:10px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;padding:4px 10px;z-index:2; }
-    .xv-card-badge.xv-sale { background:#c8a951;color:#1a1a1a; }
-    .xv-favorite-toggle { position:absolute;top:12px;right:12px;display:flex;align-items:center;justify-content:center;width:34px;height:34px;min-width:34px;max-width:34px;min-height:34px;max-height:34px;padding:0;margin:0;border-radius:50%;border:1px solid rgba(26,26,26,0.16);background:rgba(255,255,255,0.9);color:#1a1a1a;cursor:pointer;z-index:3;transition:background 0.25s ease,border-color 0.25s ease,color 0.25s ease,transform 0.25s ease;box-sizing:border-box;aspect-ratio:1;flex-shrink:0;-webkit-appearance:none;appearance:none; }
-    .xv-card-img-wrap .xv-favorite-toggle::before { display:none;content:none; }
-    .xv-card-img-wrap .xv-favorite-toggle svg { display:block;width:18px;height:18px;flex-shrink:0;pointer-events:none; }
-    .xv-card-img-wrap .xv-favorite-toggle svg path { fill:none;stroke:currentColor;transition:fill 0.2s ease,stroke 0.2s ease; }
-    .xv-card-img-wrap button.xv-favorite-toggle:hover,
-    .xv-card-img-wrap button.xv-favorite-toggle:focus-visible { background:#c8a951!important;border-color:#c8a951!important;color:#fff!important;transform:translateY(-1px); }
-    .xv-card-img-wrap button.xv-favorite-toggle:hover svg path,
-    .xv-card-img-wrap button.xv-favorite-toggle:focus-visible svg path { fill:#fff!important;stroke:none!important; }
-    .xv-card-img-wrap .xv-favorite-toggle.is-active { color:#c8a951;border-color:#c8a951;background:#fff; }
-    .xv-card-img-wrap .xv-favorite-toggle.is-active svg path { fill:currentColor!important;stroke:none!important; }
-    .xv-card-img-wrap button.xv-favorite-toggle.is-active:hover,
-    .xv-card-img-wrap button.xv-favorite-toggle.is-active:focus-visible { background:#c8a951!important;border-color:#c8a951!important;color:#fff!important; }
-    .xv-card-img-wrap button.xv-favorite-toggle.is-active:hover svg path,
-    .xv-card-img-wrap button.xv-favorite-toggle.is-active:focus-visible svg path { fill:#fff!important;stroke:none!important; }
-
-    .xv-card-info { padding:14px 12px 16px; }
-    .xv-card-info-main { display:block;text-decoration:none;color:inherit; }
-    .xv-card-info-main:hover .xv-card-name { color:#555; }
-    .xv-card-name { font-family:'Jost',sans-serif!important;font-size:17px!important;font-weight:600!important;color:#1a1a1a!important;-webkit-text-fill-color:#1a1a1a!important;margin:0 0 8px!important;line-height:1.35!important;letter-spacing:-0.01em; }
-    .xv-card-price { font-family:'Jost',sans-serif;font-size:14px;font-weight:500;color:#1a1a1a; }
-    .xv-card-price del { color:#999;font-weight:300;margin-right:6px;font-size:13px; }
-    .xv-card-price ins { text-decoration:none; }
-    .xv-card-cat { font-family:'Jost',sans-serif;font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 8px; }
-
-    .xv-card-actions { display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;align-items:stretch; }
-    .xv-card-actions--pair .xv-card-btn--detail,
-    .xv-card-actions--pair form { flex:1;min-width:min(120px,100%); }
-    .xv-card-actions form { margin:0;display:flex; }
-    .xv-card-btn--detail { display:inline-flex;align-items:center;justify-content:center;padding:10px 12px;font-family:'Jost',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.6px;text-transform:uppercase;text-decoration:none;color:#1a1a1a;border:1px solid #ddd;background:#fff;border-radius:0;transition:border-color 0.2s ease,color 0.2s ease,background 0.2s ease;text-align:center;box-sizing:border-box; }
-    .xv-card-btn--detail:hover { border-color:#1a1a1a;color:#1a1a1a; }
-    .xv-card-actions:not(.xv-card-actions--pair) .xv-card-btn--detail { width:100%; }
-
-    /* Añadir al carrito (lista): visible siempre; AJAX por class xv-quick-add en navbar */
-    .xv-card-actions .xv-quick-add { position:relative;opacity:1;transform:none;width:100%;padding:10px 12px;font-family:'Jost',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.6px;text-transform:uppercase;background:#1a1a1a;color:#fff;border:none;border-radius:0;-webkit-appearance:none;appearance:none;cursor:pointer;transition:opacity 0.2s ease,background 0.2s ease; }
-    .xv-card-actions .xv-quick-add:hover { background:rgba(26,26,26,0.88); }
+    /* Tarjetas de producto: style.css → PRODUCT CARDS */
 
     /* Pagination */
     #xvPagination { margin-top:48px;display:flex;justify-content:center;gap:8px; }
@@ -118,19 +75,11 @@ unset( $xv_add_args['paged'] );
     #xvNoProducts { text-align:center;padding:80px 20px;font-family:'Jost',sans-serif;font-size:16px;color:#888; }
     .xv-wishlist-empty-inline { text-align:center;margin-top:28px;font-family:'Jost',sans-serif;font-size:15px;color:#888; }
 
-    /* Responsive */
-    @media (max-width:1024px) { #xvProductGrid { grid-template-columns:repeat(3,1fr)!important; } }
+    /* Responsive (rejilla de tarjetas: style.css) */
     @media (max-width:768px) {
-        #xvProductGrid { grid-template-columns:repeat(2,1fr)!important; }
         #xvShop { padding:20px 20px 60px; }
         #xvSortBar { flex-direction:column;align-items:flex-start;gap:12px; }
     }
-    @media (max-width:520px) {
-        .xv-card-actions--pair { flex-direction:column; }
-        .xv-card-actions--pair .xv-card-btn--detail,
-        .xv-card-actions--pair form { flex:none;width:100%;min-width:0; }
-    }
-    @media (max-width:480px) { #xvProductGrid { grid-template-columns:1fr!important; } }
 </style>
 
 <main id="main" class="site-main">
