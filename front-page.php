@@ -53,13 +53,14 @@ get_header();
             #primary.child-front-page { margin:0!important;padding:0!important; }
             #main.home-main { margin:0!important;padding:0!important; }
             #heroSection { position:relative;width:100%;min-height:540px;overflow:hidden;display:flex!important;align-items:center;background-color:#f0efed!important;background-image:url('<?php echo esc_url( $hero_bg_url ); ?>')!important;background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;isolation:isolate; }
+            #heroSection::before { content:'';position:absolute;inset:0;background:rgba(0,0,0,0.42);z-index:0;pointer-events:none; }
             #heroCanvas { position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;display:block!important; }
             #heroContent { position:relative!important;z-index:10!important;display:block!important;visibility:visible!important;opacity:1!important;padding:80px!important;max-width:480px!important; }
-            #heroTitle { color:#1a1a1a!important;font-family:'Cormorant Garamond',Georgia,serif!important;font-size:48px!important;font-weight:300!important;line-height:1.15!important;margin-bottom:36px!important;visibility:visible!important;opacity:1!important;display:block!important;background:none!important;-webkit-text-fill-color:#1a1a1a!important; text-shadow:0 2px 10px rgba(255,255,255,0.45); }
-            #heroTitle em { font-style:italic!important;color:#1a1a1a!important;-webkit-text-fill-color:#1a1a1a!important; }
+            #heroTitle { color:#fff!important;font-family:'Cormorant Garamond',Georgia,serif!important;font-size:48px!important;font-weight:300!important;line-height:1.15!important;margin-bottom:36px!important;visibility:visible!important;opacity:1!important;display:block!important;background:none!important;-webkit-text-fill-color:#fff!important; text-shadow:0 2px 12px rgba(0,0,0,0.35); }
+            #heroTitle em { font-style:italic!important;color:#fff!important;-webkit-text-fill-color:#fff!important; }
             #heroButtons { display:flex!important;gap:16px!important;flex-wrap:wrap!important;visibility:visible!important;opacity:1!important; }
             #heroButtons a { display:inline-block!important;padding:12px 24px!important;font-family:'Jost',sans-serif!important;font-size:12px!important;font-weight:500!important;text-transform:uppercase!important;letter-spacing:1.2px!important;text-decoration:none!important;border-radius:0!important;visibility:visible!important;opacity:1!important; }
-            #heroBtnPrimary { background:#1a1a1a!important;color:#fff!important;border:1.5px solid #1a1a1a!important;-webkit-text-fill-color:#fff!important; }
+            #heroBtnPrimary { background:#fff!important;color:#1a1a1a!important;border:1.5px solid #fff!important;-webkit-text-fill-color:#1a1a1a!important; }
             #heroBtnSecondary { background:transparent!important;color:#1a1a1a!important;border:1.5px solid #1a1a1a!important;-webkit-text-fill-color:#1a1a1a!important; }
 
             @media (max-width: 980px) {
@@ -74,7 +75,7 @@ get_header();
             <canvas id="heroCanvas" class="hero-particles-canvas"></canvas>
             <div id="heroContent">
                 <div>
-                    <h1 id="heroTitle"><em>Anika</em>.<br>Joyería que trasciende.</h1>
+                    <h1 id="heroTitle">Detalles que inspiran.<br>Estilo que trasciende.</h1>
                     <div id="heroButtons">
                         <a id="heroBtnPrimary" href="<?php echo esc_url( $shop_url ); ?>">Ver catálogo</a>
                     </div>
