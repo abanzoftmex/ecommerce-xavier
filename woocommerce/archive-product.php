@@ -100,12 +100,12 @@ unset( $xv_add_args['paged'] );
     .xv-card-actions--pair .xv-card-btn--detail,
     .xv-card-actions--pair form { flex:1;min-width:min(120px,100%); }
     .xv-card-actions form { margin:0;display:flex; }
-    .xv-card-btn--detail { display:inline-flex;align-items:center;justify-content:center;padding:10px 12px;font-family:'Jost',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.6px;text-transform:uppercase;text-decoration:none;color:#1a1a1a;border:1px solid #ddd;background:#fff;transition:border-color 0.2s ease,color 0.2s ease,background 0.2s ease;text-align:center;box-sizing:border-box; }
+    .xv-card-btn--detail { display:inline-flex;align-items:center;justify-content:center;padding:10px 12px;font-family:'Jost',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.6px;text-transform:uppercase;text-decoration:none;color:#1a1a1a;border:1px solid #ddd;background:#fff;border-radius:0;transition:border-color 0.2s ease,color 0.2s ease,background 0.2s ease;text-align:center;box-sizing:border-box; }
     .xv-card-btn--detail:hover { border-color:#1a1a1a;color:#1a1a1a; }
     .xv-card-actions:not(.xv-card-actions--pair) .xv-card-btn--detail { width:100%; }
 
     /* Añadir al carrito (lista): visible siempre; AJAX por class xv-quick-add en navbar */
-    .xv-card-actions .xv-quick-add { position:relative;opacity:1;transform:none;width:100%;padding:10px 12px;font-family:'Jost',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.6px;text-transform:uppercase;background:#1a1a1a;color:#fff;border:none;cursor:pointer;transition:opacity 0.2s ease,background 0.2s ease; }
+    .xv-card-actions .xv-quick-add { position:relative;opacity:1;transform:none;width:100%;padding:10px 12px;font-family:'Jost',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.6px;text-transform:uppercase;background:#1a1a1a;color:#fff;border:none;border-radius:0;-webkit-appearance:none;appearance:none;cursor:pointer;transition:opacity 0.2s ease,background 0.2s ease; }
     .xv-card-actions .xv-quick-add:hover { background:rgba(26,26,26,0.88); }
 
     /* Pagination */
