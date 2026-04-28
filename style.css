@@ -684,18 +684,35 @@ body {
 }
 
 .cat-nav-btn {
-    background: none;
-    border: none;
-    font-size: 20px;
+    background: #fff;
+    border: 1px solid #ddd;
     cursor: pointer;
-    color: #aaa;
-    padding: 4px 8px;
-    transition: color 0.2s;
-    line-height: 1;
+    color: #1a1a1a;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.cat-nav-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.cat-nav-btn svg path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .cat-nav-btn:hover {
-    color: #1a1a1a;
+    border-color: #1a1a1a;
+    background: #f7f7f7;
 }
 
 .category-track-wrapper {
@@ -770,12 +787,17 @@ body {
 
 .category-label {
     font-family: 'Jost', sans-serif;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 600;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: #1a1a1a;
+    margin: 0;
+}
+
+.category-label-wrap {
     margin-top: 12px;
+    padding: 8px 10px 6px;
 }
 
 .category-shopall {
@@ -830,7 +852,7 @@ body {
 
 .trending-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
     gap: 32px;
 }
 
@@ -944,17 +966,35 @@ body {
 }
 
 .rec-nav-btn {
-    background: none;
-    border: none;
-    font-size: 20px;
+    background: #fff;
+    border: 1px solid #ddd;
     cursor: pointer;
-    color: #aaa;
-    padding: 4px 8px;
-    transition: color 0.2s;
+    color: #1a1a1a;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.rec-nav-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.rec-nav-btn svg path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .rec-nav-btn:hover {
-    color: #1a1a1a;
+    border-color: #1a1a1a;
+    background: #f7f7f7;
 }
 
 .rec-track-wrapper {
@@ -963,9 +1003,17 @@ body {
 
 .rec-track {
     display: flex;
-    gap: 20px;
+    gap: 24px;
     transition: transform 0.4s ease;
     will-change: transform;
+}
+
+#xvHomeNewGrid .xv-product-card {
+    width: 100%;
+}
+
+#recTrack .xv-product-card {
+    flex: 0 0 min(300px, calc((100% - 48px) / 3));
 }
 
 .rec-card {
@@ -1456,11 +1504,11 @@ button.xv-home-favorite:hover svg {
     }
 
     .trending-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .rec-card {
-        flex: 0 0 180px;
+    #recTrack .xv-product-card {
+        flex: 0 0 230px;
     }
 
 
@@ -1584,25 +1632,41 @@ button.xv-home-favorite:hover svg {
 /* Reset botones de Astra que aparecen en naranja/rojo */
 .cat-nav-btn,
 .rec-nav-btn {
-    background: none !important;
-    background-color: transparent !important;
-    border: none !important;
+    background: #fff !important;
+    background-color: #fff !important;
+    border: 1px solid #ddd !important;
     border-radius: 0 !important;
     box-shadow: none !important;
-    color: #aaa !important;
-    padding: 4px 8px !important;
-    font-size: 20px !important;
+    color: #1a1a1a !important;
+    padding: 0 !important;
+    font-size: 0 !important;
     line-height: 1 !important;
-    min-height: auto !important;
-    width: auto !important;
-    height: auto !important;
+    min-height: 36px !important;
+    width: 36px !important;
+    height: 36px !important;
 }
 
 .cat-nav-btn:hover,
 .rec-nav-btn:hover {
     color: #1a1a1a !important;
-    background: none !important;
-    background-color: transparent !important;
+    background: #f7f7f7 !important;
+    background-color: #f7f7f7 !important;
+    border-color: #1a1a1a !important;
+}
+
+.cat-nav-btn svg,
+.rec-nav-btn svg {
+    width: 18px !important;
+    height: 18px !important;
+}
+
+.cat-nav-btn svg path,
+.rec-nav-btn svg path {
+    fill: none !important;
+    stroke: currentColor !important;
+    stroke-width: 1.8 !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
 }
 
 /* Grids / Flex — los layouts más críticos */
@@ -1651,19 +1715,19 @@ button.xv-home-favorite:hover svg {
 /* Trending / Recomendados */
 .trending-grid {
     display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 32px !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 24px !important;
 }
 
 .rec-track {
     display: flex !important;
     flex-wrap: nowrap !important;
-    gap: 20px !important;
+    gap: 24px !important;
     align-items: flex-start !important;
 }
 
-.rec-card {
-    flex: 0 0 220px !important;
+#recTrack .xv-product-card {
+    flex: 0 0 min(300px, calc((100% - 48px) / 3)) !important;
     float: none !important;
 }
 
@@ -1711,6 +1775,22 @@ button.xv-home-favorite:hover svg {
     color: #b8a98a !important;
     border-color: #b8a98a !important;
     background: none !important;
+}
+
+@media (max-width: 1024px) {
+    .trending-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 520px) {
+    .trending-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    #recTrack .xv-product-card {
+        flex: 0 0 88% !important;
+    }
 }
 
 /* =====================

@@ -46,14 +46,16 @@ get_header();
         $shop_url = function_exists( 'wc_get_page_id' )
             ? get_permalink( wc_get_page_id( 'shop' ) )
             : home_url( '/shop/' );
+        $uploads     = wp_get_upload_dir();
+        $hero_bg_url = trailingslashit( $uploads['baseurl'] ) . '2026/04/fdo_anika1.webp';
         ?>
         <style>
             #primary.child-front-page { margin:0!important;padding:0!important; }
             #main.home-main { margin:0!important;padding:0!important; }
-            #heroSection { position:relative;width:100%;min-height:540px;overflow:hidden;display:flex!important;align-items:center;background-color:#f0efed!important;background-image:none!important;isolation:isolate; }
+            #heroSection { position:relative;width:100%;min-height:540px;overflow:hidden;display:flex!important;align-items:center;background-color:#f0efed!important;background-image:url('<?php echo esc_url( $hero_bg_url ); ?>')!important;background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;isolation:isolate; }
             #heroCanvas { position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;display:block!important; }
             #heroContent { position:relative!important;z-index:10!important;display:block!important;visibility:visible!important;opacity:1!important;padding:80px!important;max-width:480px!important; }
-            #heroTitle { color:#1a1a1a!important;font-family:'Cormorant Garamond',Georgia,serif!important;font-size:48px!important;font-weight:300!important;line-height:1.15!important;margin-bottom:36px!important;visibility:visible!important;opacity:1!important;display:block!important;background:none!important;-webkit-text-fill-color:#1a1a1a!important; }
+            #heroTitle { color:#1a1a1a!important;font-family:'Cormorant Garamond',Georgia,serif!important;font-size:48px!important;font-weight:300!important;line-height:1.15!important;margin-bottom:36px!important;visibility:visible!important;opacity:1!important;display:block!important;background:none!important;-webkit-text-fill-color:#1a1a1a!important; text-shadow:0 2px 10px rgba(255,255,255,0.45); }
             #heroTitle em { font-style:italic!important;color:#1a1a1a!important;-webkit-text-fill-color:#1a1a1a!important; }
             #heroButtons { display:flex!important;gap:16px!important;flex-wrap:wrap!important;visibility:visible!important;opacity:1!important; }
             #heroButtons a { display:inline-block!important;padding:12px 24px!important;font-family:'Jost',sans-serif!important;font-size:12px!important;font-weight:500!important;text-transform:uppercase!important;letter-spacing:1.2px!important;text-decoration:none!important;border-radius:0!important;visibility:visible!important;opacity:1!important; }
@@ -72,10 +74,9 @@ get_header();
             <canvas id="heroCanvas" class="hero-particles-canvas"></canvas>
             <div id="heroContent">
                 <div>
-                    <h1 id="heroTitle"> <em>open</em>.<br>Stack accordingly.</h1>
+                    <h1 id="heroTitle"><em>Anika</em>.<br>Joyería que trasciende.</h1>
                     <div id="heroButtons">
-                        <a id="heroBtnPrimary" href="<?php echo esc_url( $shop_url ); ?>">Ver todos los productos</a>
-                        <a id="heroBtnSecondary" href="<?php echo esc_url( $shop_url ); ?>?filter=category">Compra por categoría</a>
+                        <a id="heroBtnPrimary" href="<?php echo esc_url( $shop_url ); ?>">Ver catálogo</a>
                     </div>
                 </div>
             </div>
@@ -96,8 +97,16 @@ get_header();
                 <div class="category-header">
                     <h2>Compra por categoría</h2>
                     <div class="category-nav">
-                        <button class="cat-nav-btn cat-prev" aria-label="Previous">&larr;</button>
-                        <button class="cat-nav-btn cat-next" aria-label="Next">&rarr;</button>
+                        <button class="cat-nav-btn cat-prev" aria-label="Anterior">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <path d="M15 6l-6 6 6 6"></path>
+                            </svg>
+                        </button>
+                        <button class="cat-nav-btn cat-next" aria-label="Siguiente">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <path d="M9 6l6 6-6 6"></path>
+                            </svg>
+                        </button>
                     </div>
                 </div>
 
@@ -136,7 +145,9 @@ get_header();
                                         </div>
                                     <?php endif; ?>
                                 </div>
-                                <p class="category-label"><?php echo esc_html( strtoupper( $cat->name ) ); ?></p>
+                                <div class="category-label-wrap">
+                                    <p class="category-label"><?php echo esc_html( strtoupper( $cat->name ) ); ?></p>
+                                </div>
                             </a>
                         </div>
                         <?php
@@ -164,63 +175,72 @@ get_header();
              PARA CAMBIAR EL BOTÓN "Comprar ahora": busca class="btn-comprar" -->
         <!-- ================ TRENDING PRODUCTS ================ -->
         <?php
-        $trending_cat  = get_term_by( 'slug', 'trending', 'product_cat' );
-        $trending_args = array(
+        $newest_args = array(
             'post_type'      => 'product',
-            'posts_per_page' => 2,
+            'posts_per_page' => 4,
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
         );
-        if ( $trending_cat && ! is_wp_error( $trending_cat ) ) {
-            $trending_args['tax_query'] = array(
-                array(
-                    'taxonomy' => 'product_cat',
-                    'field'    => 'slug',
-                    'terms'    => 'trending',
-                ),
-            );
-            $section_title = 'Trending';
-        } else {
-            $section_title = 'Lo Más Nuevo';
-        }
-        $trending_query = new WP_Query( $trending_args );
+        $newest_query = new WP_Query( $newest_args );
         ?>
-        <?php if ( $trending_query->have_posts() ) : ?>
+        <?php if ( $newest_query->have_posts() ) : ?>
         <section class="trending-section">
             <div class="trending-container">
-                <h2 class="trending-title"><?php echo esc_html( $section_title ); ?></h2>
-                <div class="trending-grid">
-                    <?php while ( $trending_query->have_posts() ) : $trending_query->the_post();
+                <h2 class="trending-title">Lo Más Nuevo</h2>
+                <div class="trending-grid" id="xvHomeNewGrid">
+                    <?php while ( $newest_query->have_posts() ) : $newest_query->the_post();
                         global $product;
-                        if ( ! $product ) $product = wc_get_product( get_the_ID() );
-                        $short_desc = $product ? $product->get_short_description() : get_the_excerpt();
-                        $short_desc = wp_strip_all_tags( $short_desc );
-                        if ( strlen( $short_desc ) > 120 ) {
-                            $short_desc = substr( $short_desc, 0, 120 ) . '…';
+                        if ( ! $product ) {
+                            $product = wc_get_product( get_the_ID() );
                         }
+                        if ( ! $product ) {
+                            continue;
+                        }
+                        $is_on_sale  = $product->is_on_sale();
+                        $is_featured = $product->is_featured();
+                        $terms       = get_the_terms( get_the_ID(), 'product_cat' );
+                        $cat_name    = ( $terms && ! is_wp_error( $terms ) ) ? $terms[0]->name : '';
+                        $xv_show_add = $product->is_type( 'simple' ) && $product->is_in_stock();
                     ?>
-                    <div class="trending-card">
-                        <div class="trending-img-wrap">
-                            <button type="button" class="xv-favorite-toggle xv-home-favorite" data-product-id="<?php echo esc_attr( get_the_ID() ); ?>" aria-label="Agregar a favoritos" aria-pressed="false">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    <div class="xv-product-card" data-favorite-card="<?php echo esc_attr( $product->get_id() ); ?>">
+                        <div class="xv-card-img-wrap">
+                            <?php if ( $is_on_sale ) : ?>
+                                <span class="xv-card-badge xv-sale">Oferta</span>
+                            <?php elseif ( $is_featured ) : ?>
+                                <span class="xv-card-badge">Destacado</span>
+                            <?php endif; ?>
+                            <button type="button" class="xv-favorite-toggle" data-product-id="<?php echo esc_attr( get_the_ID() ); ?>" aria-label="Agregar a favoritos" aria-pressed="false">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                                    <path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                                 </svg>
                             </button>
-                            <a href="<?php the_permalink(); ?>" class="trending-card-link">
+                            <a href="<?php the_permalink(); ?>">
                                 <?php if ( has_post_thumbnail() ) : ?>
-                                    <?php the_post_thumbnail( 'large', array( 'class' => 'trending-img' ) ); ?>
+                                    <?php the_post_thumbnail( 'medium_large', array( 'class' => 'xv-card-img', 'loading' => 'lazy' ) ); ?>
                                 <?php else : ?>
-                                    <div class="trending-img-placeholder"></div>
+                                    <div class="xv-card-img-placeholder">Sin imagen</div>
                                 <?php endif; ?>
                             </a>
                         </div>
-                        <div class="trending-info">
-                            <p class="trending-label"><?php the_title(); ?></p>
-                            <?php if ( $short_desc ) : ?>
-                            <p class="trending-desc"><?php echo esc_html( $short_desc ); ?></p>
-                            <?php endif; ?>
-                            <a href="<?php the_permalink(); ?>" class="btn-comprar">Comprar ahora</a>
+                        <div class="xv-card-info">
+                            <a href="<?php the_permalink(); ?>" class="xv-card-info-main">
+                                <?php if ( $cat_name ) : ?>
+                                    <p class="xv-card-cat"><?php echo esc_html( $cat_name ); ?></p>
+                                <?php endif; ?>
+                                <h3 class="xv-card-name"><?php the_title(); ?></h3>
+                                <div class="xv-card-price"><?php echo $product->get_price_html(); ?></div>
+                            </a>
+                            <div class="xv-card-actions<?php echo $xv_show_add ? ' xv-card-actions--pair' : ''; ?>">
+                                <a href="<?php the_permalink(); ?>" class="xv-card-btn--detail"><?php esc_html_e( 'Ver detalles', 'astra-child' ); ?></a>
+                                <?php if ( $xv_show_add ) : ?>
+                                    <form method="post" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>">
+                                        <input type="hidden" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" />
+                                        <input type="hidden" name="quantity" value="1" />
+                                        <button type="submit" class="xv-quick-add"><?php esc_html_e( 'Agregar al carrito', 'astra-child' ); ?></button>
+                                    </form>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
                     <?php endwhile; wp_reset_postdata(); ?>
@@ -241,8 +261,16 @@ get_header();
                 <div class="recommended-header">
                     <h2>Creemos que te puede gustar&hellip;</h2>
                     <div class="rec-nav">
-                        <button class="rec-nav-btn rec-prev" aria-label="Previous">&larr;</button>
-                        <button class="rec-nav-btn rec-next" aria-label="Next">&rarr;</button>
+                        <button class="rec-nav-btn rec-prev" aria-label="Anterior">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <path d="M15 6l-6 6 6 6"></path>
+                            </svg>
+                        </button>
+                        <button class="rec-nav-btn rec-next" aria-label="Siguiente">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <path d="M9 6l6 6-6 6"></path>
+                            </svg>
+                        </button>
                     </div>
                 </div>
 
@@ -261,31 +289,54 @@ get_header();
                                 $rec_query->the_post();
                                 global $product;
                                 if ( ! $product ) $product = wc_get_product( get_the_ID() );
-                                $is_bestseller = $product && $product->is_featured();
-                                $price = $product ? $product->get_price_html() : '';
+                                if ( ! $product ) {
+                                    continue;
+                                }
+                                $is_on_sale  = $product->is_on_sale();
+                                $is_featured = $product->is_featured();
+                                $terms       = get_the_terms( get_the_ID(), 'product_cat' );
+                                $cat_name    = ( $terms && ! is_wp_error( $terms ) ) ? $terms[0]->name : '';
+                                $xv_show_add = $product->is_type( 'simple' ) && $product->is_in_stock();
                         ?>
-                        <div class="rec-card">
-                            <?php if ( $is_bestseller ) : ?>
-                            <span class="rec-badge">Productos más vendidos</span>
+                        <div class="xv-product-card" data-favorite-card="<?php echo esc_attr( $product->get_id() ); ?>">
+                            <div class="xv-card-img-wrap">
+                            <?php if ( $is_on_sale ) : ?>
+                                <span class="xv-card-badge xv-sale">Oferta</span>
+                            <?php elseif ( $is_featured ) : ?>
+                                <span class="xv-card-badge">Destacado</span>
                             <?php endif; ?>
-                            <button type="button" class="xv-favorite-toggle xv-home-favorite" data-product-id="<?php echo esc_attr( get_the_ID() ); ?>" aria-label="Agregar a favoritos" aria-pressed="false">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            <button type="button" class="xv-favorite-toggle" data-product-id="<?php echo esc_attr( get_the_ID() ); ?>" aria-label="Agregar a favoritos" aria-pressed="false">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                                    <path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                                 </svg>
                             </button>
-                            <a href="<?php the_permalink(); ?>" class="rec-card-link">
+                            <a href="<?php the_permalink(); ?>">
                                 <?php if ( has_post_thumbnail() ) : ?>
-                                    <?php the_post_thumbnail( 'medium', array( 'class' => 'rec-img' ) ); ?>
+                                    <?php the_post_thumbnail( 'medium_large', array( 'class' => 'xv-card-img', 'loading' => 'lazy' ) ); ?>
                                 <?php else : ?>
-                                    <div class="rec-img-placeholder"></div>
+                                    <div class="xv-card-img-placeholder">Sin imagen</div>
                                 <?php endif; ?>
-                                <div class="rec-card-info">
-                                    <h3 class="rec-card-title"><?php the_title(); ?></h3>
-                                    <?php if ( $price ) : ?>
-                                    <p class="rec-card-price"><?php echo $price; ?></p>
+                            </a>
+                            </div>
+                            <div class="xv-card-info">
+                                <a href="<?php the_permalink(); ?>" class="xv-card-info-main">
+                                    <?php if ( $cat_name ) : ?>
+                                        <p class="xv-card-cat"><?php echo esc_html( $cat_name ); ?></p>
+                                    <?php endif; ?>
+                                    <h3 class="xv-card-name"><?php the_title(); ?></h3>
+                                    <div class="xv-card-price"><?php echo $product->get_price_html(); ?></div>
+                                </a>
+                                <div class="xv-card-actions<?php echo $xv_show_add ? ' xv-card-actions--pair' : ''; ?>">
+                                    <a href="<?php the_permalink(); ?>" class="xv-card-btn--detail"><?php esc_html_e( 'Ver detalles', 'astra-child' ); ?></a>
+                                    <?php if ( $xv_show_add ) : ?>
+                                        <form method="post" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>">
+                                            <input type="hidden" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" />
+                                            <input type="hidden" name="quantity" value="1" />
+                                            <button type="submit" class="xv-quick-add"><?php esc_html_e( 'Agregar al carrito', 'astra-child' ); ?></button>
+                                        </form>
                                     <?php endif; ?>
                                 </div>
-                            </a>
+                            </div>
                         </div>
                         <?php
                             endwhile;
@@ -475,8 +526,8 @@ get_header();
     var recOffset = 0;
 
     function getRecCardW() {
-        var card = recTrack && recTrack.querySelector('.rec-card');
-        return card ? card.offsetWidth + 20 : 240;
+        var card = recTrack && recTrack.querySelector('.xv-product-card');
+        return card ? card.offsetWidth + 24 : 240;
     }
     function updateRec() {
         recTrack.style.transform = 'translateX(' + (-recOffset) + 'px)';
