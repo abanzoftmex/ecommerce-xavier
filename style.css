@@ -3406,16 +3406,28 @@ body.xv-mobile-menu-open {
     box-shadow: 0 10px 40px rgba(0,0,0,0.03);
 }
 
+.xv-login-form-wrapper {
+    width: 100%;
+}
+
 .xv-login-form-wrapper .xv-login-row {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: stretch; /* Ensures columns are equal height */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    align-items: stretch;
 }
 
 .xv-login-col {
     display: flex;
     flex-direction: column;
+    background: #fff;
+    border: 1px solid #f0efed;
+    padding: 40px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.xv-login-col:hover {
+    box-shadow: 0 15px 45px rgba(0,0,0,0.05);
 }
 
 .xv-login-col form {
@@ -3426,7 +3438,7 @@ body.xv-mobile-menu-open {
 
 .xv-login-title-small {
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 34px;
+    font-size: 32px;
     color: #1a1a1a;
     font-weight: 400;
     margin-bottom: 30px;
@@ -3451,28 +3463,28 @@ body.xv-mobile-menu-open {
 .xv-form-field input[type="text"],
 .xv-form-field input[type="email"],
 .xv-form-field input[type="password"] {
-    width: 100%;
-    padding: 14px 0;
-    border: none;
-    border-bottom: 1px solid #e0e0e0;
-    font-family: 'Jost', sans-serif;
-    font-size: 15px;
-    outline: none;
-    transition: all 0.3s ease;
-    background: transparent;
-    border-radius: 0;
+    width: 100% !important;
+    padding: 14px 0 !important;
+    border: none !important;
+    border-bottom: 1px solid #e0e0e0 !important;
+    font-family: 'Jost', sans-serif !important;
+    font-size: 15px !important;
+    outline: none !important;
+    transition: all 0.3s ease !important;
+    background: transparent !important;
+    border-radius: 0 !important;
 }
 
 .xv-form-field input:focus {
-    border-bottom-color: #c8a951;
+    border-bottom-color: #c8a951 !important;
 }
 
 .xv-form-actions {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: auto; /* Pushes buttons to the bottom of the column */
-    padding-top: 20px;
+    margin-top: auto;
+    padding-top: 30px;
     gap: 20px;
 }
 
@@ -3511,12 +3523,12 @@ body.xv-mobile-menu-open {
 
 .lost_password a {
     font-family: 'Jost', sans-serif;
-    font-size: 12px;
+    font-size: 11px;
     color: #999;
     text-decoration: none;
     transition: color 0.3s ease;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
 .lost_password a:hover {
@@ -3601,9 +3613,47 @@ body.xv-mobile-menu-open {
 }
 
 .woocommerce-MyAccount-content .woocommerce-info {
-    border-top: 2px solid #c8a951;
+    border: none;
+    border-left: 4px solid #c8a951;
     background: #faf8f5;
-    padding: 20px;
+    padding: 24px 30px 24px 60px !important; /* Added large left padding for the icon */
+    position: relative;
+    font-family: 'Jost', sans-serif;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Fix for the icon overlapping text */
+.woocommerce-info::before {
+    content: "\e016"; /* Standard WC info icon code if needed, but usually it's already there */
+    font-family: WooCommerce;
+    position: absolute !important;
+    left: 20px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    color: #c8a951 !important;
+    font-size: 20px !important;
+    display: block !important;
+}
+
+.woocommerce-MyAccount-content .woocommerce-Button {
+    background: #1a1a1a;
+    color: #fff;
+    padding: 10px 20px;
+    font-family: 'Jost', sans-serif;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.woocommerce-MyAccount-content .woocommerce-Button:hover {
+    background: #c8a951;
 }
 
 @media (max-width: 960px) {
