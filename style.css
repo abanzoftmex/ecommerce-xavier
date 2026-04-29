@@ -3394,3 +3394,154 @@ body.xv-mobile-menu-open {
         display: inline-flex;
     }
 }
+
+/* =====================
+   LOGIN & REGISTER PAGE
+===================== */
+
+.xv-login-page-wrapper {
+    padding: 140px 20px 100px;
+    background: #faf9f7;
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.xv-login-container {
+    max-width: 1000px;
+    width: 100%;
+}
+
+.xv-login-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.xv-login-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 48px;
+    font-weight: 400;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+}
+
+.xv-login-subtitle {
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.xv-login-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 40px !important;
+}
+
+.xv-login-card {
+    background: #fff;
+    padding: 40px;
+    border: 1px solid #ece7df;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+}
+
+.xv-login-section-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 32px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #f0efed;
+    padding-bottom: 15px;
+}
+
+.xv-field {
+    margin-bottom: 20px !important;
+}
+
+.xv-field label {
+    display: block;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.xv-field input {
+    width: 100% !important;
+    padding: 12px 15px !important;
+    border: 1px solid #ddd !important;
+    font-family: 'Jost', sans-serif !important;
+    font-size: 14px !important;
+    outline: none !important;
+    transition: border-color 0.3s ease !important;
+    background: #fff !important;
+}
+
+.xv-field input:focus {
+    border-color: #c8a951 !important;
+}
+
+.xv-login-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.xv-btn-primary {
+    background: #1a1a1a !important;
+    color: #fff !important;
+    border: none !important;
+    padding: 12px 30px !important;
+    font-family: 'Jost', sans-serif !important;
+    font-size: 12px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1.5px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+.xv-btn-primary:hover {
+    background: #c8a951 !important;
+    color: #fff !important;
+    transform: translateY(-2px);
+}
+
+.lost_password {
+    margin-top: 15px;
+}
+
+.lost_password a {
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    color: #666;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.lost_password a:hover {
+    color: #1a1a1a;
+}
+
+@media (max-width: 768px) {
+    .xv-login-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .xv-login-page-wrapper {
+        padding: 120px 15px 60px;
+    }
+    
+    .xv-login-title {
+        font-size: 36px;
+    }
+}

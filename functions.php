@@ -170,6 +170,11 @@ function astra_child_woocommerce_support() {
 add_action( 'after_setup_theme', 'astra_child_woocommerce_support' );
 
 /**
+ * Forzar la activación del registro en la página de Mi Cuenta
+ */
+add_filter( 'option_woocommerce_enable_myaccount_registration', '__return_yes' );
+
+/**
  * Prioritizar productos con imágenes y en existencia (In Stock).
  * Esto asegura que el catálogo se vea siempre lleno y profesional.
  */
