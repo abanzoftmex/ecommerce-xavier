@@ -3402,28 +3402,40 @@ body.xv-mobile-menu-open {
 .xv-account-page .xv-account-content-wrap {
     background: #fff;
     border: 1px solid #ece6dc;
-    padding: 50px;
+    padding: 60px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.03);
 }
 
 .xv-login-form-wrapper .xv-login-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 60px;
+    gap: 80px;
+    align-items: stretch; /* Ensures columns are equal height */
+}
+
+.xv-login-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.xv-login-col form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .xv-login-title-small {
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 32px;
+    font-size: 34px;
     color: #1a1a1a;
     font-weight: 400;
-    margin-bottom: 24px;
+    margin-bottom: 30px;
     border-bottom: 1px solid #f0efed;
-    padding-bottom: 10px;
+    padding-bottom: 12px;
 }
 
 .xv-form-field {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
 .xv-form-field label {
@@ -3433,7 +3445,7 @@ body.xv-mobile-menu-open {
     text-transform: uppercase;
     letter-spacing: 1.5px;
     color: #888;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 .xv-form-field input[type="text"],
@@ -3442,12 +3454,13 @@ body.xv-mobile-menu-open {
     width: 100%;
     padding: 14px 0;
     border: none;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #e0e0e0;
     font-family: 'Jost', sans-serif;
     font-size: 15px;
     outline: none;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
     background: transparent;
+    border-radius: 0;
 }
 
 .xv-form-field input:focus {
@@ -3458,7 +3471,8 @@ body.xv-mobile-menu-open {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 30px;
+    margin-top: auto; /* Pushes buttons to the bottom of the column */
+    padding-top: 20px;
     gap: 20px;
 }
 
@@ -3475,7 +3489,7 @@ body.xv-mobile-menu-open {
     background: #1a1a1a;
     color: #fff;
     border: 1px solid #1a1a1a;
-    padding: 14px 34px;
+    padding: 15px 40px;
     font-family: 'Jost', sans-serif;
     font-size: 12px;
     text-transform: uppercase;
@@ -3483,6 +3497,7 @@ body.xv-mobile-menu-open {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
 }
 
 .xv-btn-primary:hover {
@@ -3490,62 +3505,135 @@ body.xv-mobile-menu-open {
     color: #1a1a1a;
 }
 
+.lost_password {
+    margin-top: 20px;
+}
+
 .lost_password a {
     font-family: 'Jost', sans-serif;
-    font-size: 13px;
+    font-size: 12px;
     color: #999;
     text-decoration: none;
     transition: color 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .lost_password a:hover {
     color: #c8a951;
 }
 
-/* Woocommerce Dashboard specific tweaks */
-.woocommerce-MyAccount-navigation ul {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 40px;
+/* 
+   Woocommerce Dashboard Sidebar Layout
+*/
+.xv-account-page .woocommerce {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
-    border-bottom: 1px solid #f0efed;
-    padding-bottom: 15px;
+    gap: 50px;
+    align-items: flex-start;
 }
 
-.woocommerce-MyAccount-navigation li {
+.xv-account-page .woocommerce-MyAccount-navigation {
+    flex: 0 0 240px;
+    position: sticky;
+    top: 140px;
+}
+
+.xv-account-page .woocommerce-MyAccount-navigation ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid #f0efed;
+}
+
+.xv-account-page .woocommerce-MyAccount-navigation li {
+    margin: 0;
+    border-bottom: 1px solid #f0efed;
+}
+
+.xv-account-page .woocommerce-MyAccount-navigation li:last-child {
+    border-bottom: none;
+}
+
+.xv-account-page .woocommerce-MyAccount-navigation li a {
+    display: block;
+    padding: 16px 20px;
     font-family: 'Jost', sans-serif;
     font-size: 12px;
     text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.woocommerce-MyAccount-navigation li a {
+    letter-spacing: 1.5px;
     text-decoration: none;
-    color: #888;
-    transition: color 0.3s ease;
+    color: #666;
+    transition: all 0.3s ease;
+    background: #fff;
 }
 
-.woocommerce-MyAccount-navigation li.is-active a,
-.woocommerce-MyAccount-navigation li a:hover {
+.xv-account-page .woocommerce-MyAccount-navigation li.is-active a {
+    background: #faf8f5;
     color: #1a1a1a;
     font-weight: 600;
+    padding-left: 25px;
+    border-left: 3px solid #c8a951;
 }
 
-.woocommerce-MyAccount-content {
+.xv-account-page .woocommerce-MyAccount-navigation li a:hover:not(.is-active) {
+    background: #fdfdfd;
+    color: #1a1a1a;
+    padding-left: 25px;
+}
+
+.xv-account-page .woocommerce-MyAccount-content {
+    flex: 1;
+    min-width: 0; /* Prevents overflow */
     font-family: 'Jost', sans-serif;
     line-height: 1.8;
     color: #444;
 }
 
-@media (max-width: 900px) {
+/* Dashboard items table/info */
+.woocommerce-MyAccount-content mark {
+    background: none;
+    color: #1a1a1a;
+    font-weight: 600;
+}
+
+.woocommerce-MyAccount-content .woocommerce-info {
+    border-top: 2px solid #c8a951;
+    background: #faf8f5;
+    padding: 20px;
+}
+
+@media (max-width: 960px) {
+    .xv-account-page .woocommerce {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .xv-account-page .woocommerce-MyAccount-navigation {
+        flex: 1 1 100%;
+        position: static;
+        width: 100%;
+    }
+
+    .xv-account-page .woocommerce-MyAccount-navigation ul {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .xv-account-page .woocommerce-MyAccount-navigation li {
+        flex: 1 1 auto;
+        border-right: 1px solid #f0efed;
+    }
+
     .xv-login-form-wrapper .xv-login-row {
         grid-template-columns: 1fr;
-        gap: 50px;
+        gap: 60px;
     }
     
     .xv-account-page .xv-account-content-wrap {
-        padding: 30px 20px;
+        padding: 40px 20px;
     }
 }
