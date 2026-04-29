@@ -2303,7 +2303,14 @@ body.front-page #heroSection {
 .xv-cart-drawer .woocommerce-mini-cart__buttons .button.checkout {
     background: #c8a951;
     border-color: #c8a951;
-    color: #1a1a1a;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.xv-cart-drawer .woocommerce-mini-cart__buttons .button.checkout:hover {
+    background: #b59845;
+    border-color: #b59845;
+    transform: translateY(-2px);
 }
 
 body.xv-drawer-open {
@@ -3412,9 +3419,11 @@ body.xv-mobile-menu-open {
 
 .xv-login-form-wrapper .xv-login-row {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 40px !important;
     align-items: stretch;
+    width: 100% !important;
+    max-width: none !important;
 }
 
 .xv-login-col {
@@ -3423,14 +3432,18 @@ body.xv-mobile-menu-open {
     background: #fff;
     border: 1px solid #f0efed;
     padding: 40px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
 }
 
-.xv-login-col:hover {
-    box-shadow: 0 15px 45px rgba(0,0,0,0.05);
-}
-
-.xv-login-col form {
+.xv-login-col form.login,
+.xv-login-col form.register {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
     flex: 1;
     display: flex;
     flex-direction: column;

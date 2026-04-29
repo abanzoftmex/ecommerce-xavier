@@ -112,7 +112,11 @@ do_action( 'woocommerce_before_mini_cart' ); ?>
 
 	<?php do_action( 'woocommerce_widget_shopping_cart_before_buttons' ); ?>
 
-	<p class="woocommerce-mini-cart__buttons buttons"><?php do_action( 'woocommerce_widget_shopping_cart_buttons' ); ?></p>
+	<p class="woocommerce-mini-cart__buttons buttons">
+        <a href="<?php echo esc_url( wc_get_checkout_url() ); ?>" class="button checkout wc-forward xv-checkout-btn">
+            <?php esc_html_e( 'Finalizar Compra', 'astra-child' ); ?>
+        </a>
+    </p>
 
 	<?php do_action( 'woocommerce_widget_shopping_cart_after_buttons' ); ?>
 
