@@ -3396,152 +3396,156 @@ body.xv-mobile-menu-open {
 }
 
 /* =====================
-   LOGIN & REGISTER PAGE
+   MY ACCOUNT PAGE
 ===================== */
 
-.xv-login-page-wrapper {
-    padding: 140px 20px 100px;
-    background: #faf9f7;
-    min-height: 80vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.xv-login-container {
-    max-width: 1000px;
-    width: 100%;
-}
-
-.xv-login-header {
-    text-align: center;
-    margin-bottom: 50px;
-}
-
-.xv-login-title {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 48px;
-    font-weight: 400;
-    color: #1a1a1a;
-    margin-bottom: 10px;
-}
-
-.xv-login-subtitle {
-    font-family: 'Jost', sans-serif;
-    font-size: 16px;
-    color: #666;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.xv-login-grid {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 40px !important;
-}
-
-.xv-login-card {
+.xv-account-page .xv-account-content-wrap {
     background: #fff;
-    padding: 40px;
-    border: 1px solid #ece7df;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+    border: 1px solid #ece6dc;
+    padding: 50px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.03);
 }
 
-.xv-login-section-title {
+.xv-login-form-wrapper .xv-login-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+}
+
+.xv-login-title-small {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 32px;
-    font-weight: 500;
     color: #1a1a1a;
-    margin-bottom: 25px;
+    font-weight: 400;
+    margin-bottom: 24px;
     border-bottom: 1px solid #f0efed;
-    padding-bottom: 15px;
+    padding-bottom: 10px;
 }
 
-.xv-field {
-    margin-bottom: 20px !important;
+.xv-form-field {
+    margin-bottom: 20px;
 }
 
-.xv-field label {
+.xv-form-field label {
     display: block;
     font-family: 'Jost', sans-serif;
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #1a1a1a;
+    letter-spacing: 1.5px;
+    color: #888;
     margin-bottom: 8px;
 }
 
-.xv-field input {
-    width: 100% !important;
-    padding: 12px 15px !important;
-    border: 1px solid #ddd !important;
-    font-family: 'Jost', sans-serif !important;
-    font-size: 14px !important;
-    outline: none !important;
-    transition: border-color 0.3s ease !important;
-    background: #fff !important;
+.xv-form-field input[type="text"],
+.xv-form-field input[type="email"],
+.xv-form-field input[type="password"] {
+    width: 100%;
+    padding: 14px 0;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    font-family: 'Jost', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    background: transparent;
 }
 
-.xv-field input:focus {
-    border-color: #c8a951 !important;
+.xv-form-field input:focus {
+    border-bottom-color: #c8a951;
 }
 
-.xv-login-actions {
+.xv-form-actions {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 20px 0;
+    margin-top: 30px;
+    gap: 20px;
+}
+
+.xv-form-actions .rememberme {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    color: #666;
 }
 
 .xv-btn-primary {
-    background: #1a1a1a !important;
-    color: #fff !important;
-    border: none !important;
-    padding: 12px 30px !important;
-    font-family: 'Jost', sans-serif !important;
-    font-size: 12px !important;
-    text-transform: uppercase !important;
-    letter-spacing: 1.5px !important;
-    font-weight: 600 !important;
-    cursor: pointer !important;
-    transition: all 0.3s ease !important;
+    background: #1a1a1a;
+    color: #fff;
+    border: 1px solid #1a1a1a;
+    padding: 14px 34px;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .xv-btn-primary:hover {
-    background: #c8a951 !important;
-    color: #fff !important;
-    transform: translateY(-2px);
-}
-
-.lost_password {
-    margin-top: 15px;
+    background: transparent;
+    color: #1a1a1a;
 }
 
 .lost_password a {
     font-family: 'Jost', sans-serif;
     font-size: 13px;
-    color: #666;
+    color: #999;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .lost_password a:hover {
-    color: #1a1a1a;
+    color: #c8a951;
 }
 
-@media (max-width: 768px) {
-    .xv-login-grid {
-        grid-template-columns: 1fr !important;
+/* Woocommerce Dashboard specific tweaks */
+.woocommerce-MyAccount-navigation ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    border-bottom: 1px solid #f0efed;
+    padding-bottom: 15px;
+}
+
+.woocommerce-MyAccount-navigation li {
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.woocommerce-MyAccount-navigation li a {
+    text-decoration: none;
+    color: #888;
+    transition: color 0.3s ease;
+}
+
+.woocommerce-MyAccount-navigation li.is-active a,
+.woocommerce-MyAccount-navigation li a:hover {
+    color: #1a1a1a;
+    font-weight: 600;
+}
+
+.woocommerce-MyAccount-content {
+    font-family: 'Jost', sans-serif;
+    line-height: 1.8;
+    color: #444;
+}
+
+@media (max-width: 900px) {
+    .xv-login-form-wrapper .xv-login-row {
+        grid-template-columns: 1fr;
+        gap: 50px;
     }
     
-    .xv-login-page-wrapper {
-        padding: 120px 15px 60px;
-    }
-    
-    .xv-login-title {
-        font-size: 36px;
+    .xv-account-page .xv-account-content-wrap {
+        padding: 30px 20px;
     }
 }
