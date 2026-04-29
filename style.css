@@ -3411,30 +3411,37 @@ body.xv-mobile-menu-open {
     border: 1px solid #ece6dc;
     padding: 60px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.03);
-}
-
-.xv-login-form-wrapper {
-    width: 100%;
-}
-
-.xv-login-form-wrapper .xv-login-row {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 40px !important;
-    align-items: stretch;
-    width: 100% !important;
-    max-width: none !important;
-}
-
-.xv-login-col {
-    display: flex;
-    flex-direction: column;
-    background: #fff;
-    border: 1px solid #f0efed;
-    padding: 40px;
     width: 100% !important;
     max-width: none !important;
     box-sizing: border-box !important;
+}
+
+.xv-login-form-wrapper {
+    width: 100% !important;
+    max-width: none !important;
+    display: block !important;
+}
+
+.xv-login-form-wrapper .xv-login-row {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 40px !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+}
+
+.xv-login-col {
+    display: flex !important;
+    flex-direction: column !important;
+    background: #fff !important;
+    border: 1px solid #f0efed !important;
+    padding: 40px !important;
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+    flex: 1 !important;
 }
 
 .xv-login-col form.login,
